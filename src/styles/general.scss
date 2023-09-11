@@ -1,5 +1,5 @@
-@use './variables/mixins' as *;
-@use './variables/variables' as *;
+@use './partials/mixins' as *;
+@use './partials/variables' as *;
 
 *,
 *::before,
@@ -15,4 +15,8 @@ a{
     display: block;
     text-decoration: none;
     color: black;
+}
+
+body{
+    padding-top: 95px;
 }
