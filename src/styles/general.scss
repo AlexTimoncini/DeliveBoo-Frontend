@@ -1,6 +1,18 @@
 @use './variables/mixins' as *;
 @use './variables/variables' as *;
 
+*,
+*::before,
+*::after{
+    user-select: none;
+}
+
 ul{
     list-style: none;
+}
+
+a{
+    display: block;
+    text-decoration: none;
+    color: black;
 }
