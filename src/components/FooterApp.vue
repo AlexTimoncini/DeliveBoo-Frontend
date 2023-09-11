@@ -100,12 +100,12 @@ export default{
                         <li class="header-link">Download the App</li>
                         <li class="link">
                             <a href="https://deliveroo.it/app/?platform=ios&home_page=true&home_page_variant=&mobile_banner=false">
-                                <img src="../assets/icons/app-store.png" alt="app store logo">
+                                <img src="../assets/icons/app-store.png" alt="app store logo" draggable="false">
                             </a>
                         </li>
                         <li class="link">
                             <a href="https://play.google.com/store/apps/details?id=com.deliveroo.orderapp&hl=it&gl=US">
-                                <img src="../assets/icons/google-play.png" alt="app store logo">
+                                <img src="../assets/icons/google-play.png" alt="app store logo" draggable="false">
                             </a>
                         </li>
                     </ul>
@@ -127,7 +127,7 @@ export default{
                             &#169; 2023 DeliveBoo
                         </p>
                         <router-link to="/">
-                            <img src="../assets/logos/black_ghost.svg" alt="deliveboo green logo">
+                            <img src="../assets/logos/black_ghost.svg" alt="deliveboo green logo" draggable="false">
                         </router-link>
                     </div>
                 </div>
