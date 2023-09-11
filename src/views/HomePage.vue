@@ -13,7 +13,7 @@ export default{
             <div class="container">
                 <div class="row">
                     <div class="jumbo-img col-12 col-md-6">
-                        <img src="../assets/mascotte/ghost-hamburger-jumbo.png" alt="deliveboo mscotte eating a hamburger">
+                        <img src="../assets/mascotte/ghost-hamburger-jumbo.png" alt="deliveboo mscotte eating a hamburger" draggable="false">
                     </div>
                     <div class="jumbo-title col-12 text-center text-md-start col-md-6">
                         <h1 class="title">DeliveBoo</h1>
@@ -26,7 +26,7 @@ export default{
                 </div>
             </div>
             <!-- Background -->
-            <img class="wave" src="../assets/shapes/diagonale.svg" alt="black wave svg">
+            <img class="wave" src="../assets/shapes/diagonale.svg" alt="black wave svg" draggable="false">
         </div>
     </main>
 </template>
