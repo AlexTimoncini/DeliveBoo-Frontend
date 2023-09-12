@@ -2,14 +2,52 @@
 export default{
     name: 'HomePage',
     components:{
-
-    }
+    },
+    data() {
+        return {
+            types: [
+                {
+                    "name": "Fast Food",
+                    "logo": "https://cdn-icons-png.flaticon.com/512/385/385102.png"
+                },
+                {
+                    "name": "American",
+                    "logo": "https://cdn-icons-png.flaticon.com/256/2505/2505032.png"
+                },
+                {
+                    "name": "French",
+                    "logo": "https://cdn-icons-png.flaticon.com/512/3187/3187475.png"
+                },
+                {
+                    "name": "Italian",
+                    "logo": "https://cdn-icons-png.flaticon.com/512/4624/4624275.png"
+                },
+                {
+                    "name": "Turkish",
+                    "logo": "https://cdn-icons-png.flaticon.com/256/6978/6978155.png"
+                },
+                {
+                    "name": "Asian",
+                    "logo": "https://cdn-icons-png.flaticon.com/512/3183/3183463.png"
+                },
+                {
+                    "name": "Thai",
+                    "logo": "https://cdn-icons-png.flaticon.com/256/909/909119.png"
+                },
+                {
+                    "name": "Kebab",
+                    "logo": "https://cdn-icons-png.flaticon.com/256/7499/7499501.png"
+                },
+            ],
+            list: ['h1', 'h2']
+        }
+    },
 }
 </script>
 
 <template>
     <main>
-        <div class="jumbo">
+        <section class="jumbo">
             <div class="container">
                 <div class="row">
                     <div class="jumbo-img col-12 col-md-6">
@@ -19,15 +57,97 @@ export default{
                         <h1 class="title">DeliveBoo</h1>
                         <h2 class="slogan">Where Hunger Meets Hauntingly Good Food!</h2>
                     </div>
-                </div>
-
-                <div class="search-bar-box">
-                    <h3>What boo you wanna eat?</h3>
+                    <div class="search-bar-box col-12 col-lg-8 m-auto">
+                        <h3 class="title">What boo you wanna eat?</h3>
+                        <h5>Order Online From Your Favourite Restaurant</h5>
+                        <div class="search-bar">
+                            <label for="home-searchbar">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 101 101" id="search"><path d="M63.3 59.9c3.8-4.6 6.2-10.5 6.2-17 0-14.6-11.9-26.5-26.5-26.5S16.5 28.3 16.5 42.9 28.4 69.4 43 69.4c6.4 0 12.4-2.3 17-6.2l20.6 20.6c.5.5 1.1.7 1.7.7.6 0 1.2-.2 1.7-.7.9-.9.9-2.5 0-3.4L63.3 59.9zm-20.4 4.7c-12 0-21.7-9.7-21.7-21.7s9.7-21.7 21.7-21.7 21.7 9.7 21.7 21.7-9.7 21.7-21.7 21.7z"></path></svg>
+                            </label>
+                            <input type="text" id="home-searchbar" placeholder="Type your restaurant...">
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- Background -->
             <img class="wave" src="../assets/shapes/diagonale.svg" alt="black wave svg" draggable="false">
-        </div>
+        </section>
+        <section class="categories">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="m-0 title">Choose a category</h3>
+                    </div>
+                    <router-link v-for="type in types" :to="{ name: 'WorkInProgress' }" class="category-card col-6 col-md-3">
+                        <div class="card-image">
+                            <img class="img-fluid" :src="type.logo" alt="">
+                        </div>
+                        <h3 class="card-title">{{ type.name }}</h3>
+                    </router-link>
+                </div>
+            </div>
+        </section>
+        <section class="partners">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="title">Boo-na be our partner?</h3>
+                    </div>
+                    <div class="col-12">
+                        <div class="row justify-content-center align-items-stretch" >
+                            <div class="col-12 col-sm-10 col-md-6 col-lg-3 p-2 card_container">
+                                <div class="partner-card d-flex flex-column">
+                                    <div class="card_image">
+                                        <img class="img-fluid" src="../assets/jumbo/rider_jumbo.png" alt="deliveboo rider image" draggable="false">
+                                    </div>
+                                    <div class="card_text d-flex flex-column justify-content-between">
+                                        <h4>Ghastly Riders</h4>
+                                        <p class="m-0">Embark on a haunting journey with our spectral rider team! Join us for bewitching hours and ghostly rewards as you deliver spine-tingling meals to the hungriest souls in town.</p>
+                                        <div class="d-flex">
+                                            <router-link :to="{ name: 'WorkInProgress' }" class="card_btn">
+                                                Discover More
+                                            </router-link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-10 col-md-6 col-lg-3 p-2 card_container">
+                                <div class="partner-card d-flex flex-column">
+                                    <div class="card_image">
+                                        <img class="img-fluid" src="../assets/jumbo/restaurant_jumbo.jpg" alt="haunted restaurant image" draggable="false">
+                                    </div>
+                                    <div class="card_text d-flex flex-column justify-content-between">
+                                        <h4>Haunted Restaurants</h4>
+                                        <p class="m-0">Summon more hungry spirits to your establishment! Partner with us and tap into the dark arts of our platform, marketing sorcery, and enhanced visibility.</p>
+                                        <div class="d-flex">
+                                            <router-link :to="{ name: 'WorkInProgress' }" class="card_btn">
+                                                Discover More
+                                            </router-link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-10 col-md-6 col-lg-3 p-2 card_container">
+                                <div class="partner-card d-flex flex-column">
+                                    <div class="card_image">
+                                        <img class="img-fluid" src="../assets/jumbo/work_with_us_jumbo.jpg" alt="skeleton employee" draggable="false">
+                                    </div>
+                                    <div class="card_text d-flex flex-column justify-content-between">
+                                        <h4>Join Our Coven</h4>
+                                        <p class="m-0">Dive into the shadows and discover eerie career opportunities with us. From dark tech mysteries to ghostly customer support, help us conjure the future of food delivery.</p>
+                                        <div class="d-flex">
+                                            <router-link :to="{ name: 'WorkInProgress' }" class="card_btn mt-auto">
+                                                Discover More
+                                            </router-link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>ìì
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 </template>
 
@@ -61,16 +181,50 @@ export default{
                 margin:0;
             }
         }
+        
         .search-bar-box{
-            position: absolute;
-            background-color: $detGrey;
-            color: $fontWhite;
+            padding: 1rem;
+            background-color: #fff;
             text-align: center;
-            top: 100%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+            transform: translateY(50%);
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            border-radius: 10px;
+            .title{               
+                color: $priGreen;
+                font-size: 2rem;
+            }
+            .search-bar{
+                height: 35px;
+                margin-top: 1rem;
+                padding: 0 5rem;
+                display: flex;
+                justify-content: center;
+                input[type=text]{
+                    height: 100%;
+                    color: $priGreen;
+                    flex-grow: 1;
+                    padding-left: 0.5rem;
+                    border-radius: 10px;
+                    border: 1px solid #e8ebeb;
+                    box-shadow: inset 0 2px 4px rgba(0,0,0,.05),inset 0 0 0 100px #fff;
+                }
 
+                input[type=text]:focus{
+                    border: 1px solid $secYellow;
+                }
+                label{
+                    height: 100%;
+                    aspect-ratio: 1/1;
+                    cursor: pointer;
+                    margin-right: 0.5rem;
+                    svg{
+                        height: 100%;
+                        aspect-ratio: 1/1;
+                    }
+                }
+            }
+
+        }
         img.wave{
             position: absolute;
             width: 100%;
@@ -80,5 +234,111 @@ export default{
             filter: invert(73%) sepia(60%) saturate(809%) hue-rotate(354deg) brightness(96%) contrast(100%);
             z-index: -1;
         }
+    }
+
+    .categories{
+        padding-top: 100px;
+        background-color: $priGreen;
+        text-align: center;
+        .title{
+            color: $fontWhite;
+            font-size: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        .category-card{
+            display: block;
+            padding: 2rem;
+            transition: all 0.33s ease;
+            .card-image{
+                overflow: hidden;
+                width: 100%;
+                aspect-ratio: 1/1;
+                border-radius: 50%;
+                background-color: #fff;
+                display: flex;
+                padding: 1.8rem;
+                box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 6px 20px -3px;
+                img{
+                    height: 100%;
+                    margin: auto;
+                    transition: all 0.33s ease;
+                }
+            }
+
+            .card-title{
+                color: $fontWhite;
+                text-transform: capitalize;
+                padding-top: 1rem;
+            }
+        }
+        .category-card:hover{
+            transform: scale(1.05);
+
+            .card-image{
+                img{
+                    transform: scale(1.1);
+                }
+            }
+        }
+    }
+
+    .partners{
+        padding: 3rem 0;
+        .title{
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .card_container{
+
+            .partner-card{
+                height: 100%;
+                overflow: hidden;
+                background-color: $secYellow;
+                padding: 0;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                border-radius: 10px;
+        
+                .card_image{
+                    clip-path: polygon(0 0, 100% 0, 100% 75%, 0% 100%);
+                }
+                
+                .card_text{
+                    flex-grow: 1;
+                    padding: 1rem;
+                }
+        
+                .card_btn{
+                    background-color: $priGreen;
+                    color: $fontWhite;
+                    padding: 0.3rem 0.8rem;
+                    margin-top: 1rem;
+                    border-radius: 5px;
+                }
+            }
+        }
+            
+
+        .card_container:nth-child(2){
+            .partner-card{
+                background-color: $priGreen;
+                color: $fontWhite;
+
+                .card_btn{
+                    background-color: $secYellow;
+                    color: #000;
+                }
+            }
+        }
+    }
+    /**MEDIA QUERIES**/
+    @media (max-width: $small){
+        .search-bar-box{
+            .title{
+                font-size: 1.8rem!important;
+            }
+        } 
     }
 </style>
