@@ -1,12 +1,33 @@
+<template>
+    <div>
+        <div class="card col-sm-12 col-md-6 col-lg-4">
+            <div class="row">
+                <div class="card__image col-12">
+                    <img :src="restaurant.dish_list[1].photo" :alt="restaurant.dish_list[1].name + ' image'" draggable="false">
+                </div>
+                <div class="row">
+                    <div class="card__info col-8">
+                        <div class="car__info--title">
+                            <h3>{{ restaurant.dish_list[1].name }}</h3>
+                            <p>{{ restaurant.dish_list[1].description }}</p>
+                            <span>{{ restaurant.dish_list[1].ingredient_list.join(', ') }}.</span>
+                        </div>
+                    </div>
+                    <div class="card__price col-4">
+                        <button>
+                            <img src="../assets/icons/cart.svg" alt="Cart SVG" draggable="false">
+                        </button>
+                        <p> {{ restaurant.dish_list[1].price + ' €' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
 <script>
-import Card from '../components/Card.vue';
-
 export default{
-    name: 'RestaurantMenu',
-
-    components: {
-        Card
-    },
+    name: 'Card',
 
     data() {
         return {
@@ -131,96 +152,97 @@ export default{
 }
 </script>
 
-<template>
-    <div class="container">
-        <div class="row">
-            <div class="image-container col-12">
-                <img class="image img-fluid" :src="restaurant.image" :alt="restaurant.name + ' image'" draggable="false">
-                <img class="logo img-fluid" :src="restaurant.logo" :alt="restaurant.name + ' image'" draggable="false">
-            </div>           
-        </div>
-        <div class="row">
-            <div class="heading-container col-12">
-                <h1>{{ restaurant.name }}</h1><br>
-                <span>{{ restaurant.type_list.join(', ') }}</span>
-
-                <!-- Inserire restaurant.description ↓↓↓ -->
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus aspernatur, reiciendis maiores odit vel facere, culpa ut architecto quidem nam rem ad quod nesciunt dicta dignissimos. Architecto magni dignissimos temporibus?</p>
-            </div>
-        </div>
-        <div class="row"></div>
-            <div class="popular-dishes col-12">
-                <h2>Boo-tifully Popular and Delicious</h2>
-                <div class="row">
-                    <Card />
-                </div>
-            </div>
-        </div>
-</template>
-
 <style lang="scss" scoped>
     @use '../styles/partials/variables' as *;
+    @use '../styles/partials/mixins' as *;
     
-    div.container {
+    .card {
+        overflow: hidden;
+        border-radius: 25px;
+        margin: 10px;
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+        background-color: $secYellow;
+        border: none;
 
-        div.image-container {
+        .card__image {
             position: relative;
+            height: 300px;
 
-            img.image {
-                width: 100%;
-                height: 400px;
+            img {
+                border-bottom-right-radius: 30px;
+                transform: rotate(-5deg) translate(-25px, -25px);
+                position: absolute;
+                width: 90%;
+                height: 100%;
                 object-fit: cover;
-                object-position: top;
-                border-radius: 30px;
-                margin: 2rem 0;
+                object-position: center;
+                transition: all .2s ease;
                 box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-                transition: all .3s ease;
+                outline: 10px solid white;
 
                 &:hover {
-                    transform: scale(1.02);
+                    transform: rotate(5deg) translate(15px, 10px) scale(1.3);
                 }
-            }
-            
-            img.logo {
-                width: 150px;
-                aspect-ratio: 1;
-                border-radius: 50%;
-                display: inline-block;
-                position: absolute;
-                left: 3%;
-                top: 75%;
-                box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
             }
         }
 
-        div.heading-container {
-            padding: 4rem 0;
+        .card__info {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 1.5rem;
+            z-index: 1;
 
-            h1 {
-                font-size: 3.5rem;
+            h3 {
+                font-size: 1.5rem;
                 font-weight: bold;
-                margin: 0;
-            }
-
-            span {
-                font-size: 1.3rem;
-                font-weight: 600;
-                color: grey;
-                display: block;
-                margin-bottom: 1rem;
             }
 
             p {
-                font-size: 1.5rem;
+                font-weight: 600;
+            }
+
+            span {
+                color: $detGrey;
             }
         }
 
-        div.popular-dishes {
+        .card__price {
+            @include flex(column, end, center, no-wrap);
+            text-align: center;
+            z-index: 1;
 
-            h2 {
-                font-size: 2.5rem;
-                font-weight: bold;
-                margin-bottom: 1.5rem;
+            p {
+                background-color: white;
+                padding: .5rem 1rem;
+                border-radius: 25px;
+                font-weight: 600;
+                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+            }
+
+            button {
+                background-color: $priGreen;
+                width: 70px;
+                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                border-radius: 50%;
+                padding: .8rem;
+                border: none;
+                margin-bottom: 1rem;
+                transition: all .3s ease;
+                border: 5px solid white;
+
+                img {
+                    transition: all .3s ease;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: #009e5f;
+
+                    img {
+                        transform: scale(1.1);
+                    }
+                }
             }
         }
     }
