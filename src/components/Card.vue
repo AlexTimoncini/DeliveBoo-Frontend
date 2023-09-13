@@ -181,7 +181,7 @@ export default{
                 outline: 10px solid white;
 
                 &:hover {
-                    transform: rotate(5deg) translate(15px, 10px) scale(1.3);
+                    transform: rotate(0deg) translate(25px, 25px) scale(1.3);
                 }
             }
         }
