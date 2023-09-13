@@ -26,7 +26,7 @@ const router = createRouter({
             component: AdvanceSearch
         },
         {
-            path: '/resturant/:id',
+            path: '/restaurant/:id',
             name: 'RestaurantMenu',
             component: RestaurantMenu
         },
