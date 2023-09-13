@@ -140,12 +140,23 @@ export default{
             </div>           
         </div>
         <div class="row">
-            <div class="heading-container col-12">
-                <h1>{{ restaurant.name }}</h1><br>
+            <div class="heading-container col-8 mb-5">
+                <h1>{{ restaurant.name }}</h1>
                 <span>{{ restaurant.type_list.join(', ') }}</span>
 
                 <!-- Inserire restaurant.description ↓↓↓ -->
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus aspernatur, reiciendis maiores odit vel facere, culpa ut architecto quidem nam rem ad quod nesciunt dicta dignissimos. Architecto magni dignissimos temporibus?</p>
+            </div>
+            <div class="info-card card col-4 mb-5">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><img src="../assets/icons/gps.svg" alt="GPS Icon"><span>{{ restaurant.address }}</span></li>
+                    
+                    <!-- Inserire restaurant.phone ↓↓↓ -->
+                    <li class="list-group-item"><img src="../assets/icons/telephone.svg" alt="E-mail Icon"><span>000 000 0000</span></li>
+
+                    <li class="list-group-item"><img src="../assets/icons/mail.svg" alt="Mail Icon"><span>{{ restaurant.email }}</span></li>
+                    <li class="list-group-item"><img src="../assets/icons/paper.svg" alt="VAT Icon"><span>{{ restaurant.vat_number }}</span></li>
+                </ul>
             </div>
         </div>
         <div class="row"></div>
@@ -194,7 +205,7 @@ export default{
         }
 
         div.heading-container {
-            padding: 4rem 0;
+            padding: 4rem 0 0;
 
             h1 {
                 font-size: 3.5rem;
@@ -206,12 +217,33 @@ export default{
                 font-size: 1.3rem;
                 font-weight: 600;
                 color: grey;
-                display: block;
+                display: inline-block;
                 margin-bottom: 1rem;
             }
 
             p {
                 font-size: 1.5rem;
+                padding: 0.5rem 2rem 0.5rem 0.5rem;
+            }
+        }
+
+        div.info-card {
+            border: 1px solid lightgrey;
+            align-self: center;
+            justify-content: center;
+            align-items: center;
+            width: fit-content;
+            height: fit-content;
+
+            img {
+                width: 25px;
+                aspect-ratio: 1;
+                margin-right: .5rem;
+            }
+
+            span {
+                line-height: 25px;
+                vertical-align: middle;
             }
         }
 
