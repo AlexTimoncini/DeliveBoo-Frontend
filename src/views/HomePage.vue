@@ -589,7 +589,8 @@ export default{
                     ]
                     
                 }
-            ]
+            ],
+            search: ''
         }
     },
 }
@@ -610,11 +611,11 @@ export default{
                     <div class="search-bar-box col-12 col-lg-7 m-auto">
                         <h3 class="title">What boo you wanna eat?</h3>
                         <h5>Order Online From Your Favourite Restaurant</h5>
-                        <div class="search-bar">
+                        <div class="search-bar" @keyup.enter="this.$router.push({ name: 'AdvanceSearch', params: { searchType: 'restaurant', searchInput: this.search } })">
                             <label for="home-searchbar">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 101 101" id="search"><path d="M63.3 59.9c3.8-4.6 6.2-10.5 6.2-17 0-14.6-11.9-26.5-26.5-26.5S16.5 28.3 16.5 42.9 28.4 69.4 43 69.4c6.4 0 12.4-2.3 17-6.2l20.6 20.6c.5.5 1.1.7 1.7.7.6 0 1.2-.2 1.7-.7.9-.9.9-2.5 0-3.4L63.3 59.9zm-20.4 4.7c-12 0-21.7-9.7-21.7-21.7s9.7-21.7 21.7-21.7 21.7 9.7 21.7 21.7-9.7 21.7-21.7 21.7z"></path></svg>
                             </label>
-                            <input type="text" id="home-searchbar" placeholder="Type your restaurant...">
+                            <input type="text" id="home-searchbar" placeholder="Type your restaurant..." v-model="search">
                         </div>
                     </div>
                 </div>
@@ -628,13 +629,13 @@ export default{
                     <div class="col-12">
                         <h3 class="m-0 title">Choose a category</h3>
                     </div>
-                    <router-link v-for="type in types" :to="{ name: 'WorkInProgress' }" class="category-card col-6 col-md-3">
+                    <div v-for="type in types" :to="{ name: 'WorkInProgress' }" class="category-card col-6 col-md-3" @click="this.$router.push({ name: 'AdvanceSearch', params: { searchType: 'category', searchInput: '0' } })">
 
                         <div class="card-image">
                             <img class="img-fluid" :src="type.logo" alt="">
                         </div>
                         <h3 class="card-title">{{ type.name }}</h3>
-                    </router-link>
+                    </div>
                 </div>
             </div>
         </section>
