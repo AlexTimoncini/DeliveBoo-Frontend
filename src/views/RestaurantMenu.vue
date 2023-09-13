@@ -128,31 +128,60 @@ export default{
 <template>
     <div class="container">
         <div class="row">
-            <div class="restaurant-image-container col-12">
-                <img class="restaurant-image img-fluid" :src="restaurant.image" :alt="restaurant.name + ' image'">
-                <img class="restaurant-logo img-fluid" :src="restaurant.logo" :alt="restaurant.name + ' image'">
-            </div>
-            <div class="restaurant-heading-container col-12">
+            <div class="image-container col-12">
+                <img class="image img-fluid" :src="restaurant.image" :alt="restaurant.name + ' image'" draggable="false">
+                <img class="logo img-fluid" :src="restaurant.logo" :alt="restaurant.name + ' image'" draggable="false">
+            </div>           
+        </div>
+        <div class="row">
+            <div class="heading-container col-12">
                 <h1>{{ restaurant.name }}</h1><br>
                 <span>{{ restaurant.type_list.join(', ') }}</span>
 
                 <!-- Inserire restaurant.description ↓↓↓ -->
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus aspernatur, reiciendis maiores odit vel facere, culpa ut architecto quidem nam rem ad quod nesciunt dicta dignissimos. Architecto magni dignissimos temporibus?</p>
-
-
             </div>
         </div>
-    </div>
+        <div class="row"></div>
+            <div class="popular-dishes col-12">
+                <h2>Boo-tifully Popular and Delicious</h2>
+                <div class="row">
+                    <div class="card col-sm-12 col-md-6 col-lg-4">
+                        <div class="row">
+                            <div class="card__image col-12">
+                                <img :src="restaurant.dish_list[1].photo" :alt="restaurant.dish_list[1].name + ' image'" draggable="false">
+                            </div>
+                            <div class="row">
+                                <div class="card__info col-8">
+                                    <div class="car__info--title">
+                                        <h3>{{ restaurant.dish_list[1].name }}</h3>
+                                        <p>{{ restaurant.dish_list[1].description }}</p>
+                                        <span>{{ restaurant.dish_list[1].ingredient_list.join(', ') }}.</span>
+                                    </div>
+                                </div>
+                                <div class="card__price col-4">
+                                    <button>
+                                        <img src="../assets/icons/cart.svg" alt="Cart SVG" draggable="false">
+                                    </button>
+                                    <p> {{ restaurant.dish_list[1].price + ' €' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 </template>
 
 <style lang="scss" scoped>
+    @use '../styles/partials/variables' as *;
     
     div.container {
 
-        div.restaurant-image-container {
+        div.image-container {
             position: relative;
 
-            img.restaurant-image {
+            img.image {
                 width: 100%;
                 height: 400px;
                 object-fit: cover;
@@ -167,7 +196,7 @@ export default{
                 }
             }
             
-            img.restaurant-logo {
+            img.logo {
                 width: 150px;
                 aspect-ratio: 1;
                 border-radius: 50%;
@@ -179,7 +208,7 @@ export default{
             }
         }
 
-        div.restaurant-heading-container {
+        div.heading-container {
             padding: 4rem 0;
 
             h1 {
@@ -198,6 +227,106 @@ export default{
 
             p {
                 font-size: 1.5rem;
+            }
+        }
+
+        div.popular-dishes {
+
+            h2 {
+                font-size: 2.5rem;
+                font-weight: bold;
+                margin-bottom: 1.5rem;
+            }
+
+            .card {
+                overflow: hidden;
+                border-radius: 25px;
+                margin: 10px;
+                box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+                background-color: $secYellow;
+                border: none;
+
+                .card__image {
+                    position: relative;
+                    height: 300px;
+
+                    img {
+                        border-bottom-right-radius: 30px;
+                        transform: rotate(-5deg) translate(-25px, -25px);
+                        position: absolute;
+                        width: 90%;
+                        height: 100%;
+                        object-fit: cover;
+                        object-position: center;
+                        transition: all .2s ease;
+                        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                        outline: 10px solid white;
+
+                        &:hover {
+                            transform: rotate(5deg) translate(15px, 10px) scale(1.3);
+                        }
+                    }
+                }
+
+                .card__info {
+                    display: flex;
+                    align-items: flex-end;
+                    justify-content: space-between;
+                    padding: 1rem;
+                    z-index: 1;
+
+                    h3 {
+                        font-size: 1.5rem;
+                        font-weight: bold;
+                    }
+
+                    p {
+                        font-weight: 600;
+                    }
+
+                    span {
+                        color: $detGrey;
+                    }
+                }
+
+                .card__price {
+                    padding: 1rem;
+                    text-align: center;
+                    z-index: 1;
+
+                    p {
+                        background-color: white;
+                        padding: .5rem 1rem;
+                        border-radius: 25px;
+                        font-weight: 600;
+                        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                    }
+
+                    button {
+                        background-color: $priGreen;
+                        width: 70px;
+                        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                        border-radius: 50%;
+                        padding: .8rem;
+                        border: none;
+                        margin-bottom: 1rem;
+                        transition: all .3s ease;
+                        border: 5px solid white;
+
+                        img {
+                            transition: all .3s ease;
+                        }
+
+                        &:hover {
+                            cursor: pointer;
+                            background-color: #009e5f;
+
+                            img {
+                                transform: scale(1.1);
+                            }
+                        }
+                    }
+                }
             }
         }
     }
