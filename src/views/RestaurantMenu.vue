@@ -565,7 +565,7 @@ export default{
 </script>
 
 <template>
-    <div class="container">
+    <div class="container pb-5">
         <div class="row">
 
             <!-- Restaurant Photo & Logo -->
@@ -576,7 +576,7 @@ export default{
         </div>
         <div class="row">
             
-        <!-- Restaurant Header (Title, Types & Description) -->
+            <!-- Restaurant Header (Title, Types & Description) -->
             <div class="header col-8 mb-5">
                 <h1>{{ restaurants[0].name }}</h1>
                 <span>{{ restaurants[0].type_list.join(', ') }}</span>
@@ -598,17 +598,35 @@ export default{
                 </ul>
             </div>
         </div>
-        <div class="row"></div>
 
-            <!-- Restaurant Popular Dishes List -->
-            <div class="popular-dishes col-12">
-                <h2>Boo-tifully Popular and Delicious</h2>
-                <div class="row">
-                    <Card />
-                </div>
+        <!-- Restaurant Popular Dishes List -->
+        <div class="popular-dishes col-12 mb-5">
+            <h2>Boo-tifully Popular and Delicious</h2>
+            <div class="row">
+                <Card
+                    :dish="restaurants[0].dish_list[5]"
+                />
+                <Card
+                    :dish="restaurants[0].dish_list[6]"
+                />
+                <Card
+                    :dish="restaurants[0].dish_list[9]"
+                />
             </div>
         </div>
+
+        <!-- Menu -->
+        <div class="menu col-12">
+            <h2>{{ restaurants[0].name }} Menu</h2>
+            <div class="row">
+                <Card v-for="dish in restaurants[0].dish_list"
+                    :dish="dish"
+                />
+            </div>
+        </div>
+    </div>
 </template>
+
 
 <style lang="scss" scoped>
     @use '../styles/partials/variables' as *;
@@ -698,6 +716,15 @@ export default{
         }
 
         div.popular-dishes {
+
+            h2 {
+                font-size: 2.5rem;
+                font-weight: bold;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        div.menu {
 
             h2 {
                 font-size: 2.5rem;
