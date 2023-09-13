@@ -71,7 +71,7 @@ export default{
         <div class="row justify-content-between align-items-start">
             <ul class="cart col-12 col-lg-6 row">
                 <li v-for="(dish, index) in store.cart_list" class="cart_item col-12">
-                    <div class="dish_img"><img :src="dish.photo" :alt="dish.name + 'image'"></div>
+                    <div class="dish_img"><img :src="dish.photo" :alt="dish.name + 'image'" draggable="false"></div>
                     <div class="dish_info">
                         <div class="dish_name"><h6>{{ dish.name }}</h6></div>
                         <div class="dish_price"><p class="m-0">{{ dish.price }}€</p></div>
@@ -87,7 +87,7 @@ export default{
             <ul class="order_preview col-12 col-lg-6 m-0">
                 <li><h4 class="title mt-3">Order Preview</h4></li>
                 <li v-for="dish in store.cart_list" class="order_item d-flex justify-content-between">
-                    <div class="dish_name m-0"><h6>{{ dish.name }} x{{ dish.quantity }}</h6></div>
+                    <div class="dish_name m-0"><h6>{{ dish.name }} <strong>x{{ dish.quantity }}</strong></h6></div>
                     <div class="dish_price m-0"><p class="m-0">{{ (dish.price * dish.quantity).toFixed(2) }}€</p></div>
                 </li>
                 <li class="order_item d-flex justify-content-between total_price">
@@ -107,7 +107,6 @@ export default{
         font-family: $primaryFont;
         .title{
             font-size: 2.5rem;
-            background-color: white;
         }
         .btn{
             height: 100%;
@@ -117,6 +116,11 @@ export default{
                 height: 100%;
                 display: block;
                 filter: invert(37%) sepia(95%) saturate(780%) hue-rotate(119deg) brightness(91%) contrast(99%);
+                transition: all .3s ease;
+
+                &:hover {
+                    transform: scale(1.2)
+                }
             }
         }
     }
@@ -132,9 +136,9 @@ export default{
             box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 7px;
             display: flex;
             position: relative;
-            border: 5px solid white;
+            border-radius: 10px;
             .dish_img{
-                width: 70px;                
+                width: 70px;            
 
                 img{
                     width: 100%;
@@ -142,24 +146,40 @@ export default{
                     aspect-ratio: 1/1;
                     display: block;
                     object-fit: cover;
-                    border-right: 5px solid white;
+                    border-top-left-radius: 10px;
+                    border-bottom-left-radius: 10px;
                 }
             }
             .dish_info{
                 padding: 0.5rem 2rem;
+                background-color: white;
+                width: 50%;
+
+                &:hover h6, &:hover .dish_price {
+                    transform: translateX(-10%);
+                }
 
                 h6 {
                     font-size: 1.3rem;
+                    color: $priGreen;
+                    transition: all .3s ease;
                 }
 
                 .dish_price{
-                    
+                    background-color: $secYellow;
+                    text-align: center;
+                    font-weight: 600;
+                    width: fit-content;
+                    padding: 0 1rem;
+                    border-radius: 20px;
+                    transition: all .3s ease;
+
                 }
             }
 
             .dish_quantity_box{
                 position: absolute;
-                right: 0;
+                right: 5%;
                 top: 50%;
                 transform: translateY(-50%);
                 display: flex;
@@ -168,7 +188,7 @@ export default{
                     border: none;
                     padding: .5rem;
                     background-color: white;
-                    border-radius: 10px;
+                    border-radius: 20px;
                     width: 60px;
                     text-align: center;
 
@@ -179,7 +199,7 @@ export default{
                 }
 
                 .btn_quantity{
-                    padding: 0;
+                    padding: .2rem;
                     margin: 0 1rem;
                     border: none;
                     background: none;
@@ -188,10 +208,17 @@ export default{
                     flex-grow: 1;
                     height: 100%;
                     width: 40px;
+                    background-color: white;
+                    border-radius: 50%;
                     img{
                         width: 100%;
                         display: block;
                         filter: invert(37%) sepia(95%) saturate(780%) hue-rotate(119deg) brightness(91%) contrast(99%);
+                        transition: all .3s ease;
+
+                        &:hover {
+                            transform: scale(1.15)
+                        }
 ;
                     }
                 }
@@ -202,11 +229,22 @@ export default{
     .order_preview{
         position: relative;
         box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 7px;
+
+        strong {
+            color: $priGreen;
+            font-weight: 600;
+        }
+        .title {
+            color: $priGreen;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
         .order_item{
             padding: 0.3rem 0;
         }
         .total_price{
             border-top: 2px solid $secYellow;
+            padding: 1rem 0;
         }
 
     }
