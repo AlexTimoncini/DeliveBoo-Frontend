@@ -11,7 +11,7 @@ export default{
                 "vat_number": "LU12345678",
                 "address": "10 rue Willy Goergen",
                 "type_list": ["Fast Food", "American"],
-                "logo": "/booldonalds.png",
+                "logo": "/assets/booldonalds.png",
                 "image": "https://images.pexels.com/photos/4109136/pexels-photo-4109136.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                 "dish_list": [
                     {
@@ -128,8 +128,18 @@ export default{
 <template>
     <div class="container">
         <div class="row">
-            <div class="restaurant-image col-12">
-                <img class="img-fluid" :src="restaurant.image" :alt="restaurant.name + ' image'">
+            <div class="restaurant-image-container col-12">
+                <img class="restaurant-image img-fluid" :src="restaurant.image" :alt="restaurant.name + ' image'">
+                <img class="restaurant-logo img-fluid" :src="restaurant.logo" :alt="restaurant.name + ' image'">
+            </div>
+            <div class="restaurant-heading-container col-12">
+                <h1>{{ restaurant.name }}</h1><br>
+                <span>{{ restaurant.type_list.join(', ') }}</span>
+
+                <!-- Inserire restaurant.description ↓↓↓ -->
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus aspernatur, reiciendis maiores odit vel facere, culpa ut architecto quidem nam rem ad quod nesciunt dicta dignissimos. Architecto magni dignissimos temporibus?</p>
+
+
             </div>
         </div>
     </div>
@@ -139,18 +149,55 @@ export default{
     
     div.container {
 
-        div.restaurant-image img {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            object-position: top;
-            border-radius: 30px;
-            margin: 2rem 0;
-            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-            transition: all .3s ease;
+        div.restaurant-image-container {
+            position: relative;
 
-            &:hover {
-                transform: scale(1.02);
+            img.restaurant-image {
+                width: 100%;
+                height: 400px;
+                object-fit: cover;
+                object-position: top;
+                border-radius: 30px;
+                margin: 2rem 0;
+                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                transition: all .3s ease;
+
+                &:hover {
+                    transform: scale(1.02);
+                }
+            }
+            
+            img.restaurant-logo {
+                width: 150px;
+                aspect-ratio: 1;
+                border-radius: 50%;
+                display: inline-block;
+                position: absolute;
+                left: 3%;
+                top: 75%;
+                box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+            }
+        }
+
+        div.restaurant-heading-container {
+            padding: 4rem 0;
+
+            h1 {
+                font-size: 3.5rem;
+                font-weight: bold;
+                margin: 0;
+            }
+
+            span {
+                font-size: 1.3rem;
+                font-weight: 600;
+                color: grey;
+                display: block;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                font-size: 1.5rem;
             }
         }
     }
