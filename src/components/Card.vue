@@ -1,24 +1,22 @@
 <template>
-    <div>
-        <div class="card col-sm-12 col-md-6 col-lg-4">
+    <div class="card col-sm-12 col-md-6 col-lg-4">
+        <div class="row">
+            <div class="card__image col-12">
+                <img :src="dish.photo" :alt="dish.name + ' image'" draggable="false">
+            </div>
             <div class="row">
-                <div class="card__image col-12">
-                    <img :src="restaurant.dish_list[1].photo" :alt="restaurant.dish_list[1].name + ' image'" draggable="false">
+                <div class="card__info col-8">
+                    <div class="car__info--title">
+                        <h3>{{ dish.name }}</h3>
+                        <p>{{ dish.description }}</p>
+                        <span>{{ dish.ingredient_list.join(', ') }}.</span>
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="card__info col-8">
-                        <div class="car__info--title">
-                            <h3>{{ restaurant.dish_list[1].name }}</h3>
-                            <p>{{ restaurant.dish_list[1].description }}</p>
-                            <span>{{ restaurant.dish_list[1].ingredient_list.join(', ') }}.</span>
-                        </div>
-                    </div>
-                    <div class="card__price col-4">
-                        <button>
-                            <img src="../assets/icons/cart.svg" alt="Cart SVG" draggable="false">
-                        </button>
-                        <p> {{ restaurant.dish_list[1].price + ' €' }}</p>
-                    </div>
+                <div class="card__price col-4">
+                    <button>
+                        <img src="../assets/icons/cart.svg" alt="Cart SVG" draggable="false">
+                    </button>
+                    <p> {{ dish.price + ' €' }}</p>
                 </div>
             </div>
         </div>
@@ -28,6 +26,10 @@
 <script>
 export default{
     name: 'Card',
+
+    props: {
+        dish: Object
+    },
 
     data() {
         return {
@@ -159,10 +161,8 @@ export default{
     .card {
         overflow: hidden;
         border-radius: 25px;
-        margin: 10px;
-        box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
         background-color: $secYellow;
-        border: none;
+        border: 5px solid white;
 
         .card__image {
             position: relative;
@@ -176,7 +176,7 @@ export default{
                 height: 100%;
                 object-fit: cover;
                 object-position: center;
-                transition: all .2s ease;
+                transition: all .3s ease;
                 box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
                 outline: 10px solid white;
 
