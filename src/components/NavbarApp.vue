@@ -36,7 +36,9 @@ export default{
                     <li><router-link :to="{ name: 'WorkInProgress' }">About</router-link></li>
                     <li><router-link :to="{ name: 'WorkInProgress' }">Contact</router-link></li>
                 </ul>
-                <div class="login-btn">Are you a restaurant?</div>
+                <div class="login-btn">
+                    <router-link :to="{ name: 'LoginRestaurant' }">Are you a restaurant?</router-link>
+                </div>
                 <div class="cart-btn">
                     <router-link :to="{ name: 'CartCheckout' }">
                         <img src="../assets/icons/cart.svg" alt="cart svg" draggable="false">
