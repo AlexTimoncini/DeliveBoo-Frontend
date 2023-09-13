@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="card__price col-4">
-                    <button>
+                    <button @click="$emit('add')">
                         <img src="../assets/icons/cart.svg" alt="Cart SVG" draggable="false">
                     </button>
                     <p> {{ dish.price + ' €' }}</p>

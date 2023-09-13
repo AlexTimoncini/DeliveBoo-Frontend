@@ -1,5 +1,6 @@
 <script>
 import Card from '../components/Card.vue';
+import { store } from '../store';
 
 export default{
     name: 'RestaurantMenu',
@@ -558,9 +559,40 @@ export default{
                     ]
                     
                 }
-            ]
+            ],
+            store
+        }
+    },
+    methods: {
+        addDishToCart(dishObj){
+            let cart = store.cart_list;
+            if( (cart.find((item) => item.name === dishObj.name)) !== undefined ){
+                let dish = cart.find((item) => item.name === dishObj.name);
+                dishObj.quantity = dish.quantity + 1;
+                let dishIndex = cart.findIndex((item) => item.name === dishObj.name);
+                store.cart_list.splice(dishIndex, 1, dishObj);
+            }else{
+                dishObj.quantity = 1;
+                store.cart_list.push(dishObj);
+            };
+			this.saveCart();
+        },
+        saveCart(){
+            console.log(store.cart_list);
+            const parsed = JSON.stringify(store.cart_list);
+            localStorage.setItem('cart', parsed);
+        }
+    }, 
+    mounted() {
+    if(localStorage.getItem('cart')){
+        try {
+            store.cart_list = JSON.parse(localStorage.getItem('cart'));
+        } catch(e) {
+            localStorage.removeItem('cart');
         }
     }
+    // localStorage.clear();
+  },
 }
 </script>
 
@@ -602,15 +634,10 @@ export default{
         <!-- Restaurant Popular Dishes List -->
         <div class="popular-dishes col-12 mb-5">
             <h2>Boo-tifully Popular and Delicious</h2>
-            <div class="row">
-                <Card
-                    :dish="restaurants[0].dish_list[5]"
-                />
-                <Card
-                    :dish="restaurants[0].dish_list[6]"
-                />
-                <Card
-                    :dish="restaurants[0].dish_list[9]"
+            <div class="row" >
+                <Card v-for="n in 3"
+                    :dish="restaurants[0].dish_list[n]"
+                    @add="addDishToCart(restaurants[0].dish_list[n])"
                 />
             </div>
         </div>
@@ -621,6 +648,7 @@ export default{
             <div class="row">
                 <Card v-for="dish in restaurants[0].dish_list"
                     :dish="dish"
+                    @add="addDishToCart(dish)"
                 />
             </div>
         </div>
