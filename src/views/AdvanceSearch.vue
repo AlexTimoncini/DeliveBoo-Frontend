@@ -776,7 +776,7 @@ export default {
 
                     <div class="input-container d-flex ">
 
-                        <input class="input-range-min" type="range" min="1" max="100" v-model="raqngeNumber" />
+                        <input class="input-range-min" type="range" min="1" max="100" v-model="rangeNumber" />
                     </div>
 
                 </div>
@@ -791,18 +791,19 @@ export default {
                         <!-- Best sellers  -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">Our Best Sellers!</h3>
-                            <Slider :slides="restaurants" :autoplay="0" :pagination="false" />
+                            <Slider :slides="restaurants" :autoplay="0" :pagination="false" :title="true"
+                                :navigation="true" />
                         </div>
 
                         <!-- New in town -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">New in Town</h3>
-                            <Slider :slides="restaurants" :autoplay="0" :pagination="false" />
+                            <Slider :slides="restaurants" :autoplay="0" :pagination="false" :title="true" />
                         </div>
                         <!-- Free delivery -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">Free delivery under 10 bucks</h3>
-                            <Slider :slides="restaurants" :autoplay="0" :pagination="false" />
+                            <Slider :slides="restaurants" :autoplay="0" :pagination="false" :title="true" />
                         </div>
                         <!-- Discover more -->
                         <div class="col-12 mb-4">
