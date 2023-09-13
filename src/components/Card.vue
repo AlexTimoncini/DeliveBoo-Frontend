@@ -1,6 +1,6 @@
 <template>
     <div class="card col-sm-12 col-md-6 col-lg-4">
-        <div class="row">
+        <div class="row justify-content-between h-100">
             <div class="card__image col-12">
                 <img :src="dish.photo" :alt="dish.name + ' image'" draggable="false">
             </div>
