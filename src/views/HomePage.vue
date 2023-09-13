@@ -705,7 +705,7 @@ export default{
                 <div class="row">
                     <div class="col-12">
                         <h3 class="title">Our Best Restaurants</h3>
-                        <Slider :slides="restaurants" />
+                        <Slider :slides="restaurants" :autoplay="3000" :pagination="true" />
                     </div>
                 </div>
             </div>

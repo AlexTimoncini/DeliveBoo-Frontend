@@ -9,7 +9,9 @@ export default{
     Pagination,
   },
     props: {
-        slides: Array
+        slides: Array,
+        autoplay: Number,
+        pagination: Boolean
     },
     data(){
         return{
@@ -34,7 +36,7 @@ export default{
 </script>
 
 <template>
-    <Carousel :items-to-show="2" :autoplay="3000" :transition="300" :wrapAround="true" :breakpoints="breakpoints" snapAlign="start">
+    <Carousel :items-to-show="2" :autoplay="autoplay" :transition="300" :wrapAround="true" :breakpoints="breakpoints" snapAlign="start">
         <Slide v-for="slide in slides" :key="slide">
             <router-link :to="{ name: 'WorkInProgress' }">
                 <div class="slide-img">
@@ -45,7 +47,7 @@ export default{
         </Slide>
 
         <template #addons>
-        <Pagination />
+        <Pagination v-if="pagination" />
         </template>
     </Carousel>
 </template>
