@@ -99,7 +99,8 @@ export default{
         padding: 1rem 0;
         font-family: $primaryFont;
         .title{
-            font-size: 2rem;
+            font-size: 2.5rem;
+            background-color: white;
         }
         .btn{
             height: 100%;
@@ -119,22 +120,30 @@ export default{
 
         .cart_item{
             width: 100%;
+            background-color: $secYellow;
             padding: 0;
             box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 7px;
             display: flex;
             position: relative;
+            border: 5px solid white;
             .dish_img{
                 width: 70px;                
 
                 img{
                     width: 100%;
+                    height: 100%;
                     aspect-ratio: 1/1;
                     display: block;
                     object-fit: cover;
+                    border-right: 5px solid white;
                 }
             }
             .dish_info{
                 padding: 0.5rem 2rem;
+
+                h6 {
+                    font-size: 1.3rem;
+                }
 
                 .dish_price{
                     
@@ -150,7 +159,16 @@ export default{
                 align-items: center;
                 .dish_quantity{
                     border: none;
-                    font-size: 1.5rem;
+                    padding: .5rem;
+                    background-color: white;
+                    border-radius: 10px;
+                    width: 60px;
+                    text-align: center;
+
+                    & option {
+                        background-color: white;
+                        font-size: 1rem;
+                    }
                 }
 
                 .btn_quantity{
