@@ -791,26 +791,47 @@ export default {
                         <!-- Best sellers  -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">Our Best Sellers!</h3>
-                            <Slider :slides="restaurants" />
+                            <Slider :slides="restaurants" :autoplay="0" :pagination="false" />
                         </div>
 
                         <!-- New in town -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">New in Town</h3>
-                            <Slider :slides="restaurants" />
+                            <Slider :slides="restaurants" :autoplay="0" :pagination="false" />
                         </div>
                         <!-- Free delivery -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">Free delivery under 10 bucks</h3>
-                            <Slider :slides="restaurants" />
+                            <Slider :slides="restaurants" :autoplay="0" :pagination="false" />
                         </div>
                         <!-- Discover more -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">Discover more</h3>
-                            <div class="my_restaurant_card_container">
-                                <div class="my_card">
-
+                            <div class="my_restaurant_card_container container-fluid">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6 col-lg-4 mb-4" v-for="restaurant in restaurants">
+                                        <div class="my_card d-flex justify-content-center align-items-center">
+                                            <img class="img-fluid"
+                                                src="https://media-cdn.tripadvisor.com/media/photo-s/1e/26/b2/0c/the-best-italian-restaurant.jpg"
+                                                alt="">
+                                            <h3>Nome ristorante</h3>
+                                        </div>
+                                        <div class="my-card-label">
+                                            <svg fill="#000000" width="800px" height="800px" viewBox="0 0 100 100"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M49,18.92A23.74,23.74,0,0,0,25.27,42.77c0,16.48,17,31.59,22.23,35.59a2.45,2.45,0,0,0,3.12,0c5.24-4.12,22.1-19.11,22.1-35.59A23.74,23.74,0,0,0,49,18.92Zm0,33.71a10,10,0,1,1,10-10A10,10,0,0,1,49,52.63Z" />
+                                            </svg>
+                                            <h5>
+                                                12 Rue Jean Engling, L-1466
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-3 text-end">
+                                        <a class="see-more" href="">See More</a>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
 
@@ -916,7 +937,7 @@ export default {
 }
 
 div.search-page-container {
-    width: 100vw;
+    // width: 100vw;
     // height: calc(100vh - 95px);
 
     .my_sidebar {
@@ -999,6 +1020,69 @@ div.search-page-container {
         .cards_title {
             color: $priGreen;
             font-weight: 700;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .my_restaurant_card_container {
+        .my_card {
+            position: relative;
+            background-color: #3ea27a;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 10px 10px 0 0;
+            padding: 1.5;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            color: white;
+            text-align: center;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+            overflow: hidden;
+
+            h3 {
+                position: absolute;
+                font-size: 2rem;
+            }
+
+            img {
+                transition: all .3s ease;
+            }
+        }
+
+        .my_card img:hover {
+            transform: scale(1.2);
+        }
+
+        .my-card-label {
+            width: 100%;
+            height: 60px;
+            border-radius: 0 0 10px 10px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            color: #878686;
+            font-weight: 300;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            svg {
+                height: 40px;
+                width: 40px;
+                fill: #3ea27a;
+            }
+
+            h5 {
+                margin: 0%;
+            }
+
+
+        }
+
+        a.see-more {
+            color: $priGreen;
+            transition: all .3s ease;
+        }
+
+        a.see-more:hover {
+            text-decoration: underline;
         }
     }
 
