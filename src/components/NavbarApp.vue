@@ -38,7 +38,9 @@ export default{
                 </ul>
                 <div class="login-btn">Are you a restaurant?</div>
                 <div class="cart-btn">
-                    <img src="../assets/icons/cart.svg" alt="cart svg" draggable="false">
+                    <router-link :to="{ name: 'CartCheckout' }">
+                        <img src="../assets/icons/cart.svg" alt="cart svg" draggable="false">
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -54,7 +56,7 @@ export default{
         font-family: $primaryFont;
         position: fixed;
         top: 0;
-        z-index: 1;
+        z-index: 2;
         width: 100%;
         
         .nav.container{
@@ -64,7 +66,6 @@ export default{
             
             .logo{
                 height: 100%;
-                width: 300px;
                 display: flex;
                 padding: 0.5rem 0;
                 img{
