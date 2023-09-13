@@ -651,7 +651,7 @@ export default {
 
         <!-- Searchbar  -->
         <div
-            class="select-search d-block d-lg-none d-flex justify-content-center align-items-center flex-column flex-md-row container py-3  ">
+            class="select-search d-block d-lg-none d-flex justify-content-center align-items-center flex-column container py-3  ">
             <h1 class="me-3 mb-0 my_search_title">
                 What do you boona eat?
             </h1>
@@ -809,12 +809,11 @@ export default {
                             <h3 class="cards_title">Discover more</h3>
                             <div class="my_restaurant_card_container container-fluid">
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-6 col-lg-4 mb-4" v-for="restaurant in restaurants">
-                                        <div class="my_card d-flex justify-content-center align-items-center">
-                                            <img class="img-fluid"
-                                                src="https://media-cdn.tripadvisor.com/media/photo-s/1e/26/b2/0c/the-best-italian-restaurant.jpg"
-                                                alt="">
-                                            <h3>Nome ristorante</h3>
+                                    <div class="col-sm-12 col-md-6 col-lg-4 mb-4" v-for="restaurant in restaurants"
+                                        @click="this.$router.push({ name: 'RestaurantMenu', params: { id: '0' } })">
+                                        <div class=" my_card d-flex justify-content-center align-items-center">
+                                            <img class="img-fluid" :src="restaurant.image" alt="">
+                                            <h3>{{ restaurant.name }}</h3>
                                         </div>
                                         <div class="my-card-label">
                                             <svg fill="#000000" width="800px" height="800px" viewBox="0 0 100 100"
@@ -823,12 +822,12 @@ export default {
                                                     d="M49,18.92A23.74,23.74,0,0,0,25.27,42.77c0,16.48,17,31.59,22.23,35.59a2.45,2.45,0,0,0,3.12,0c5.24-4.12,22.1-19.11,22.1-35.59A23.74,23.74,0,0,0,49,18.92Zm0,33.71a10,10,0,1,1,10-10A10,10,0,0,1,49,52.63Z" />
                                             </svg>
                                             <h5>
-                                                12 Rue Jean Engling, L-1466
+                                                {{ restaurant.address }}
                                             </h5>
                                         </div>
                                     </div>
                                     <div class="col-12 mt-3 text-end">
-                                        <a class="see-more" href="">See More</a>
+                                        <a class="see-more" href="" @click="">See More</a>
                                     </div>
                                 </div>
 
@@ -1037,6 +1036,7 @@ div.search-page-container {
             text-align: center;
             text-shadow: 0 1px 4px rgba(0, 0, 0, .6);
             overflow: hidden;
+            cursor: pointer;
 
             h3 {
                 position: absolute;
