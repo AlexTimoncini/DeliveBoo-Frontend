@@ -21,7 +21,7 @@ export default {
                 <h1>Create Account</h1>
                 <div class="social-container">
                     <a href="" class="social">
-                        <svg fill="#000000" height="18px" width="18px" version="1.1" id="Layer_1"
+                        <svg fill="#faf9f5" height="18px" width="18px" version="1.1" id="Layer_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                             viewBox="0 0 310 310" xml:space="preserve" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)"
                             stroke="#4665af">
@@ -37,7 +37,7 @@ export default {
                         </svg>
                     </a>
                     <a href="#" class="social">
-                        <svg fill="#000000" height="18px" width="18px" version="1.1" id="Layer_1"
+                        <svg fill="#faf9f5" height="18px" width="18px" version="1.1" id="Layer_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                             viewBox="0 0 315 315" xml:space="preserve">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -55,7 +55,7 @@ export default {
                         </svg>
                     </a>
                     <a href="#" class="social">
-                        <svg fill="#000000" height="18px" width="18px" version="1.1" id="Capa_1"
+                        <svg fill="#faf9f5" height="18px" width="18px" version="1.1" id="Capa_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                             viewBox="0 0 22.773 22.773" xml:space="preserve">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -102,7 +102,7 @@ export default {
                 <h1>Sign in</h1>
                 <div class="social-container">
                     <a href="" class="social">
-                        <svg fill="#000000" height="18px" width="18px" version="1.1" id="Layer_1"
+                        <svg fill="#faf9f5" height="18px" width="18px" version="1.1" id="Layer_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                             viewBox="0 0 310 310" xml:space="preserve" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)"
                             stroke="#4665af">
@@ -118,7 +118,7 @@ export default {
                         </svg>
                     </a>
                     <a href="#" class="social">
-                        <svg fill="#000000" height="18px" width="18px" version="1.1" id="Layer_1"
+                        <svg fill="#faf9f5" height="18px" width="18px" version="1.1" id="Layer_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                             viewBox="0 0 315 315" xml:space="preserve">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -136,7 +136,7 @@ export default {
                         </svg>
                     </a>
                     <a href="#" class="social">
-                        <svg fill="#000000" height="18px" width="18px" version="1.1" id="Capa_1"
+                        <svg fill="#faf9f5" height="18px" width="18px" version="1.1" id="Capa_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                             viewBox="0 0 22.773 22.773" xml:space="preserve">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -174,7 +174,7 @@ export default {
                 <span>or use your account</span>
                 <input type="email" placeholder="Email" />
                 <input type="password" placeholder="Password" />
-                <a href="#">Forgot your password?</a>
+                <a href="#" style="color: #faf9f5">Forgot your password?</a>
                 <button>Sign In</button>
             </form>
         </div>
@@ -225,7 +225,7 @@ button {
     border-radius: 20px;
     border: 1px solid $secYellow;
     background-color: $secYellow;
-    color: #FFFFFF;
+    color: #000;
     font-size: 12px;
     font-weight: bold;
     padding: 12px 45px;
@@ -244,11 +244,13 @@ button:focus {
 
 button.ghost {
     background-color: $priGreen;
+    color: $fontWhite;
     border-color: $priGreen;
 }
 
 form {
     background-color: $priGreen;
+    color: $fontWhite;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -343,7 +345,7 @@ input {
 
 .overlay {
     background-color: $secYellow;
-    color: #FFFFFF;
+    color: #000;
     position: relative;
     left: -100%;
     height: 100%;

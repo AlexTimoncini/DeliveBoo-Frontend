@@ -601,8 +601,8 @@ export default{
         <section class="jumbo">
             <div class="container">
                 <div class="row">
-                    <div class="jumbo-img col-12 col-md-6">
-                        <img src="../assets/mascotte/ghost-hamburger-jumbo.png" alt="deliveboo mscotte eating a hamburger" draggable="false">
+                    <div class="jumbo-img col-12 col-md-6 pt-4">
+                        <img src="../assets/mascotte/ghost-jumbo-hd.png" alt="deliveboo mscotte eating a hamburger" draggable="false">
                     </div>
                     <div class="jumbo-title col-12 text-center text-md-start col-md-6">
                         <h1 class="title">DeliveBoo</h1>
@@ -625,7 +625,7 @@ export default{
         </section>
         <section class="categories">
             <div class="container">
-                <div class="row">
+                <div class="row justify-content-center">
                     <div class="col-12">
                         <h3 class="m-0 title">Choose a category</h3>
                     </div>
@@ -804,13 +804,15 @@ export default{
         .title{
             color: $fontWhite;
             font-size: 2rem;
-            padding-bottom: 2rem;
+            padding: 2rem 0;
         }
 
         .category-card{
             display: block;
             padding: 2rem;
             transition: all 0.33s ease;
+            max-width: 250px;
+            cursor: pointer;
             .card-image{
                 overflow: hidden;
                 width: 100%;
@@ -906,6 +908,7 @@ export default{
     /**MEDIA QUERIES**/
     @media (max-width: $small){
         .search-bar-box{
+            transform: translateY(30%) !important;
             .title{
                 font-size: 1.8rem!important;
             }
