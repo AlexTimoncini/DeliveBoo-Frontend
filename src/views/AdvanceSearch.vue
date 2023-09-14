@@ -798,12 +798,14 @@ export default {
                         <!-- New in town -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">New in Town</h3>
-                            <Slider :slides="restaurants" :autoplay="0" :pagination="false" :title="true" />
+                            <Slider :slides="restaurants" :autoplay="0" :pagination="false" :title="true" 
+                            :navigation="true" />
                         </div>
                         <!-- Free delivery -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">Free delivery under 10 bucks</h3>
-                            <Slider :slides="restaurants" :autoplay="0" :pagination="false" :title="true" />
+                            <Slider :slides="restaurants" :autoplay="0" :pagination="false" :title="true" 
+                            :navigation="true" />
                         </div>
                         <!-- Discover more -->
                         <div class="col-12 mb-4">
