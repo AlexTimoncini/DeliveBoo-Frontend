@@ -6,7 +6,7 @@
             </div>
             <div class="row">
                 <div class="card__info col-8">
-                    <div class="car__info--title">
+                    <div class="card__info-title">
                         <h3>{{ dish.name }}</h3>
                         <p>{{ dish.description }}</p>
                         <span>{{ dish.ingredient_list.join(', ') }}.</span>
@@ -187,23 +187,27 @@ export default{
         }
 
         .card__info {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            padding: 1.5rem;
+            padding: 1rem;
             z-index: 1;
 
-            h3 {
-                font-size: 1.5rem;
-                font-weight: bold;
-            }
+            .card__info-title {
+                height: 150px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
 
-            p {
-                font-weight: 600;
-            }
+                h3 {
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                }
 
-            span {
-                color: $detGrey;
+                p {
+                    font-weight: 600;
+                }
+
+                span {
+                    color: $detGrey;
+                }
             }
         }
 
