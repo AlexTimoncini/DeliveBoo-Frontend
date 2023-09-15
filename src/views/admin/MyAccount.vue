@@ -1,9 +1,7 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <DashboardSidebar />
-            <DashboardNavbar />
-        </div>
+    <div class="container-fluid p-0">
+        <DashboardSidebar />
+        <DashboardNavbar />
     </div>
 </template>
 
