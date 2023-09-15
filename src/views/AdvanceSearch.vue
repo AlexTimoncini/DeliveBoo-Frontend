@@ -22,6 +22,7 @@ export default {
             axios.get(store.ApiUrl + 'types')
                 .then( (response) => {
                     this.visibleTypesXl = response.data.data.slice(3, 11);
+                    console.log(this.visibleTypesXl)
                     this.visibleTypesLarge = response.data.data.slice(3, 10);
                     this.visibleTypesSmall = response.data.data.slice(3, 8);
             })
@@ -82,7 +83,7 @@ export default {
                         <p class="m-0">{{ type.name }}</p>
                     </div>
                 </a>
-                <a href="#" v-for="type in visibleTypesLarge" class="type-pill d-none d-lg-block"
+                <a href="#" v-for="type in visibleTypesLarge" class="type-pill d-none d-lg-block d-xl-none"
                     @click="this.$router.push({ name: 'AdvanceSearch', params: { searchType: 'type', searchInput: '0' } })">
 
                     <div class="type_pill d-flex align-items-center">
