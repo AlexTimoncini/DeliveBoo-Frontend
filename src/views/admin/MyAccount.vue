@@ -1,7 +1,13 @@
 <template>
-    <div class="container-fluid p-0">
-        <DashboardSidebar />
-        <DashboardNavbar />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 col-2 p-0">
+                <DashboardSidebar />
+            </div>
+            <div class="col-md-9 col-10 p-0">
+                <DashboardNavbar />
+            </div>
+        </div>
     </div>
 </template>
 
