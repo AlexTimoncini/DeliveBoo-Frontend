@@ -10,6 +10,8 @@ import Dishes from './views/admin/Dishes.vue';
 import Orders from './views/admin/Orders.vue';
 import DishEdit from './views/admin/DishEdit.vue';
 import OrderShow from './views/admin/OrderShow.vue';
+import NotFound from './views/NotFound.vue';
+
 
 
 const router = createRouter({
@@ -44,6 +46,11 @@ const router = createRouter({
             path: '/cart',
             name: 'CartCheckout',
             component: CartCheckout
+        },
+        {
+            path: '/404',
+            name: 'NotFound',
+            component: NotFound
         },
         {
             path: '/admin/myaccount',
