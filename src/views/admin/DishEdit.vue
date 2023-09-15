@@ -9,7 +9,7 @@
                 <div class="dish-edit">        
                     <h2>Hamburger alla frutta Edit</h2>
                     <div class="row align-items-center">
-                        <div class="dish-info col-6">
+                        <div class="dish-info col-12 col-md-6">
 
                             <form action="">
                                 <label for="name">Name</label>
@@ -56,7 +56,7 @@
                                 </button>
                             </form>
                         </div>
-                        <div class="col-6">
+                        <div class="d-none d-md-block col-6">
                             <img class="d-none d-lg-block" src="../../assets/mascotte/boo-edit.png" alt="Boo Edit Image">
                             <img class="d-md-block d-lg-none p-3" src="../../assets/mascotte/boo-edit-sm.png" alt="Boo Edit Small Image">
                         </div>
@@ -88,8 +88,18 @@ export default {
 @use '../../styles/partials/variables' as *;
 @use '../../styles/partials/mixins' as *;
 
+    .my_app::-webkit-scrollbar {
+        display: none;
+    }
+
     div.dish-edit {
         padding: 5rem 2rem;
+        overflow-y: scroll;
+        height: calc(100vh - 95px - 80px);
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
 
         h2 {
             background-color: $priGreen;
