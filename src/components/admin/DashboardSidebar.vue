@@ -117,8 +117,6 @@
                     </li>
 
                 </ul>
-                <hr>
-
             </div>
         </div>
     </div>
@@ -136,8 +134,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '../styles/partials/variables' as *;
-@use '../styles/partials/mixins' as *;
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
 
 .my_sidebar {
     background-color: $priGreen;
