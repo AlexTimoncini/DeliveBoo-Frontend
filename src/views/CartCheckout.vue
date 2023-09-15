@@ -45,6 +45,7 @@ export default{
         } catch(e) {
             localStorage.removeItem('cart');
         }
+        // localStorage.clear();
     }
     },
 }
@@ -68,7 +69,10 @@ export default{
                 </div>
             </div>
         </div>
-        <div class="row justify-content-between align-items-start">
+        <div v-if="store.cart_list.length < 1" class="empty_cart col-12 d-flex" >
+            <img class="img-fluid mx-auto" src="../assets/mascotte/ghost_sleepy.png" alt="sleepy deliveboo ghost" draggable="false">
+        </div>
+        <div v-else class="row justify-content-between align-items-start">
             <ul class="cart col-12 col-lg-6 row">
                 <li v-for="(dish, index) in store.cart_list" class="cart_item col-12">
                     <div class="dish_img"><img :src="dish.photo" :alt="dish.name + 'image'" draggable="false"></div>
