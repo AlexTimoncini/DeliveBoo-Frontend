@@ -16,8 +16,11 @@
 
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="#"
+            <!-- My Account  -->
+            <li class="nav-item" @click=" this.$router.push({
+                name: 'MyAccount'
+            })">
+                <a href=" #"
                     class="nav-link my_nav-link active d-flex align-items-center justify-content-center justify-content-md-start"
                     aria-current="page">
                     <svg class="icon me-md-2 active" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +36,10 @@ c0,11.3-9,20.6-20.4,20.6H37.2z" />
                     <span class="d-none d-md-block">Account</span>
                 </a>
             </li>
-            <li>
+            <!-- Dishes  -->
+            <li @click=" this.$router.push({
+                name: 'Dishes'
+            })">
                 <a href="#"
                     class="nav-link my_nav-link  d-flex align-items-center justify-content-center justify-content-md-start">
                     <svg class="icon me-md-2" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +61,10 @@ c0.9-1.2,0.7-2.8-0.5-3.6c-1.2-0.9-2.8-0.7-3.6,0.5c-2.8,3.8-4.2,8.5-4.2,13.2C40.3
 
                 </a>
             </li>
-            <li>
+            <!-- Orders -->
+            <li @click=" this.$router.push({
+                name: 'Orders'
+            })">
                 <a href="#"
                     class="nav-link my_nav-link  d-flex align-items-center justify-content-center justify-content-md-start">
                     <svg class="icon me-md-2" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
@@ -79,9 +88,12 @@ z" />
 
                 </a>
             </li>
-            <li>
+            <!-- Analytics -->
+            <li @click=" this.$router.push({
+                name: 'Analytics'
+            })">
                 <a href="#"
-                    class="nav-link my_nav-link  d-flex align-items-center justify-content-center justify-content-md-start">
+                    class="nav-link my_nav-link d-flex align-items-center justify-content-center justify-content-md-start">
                     <svg class="icon me-md-2" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 150"
                         style="enable-background:new 0 0 150 150;" xml:space="preserve">
@@ -108,9 +120,7 @@ c0.7,1.3,1.3,2.7,1.3,4c0,1.3,0,2-0.7,2.7c0,0.7-0.7,1.3-1.3,1.3c-0.7,0.7-2,1.3-3.
 c0-0.7,0.7-1.3,1.3-2c0.7-0.7,1.3-0.7,2.7-1.3c1.3-0.7,2.7-0.7,4-0.7h2.7V33.9L27.2,33.9z" />
                         </g>
                     </svg>
-
                     <span class="d-none d-md-block">Analytics</span>
-
                 </a>
             </li>
 
@@ -152,13 +162,25 @@ export default {
     .my_nav-link {
         color: $fontWhite;
         padding: .5rem 1rem;
+        transition: all .3s ease;
+    }
+
+    .my_nav-link:hover {
+        color: $fontWhite;
+        padding: .5rem 1rem;
+        background-color: rgba(255, 255, 255, 0.131);
     }
 
     .active {
         background-color: white;
         color: $priGreen;
         fill: $priGreen;
+    }
 
+    .active:hover {
+        background-color: rgb(255, 255, 255);
+        color: $secYellow;
+        fill: $secYellow;
     }
 }
 </style>
