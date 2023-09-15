@@ -8,6 +8,7 @@ import CartCheckout from './views/CartCheckout.vue';
 import MyAccount from './views/admin/MyAccount.vue';
 import Dishes from './views/admin/Dishes.vue';
 import Orders from './views/admin/Orders.vue';
+import Analytics from './views/admin/Analytics.vue';
 import DishEdit from './views/admin/DishEdit.vue';
 import OrderShow from './views/admin/OrderShow.vue';
 import NotFound from './views/NotFound.vue';
@@ -66,6 +67,11 @@ const router = createRouter({
             path: '/admin/orders',
             name: 'Orders',
             component: Orders
+        },
+        {
+            path: '/admin/analytics',
+            name: 'Analytics',
+            component: Analytics
         },
         {
             path: '/admin/dish/:id',
