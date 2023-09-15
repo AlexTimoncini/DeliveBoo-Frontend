@@ -211,7 +211,7 @@ export default {
                 border-bottom-left-radius: 15px;
                 border-bottom-right-radius: 15px;
                 border: none;
-                padding: .1rem 1rem;
+                padding: .8rem 1rem;
                 margin-bottom: 1rem;
 
                 &[type=file] {
@@ -228,6 +228,7 @@ export default {
                 border-bottom-left-radius: 15px;
                 border-bottom-right-radius: 15px;
                 border: none;
+                padding: 1rem;
 
                 &[disabled] {
                     background-color: white;
@@ -237,7 +238,7 @@ export default {
 
         div.my-restaurant,
         div.my-media {
-            height: 350px;
+            height: 440px;
         }
     }
 
