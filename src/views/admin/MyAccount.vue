@@ -126,6 +126,11 @@ export default {
             object-fit: cover;
             border-radius: 15px;
             box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+            transition: all .3s ease;
+
+            &:hover {
+                transform: scale(1.02);
+            }
         }
 
         div.buttons {
@@ -141,6 +146,15 @@ export default {
                 border: none;
                 margin: 1rem;
                 box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                transition: all .3s ease;
+
+                &:hover {
+                    background-color: #ffd966;
+                }
+
+                &:hover svg {
+                    transform: scale(1.1);
+                }
 
                 span {
                     margin-left: 1rem;
@@ -159,6 +173,7 @@ export default {
                 svg {
                     width: 30px;
                     aspect-ratio: 1;
+                    transition: all .3s ease;
                 }
             }
         }
