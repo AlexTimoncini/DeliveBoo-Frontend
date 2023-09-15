@@ -6,6 +6,10 @@ import RestaurantMenu from './views/RestaurantMenu.vue';
 import LoginRestaurant from './views/LoginRestaurant.vue';
 import CartCheckout from './views/CartCheckout.vue';
 import MyAccount from './views/admin/MyAccount.vue';
+import Dishes from './views/admin/Dishes.vue';
+import Orders from './views/admin/Orders.vue';
+import DishEdit from './views/admin/DishEdit.vue';
+import OrderShow from './views/admin/OrderShow.vue';
 
 
 const router = createRouter({
@@ -45,6 +49,26 @@ const router = createRouter({
             path: '/admin/myaccount',
             name: 'MyAccount',
             component: MyAccount
+        },
+        {
+            path: '/admin/dishes',
+            name: 'Dishes',
+            component: Dishes
+        },
+        {
+            path: '/admin/orders',
+            name: 'Orders',
+            component: Orders
+        },
+        {
+            path: '/admin/dish/:id',
+            name: 'DishEdit',
+            component: DishEdit
+        },
+        {
+            path: '/admin/order/:id',
+            name: 'OrderShow',
+            component: OrderShow
         },
     ],
 });
