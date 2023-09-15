@@ -1,4 +1,5 @@
 <script>
+import axios from 'axios';
 import Slider from '../components/Slider.vue';
 export default{
     name: 'HomePage',
@@ -7,9 +8,26 @@ export default{
     },
     data() {
         return {
-            search: ''
+            search: '',
+            ApiUrl: 'http://127.0.0.1:8000/api/',
+            filteredTypes: [],
+            allTypes: [],
         }
     },
+    created(){
+        axios.get(this.ApiUrl + 'types')
+            .then( (response) => {
+                this.allTypes = response.data.data;
+                this.allTypes.forEach((type, index) => {
+                if(index % 2 == 0){
+                    this.filteredTypes.push(type);
+                }
+        });
+            })
+            .catch(function (error) {
+                console.log(error);
+        });
+    }
 }
 </script>
 
@@ -46,7 +64,7 @@ export default{
                     <div class="col-12">
                         <h3 class="m-0 title">Choose a category</h3>
                     </div>
-                    <div v-for="type in types" :to="{ name: 'WorkInProgress' }" class="category-card col-6 col-md-3" @click="this.$router.push({ name: 'AdvanceSearch', params: { searchType: 'category', searchInput: '0' } })">
+                    <div v-for="type in filteredTypes" :to="{ name: 'WorkInProgress' }" class="category-card col-6 col-md-3" @click="this.$router.push({ name: 'AdvanceSearch', params: { searchType: 'category', searchInput: '0' } })">
 
                         <div class="card-image">
                             <img class="img-fluid" :src="type.logo" alt="">
