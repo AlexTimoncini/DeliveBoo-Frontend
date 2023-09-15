@@ -10,19 +10,32 @@ export default {
     data() {
         return {
             rangeNumber: null,
+            search: '',
             store,
             categories: [],
+            /**Types Arrays**/
+            allTypes: [],
             visibleTypesLarge: [],
             visibleTypesSmall: [],
             visibleTypesXl: [],
+            /**Categories Arrays**/
+            allCategories: [],
+            visibleCategories: [],
+            /**Restaurants Arrays**/
+            filteredRestaurants: [],
+            params: {
+                searchbar: '',
+                type_ids: [],
+                category_id: ''
+            }
         }
     },
     methods: {
         getTypes(){
             axios.get(store.ApiUrl + 'types')
                 .then( (response) => {
+                    this.allTypes = response.data.data;
                     this.visibleTypesXl = response.data.data.slice(3, 11);
-                    console.log(this.visibleTypesXl)
                     this.visibleTypesLarge = response.data.data.slice(3, 10);
                     this.visibleTypesSmall = response.data.data.slice(3, 8);
             })
@@ -38,13 +51,38 @@ export default {
                 .catch(function (error) {
                     console.log(error);
             });
-        }
+        },
+        getCategories(){
+            axios.get(store.ApiUrl + 'categories')
+                .then( (response) => {
+                    this.allCategories = response.data.data;
+                    this.visibleCategories = response.data.data.slice(1, 10);
+                    console.log(this.visibleCategories);
+            })
+                .catch(function (error) {
+                    console.log(error);
+            });
+        },
+        searchRestaurant(){
+            this.params.searchbar = this.search;
+            let query = encodeURIComponent(JSON.stringify(this.params));
+            axios.get(store.ApiUrl + 'search/advance/' + query)
+            .then( (response) => {
+                this.filteredRestaurants = response.data.data;
+                console.log(this.filteredRestaurants);
+            })
+            .catch(function (error) {
+                    console.log(query);
+                    console.log(error);
+            });
+        },
+        
     },
     mounted(){
         this.getTypes();
         this.getBestRestaurants();
+        this.getCategories();
     }
-    
 }
 </script>
 
@@ -60,7 +98,7 @@ export default {
                 What do you boona eat?
             </h1>
             <div class="search-bar "
-                @keyup.enter="this.$router.push({ name: 'AdvanceSearch', params: { searchType: 'restaurant', searchInput: this.search } })">
+                @keyup.enter="searchRestaurant()">
                 <label for="home-searchbar">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 101 101" id="search">
                         <path
@@ -103,10 +141,9 @@ export default {
         </div>
 
         <!-- Category filter  -->
-
         <div class="select-category d-none d-md-block">
             <div class="container d-flex justify-content-center p-2">
-                <a href="#" class="category-pills" v-for="category in [0]"
+                <a href="#" class="category-pills" v-for="category in visibleCategories"
                     @click="this.$router.push({ name: 'AdvanceSearch', params: { searchType: 'category', searchInput: '0' } })">
                     <p class="m-0">{{ category.name }}</p>
                 </a>
@@ -117,14 +154,10 @@ export default {
     <!-- Main app  -->
     <div class=" container-fluid ">
         <div class=" row d-flex search-page-container">
-
             <!-- Sidebar -->
-
             <div class="my_sidebar col-3 d-none d-md-block">
                 <!-- <h1>Cerca il tuo ristorante</h1> -->
-
                 <!-- Searchbar  -->
-
                 <div class="search-bar mb-4 d-md-none d-lg-flex"
                     @keyup.enter="this.$router.push({ name: 'AdvanceSearch', params: { searchType: 'restaurant', searchInput: this.search } })">
                     <label for="home-searchbar">
@@ -150,7 +183,7 @@ export default {
                         <div id="flush-collapseOne" class="accordion-collapse" aria-labelledby="flush-headingOne">
                             <div class="accordion-body px-0">
 
-                                <div class="my_select" v-for="type in store.allTypes">
+                                <div class="my_select" v-for="type in allTypes">
 
                                     <input class="my_checkbox" type="checkbox" id="" name="type" :value="type.name">
                                     <label for="type">{{ type.name }}</label>
@@ -171,7 +204,7 @@ export default {
                             </button>
                         </h2>
                         <div id="flush-collapseTwo" class="accordion-collapse " aria-labelledby="flush-headingTwo">
-                            <div class="my_select" v-for="category in [0]">
+                            <div class="my_select" v-for="category in allCategories">
                                 <input class="my_checkbox" type="checkbox" id="" name="type" :value="category.name">
                                 <label for="type">{{ category.name }}</label>
                             </div>
@@ -201,15 +234,14 @@ export default {
             <!-- Main -->
 
             <div class="my_main col-12 col-md-9 mt-4">
-                <div class="container">
-                    <div class="row">
+                <div  class="container">
+                    <div v-if="params == null" class="row">
                         <!-- Best sellers  -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">Our Best Sellers!</h3>
                             <Slider :slides="store.bestSellers" :autoplay="0" :pagination="false" :title="true"
                                 :navigation="true" />
                         </div>
-
                         <!-- New in town -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">New in Town</h3>
@@ -251,7 +283,36 @@ export default {
 
                             </div>
                         </div>
+                    </div>
+                    <div v-if="params == null" class="row">
+                        <div class="col-12 mb-4">
+                            <h3 class="cards_title">{{ filteredRestaurants.length }} results</h3>
+                            <div class="my_restaurant_card_container container-fluid">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6 col-lg-4 mb-4" v-for="restaurant in store.bestSellers"
+                                        @click="this.$router.push({ name: 'RestaurantMenu', params: { id: '0' } })">
+                                        <div class=" my_card d-flex justify-content-center align-items-center">
+                                            <img class="img-fluid" :src="restaurant.image" alt="">
+                                            <h3>{{ restaurant.name }}</h3>
+                                        </div>
+                                        <div class="my-card-label">
+                                            <svg fill="#000000" width="800px" height="800px" viewBox="0 0 100 100"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M49,18.92A23.74,23.74,0,0,0,25.27,42.77c0,16.48,17,31.59,22.23,35.59a2.45,2.45,0,0,0,3.12,0c5.24-4.12,22.1-19.11,22.1-35.59A23.74,23.74,0,0,0,49,18.92Zm0,33.71a10,10,0,1,1,10-10A10,10,0,0,1,49,52.63Z" />
+                                            </svg>
+                                            <h5>
+                                                {{ restaurant.address }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-3 text-end">
+                                        <a class="see-more" href="" @click="">See More</a>
+                                    </div>
+                                </div>
 
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
