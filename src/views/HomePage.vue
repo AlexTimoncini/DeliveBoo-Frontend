@@ -12,21 +12,37 @@ export default{
             ApiUrl: 'http://127.0.0.1:8000/api/',
             filteredTypes: [],
             allTypes: [],
+            bestRestaurants: []
+        }
+    },
+    methods: {
+        getCategories(){
+            axios.get(this.ApiUrl + 'types')
+                .then( (response) => {
+                    this.allTypes = response.data.data;
+                    this.allTypes.forEach((type, index) => {
+                    if(index % 2 == 0){
+                        this.filteredTypes.push(type);
+                    }
+            });
+                })
+                .catch(function (error) {
+                    console.log(error);
+            });
+        },
+        getBestRestaurants(){
+            axios.get(this.ApiUrl + 'restaurants/bestSeller')
+                .then( (response) => {
+                    this.bestRestaurants = response.data.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+            });
         }
     },
     created(){
-        axios.get(this.ApiUrl + 'types')
-            .then( (response) => {
-                this.allTypes = response.data.data;
-                this.allTypes.forEach((type, index) => {
-                if(index % 2 == 0){
-                    this.filteredTypes.push(type);
-                }
-        });
-            })
-            .catch(function (error) {
-                console.log(error);
-        });
+        this.getCategories();
+        this.getBestRestaurants();
     }
 }
 </script>
@@ -140,7 +156,7 @@ export default{
                 <div class="row">
                     <div class="col-12">
                         <h3 class="title">Our Best Restaurants</h3>
-                        <Slider :slides="restaurants" :autoplay="3000" :pagination="true" />
+                        <Slider :slides="bestRestaurants" :autoplay="3000" :pagination="true" />
                     </div>
                 </div>
             </div>
