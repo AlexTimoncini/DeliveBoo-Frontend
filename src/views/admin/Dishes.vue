@@ -6,6 +6,83 @@
             </div>
             <div class="col-md-9 col-10 p-0">
                 <DashboardNavbar />
+                <div class="my_app px-5">
+
+                    <div class="mt-4">
+
+                        <!-- Categories  -->
+                        <div class="category mb-4 row">
+                            <h3 class="my_title col-12 mb-3 ps-md-3 ps-0">
+                                Panini
+                            </h3>
+                            <!-- Cards  -->
+                            <div class="col-12 col-md-6 col-lg-4 p-0 p-md-3">
+                                <div class="dish-card card-container p-3">
+                                    <div class="card-buttons-container d-flex justify-content-end">
+                                        <div class="card-button btn">
+                                            <svg viewBox="0 0 24 24">
+                                                <path
+                                                    d="M 10 2 L 9 3 L 4 3 L 4 5 L 5 5 L 5 20 C 5 20.522222 5.1913289 21.05461 5.5683594 21.431641 C 5.9453899 21.808671 6.4777778 22 7 22 L 17 22 C 17.522222 22 18.05461 21.808671 18.431641 21.431641 C 18.808671 21.05461 19 20.522222 19 20 L 19 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 7 5 L 17 5 L 17 20 L 7 20 L 7 5 z M 9 7 L 9 18 L 11 18 L 11 7 L 9 7 z M 13 7 L 13 18 L 15 18 L 15 7 L 13 7 z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                        <div class="card-button btn" @click=" this.$router.push({
+                                            name: 'DishEdit',
+                                            params: { id: '0' }
+                                        })">
+                                            <svg version=" 1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg" x="0px"
+                                                y="0px" viewBox="0 0 800 800" style="enable-background:new 0 0 800 800;"
+                                                xml:space="preserve">
+                                                <path d="M522.4,136.3c18.3-18.2,47.8-18.2,66,0l75.8,75.8c18.2,18.2,18.2,47.7,0,66l-55.1,55.1L467.4,191.3L522.4,136.3z
+	 M133.6,678.3c-8.2,0-13.1-6.3-10.9-15.6l32.4-144c3.3-12,9.2-23.1,17.3-32.4l82.4-82.4l73.7-73.8l105.8-105.8l36.8,36.8l-262,261.9
+	l-14.5-14.5c-4,5.1-7,10.9-9,17.1l-14.3,63.5l40,40l63.5-14.3c6.2-1.9,12-5,17.1-9l-49.7-49.8l261.9-261.9l72,72L470.4,471.9
+	L314.2,628.1v0c-9.4,8.1-20.4,14.1-32.4,17.3l-144,32.4C136.5,678.1,135.1,678.3,133.6,678.3L133.6,678.3z" />
+                                            </svg>
+
+                                        </div>
+                                    </div>
+                                    <form>
+                                        <div class="form-group mb-2">
+                                            <label for="exampleFormControlInput1">Dish Name</label>
+                                            <input type="text" class="form-control " id="" placeholder="Nome Piatto"
+                                                disabled>
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label for="dishDescription">Dish Description</label>
+                                            <textarea class="form-control" name="dishDescription" rows="3" disabled>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde modi delectus officia aut pariatur magnam quos aliquid, ab fuga illo perferendis sit saepe ut suscipit expedita culpa, dignissimos soluta voluptates.
+                                        </textarea>
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label for="exampleFormControlInput1">Ingredients</label>
+                                            <input type="text" class="form-control mb-1" id=""
+                                                placeholder="Pane, Formaggio, Carne, Cetrioli" disabled>
+                                        </div>
+                                        <div class="form-group mb-2 d-flex">
+
+                                            <div class="form-group mb-2 me-3">
+                                                <label for="exampleFormControlInput1">Price</label>
+                                                <input type="text" class="form-control mb-1" id=""
+                                                    placeholder="Pane, Formaggio, Carne, Cetrioli" disabled>
+                                            </div>
+                                            <div class="form-group mb-2 d-flex flex-column">
+                                                <label for="exampleFormControlInput1">Image</label>
+                                                <img class="thumb"
+                                                    src="https://www.buttalapasta.it/wp-content/uploads/2016/01/hamburger-di-carne-americano.jpg"
+                                                    alt="">
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -25,4 +102,86 @@ export default {
 <style lang="scss" scoped>
 @use '../../styles/partials/variables' as *;
 @use '../../styles/partials/mixins' as *;
+
+
+
+.my_app::-webkit-scrollbar {
+    display: none;
+}
+
+.my_app {
+    width: 100%;
+    height: calc(100vh - 95px - 80px);
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+
+    .my_button {
+        background-color: $priGreen;
+        margin: .5rem;
+
+        svg {
+            width: 25px;
+            height: 25px;
+            fill: $fontWhite;
+        }
+    }
+
+    .my_button:hover {
+        background-color: #028450;
+    }
+
+    .my_button:active {
+        background-color: #249d6d;
+
+        svg {
+            padding: .1rem;
+        }
+    }
+}
+
+.category {
+    .my_title {
+        color: $priGreen;
+        font-weight: 600;
+    }
+
+    .dish-card {
+        // background-color: #efebe0;
+        border-radius: 10px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+        .btn.card-button {
+            height: 30px;
+            width: 30px;
+            margin: .3rem;
+            padding: 0;
+            border-radius: 50%;
+            background-color: $secYellow;
+
+
+
+            svg {
+                margin: .3rem;
+                fill: $fontWhite;
+            }
+
+            svg:hover {
+                margin: .4rem;
+            }
+        }
+
+        .btn.card-button:hover {
+            background-color: #f5c535;
+        }
+
+        .thumb {
+            width: 35px;
+            height: 35px;
+            border-radius: 5px;
+        }
+    }
+}
 </style>
