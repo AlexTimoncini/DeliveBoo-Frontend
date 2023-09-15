@@ -57,8 +57,8 @@
                             </form>
                         </div>
                         <div class="d-none d-md-block col-6">
-                            <img class="d-none d-lg-block" src="../../assets/mascotte/boo-edit.png" alt="Boo Edit Image">
-                            <img class="d-md-block d-lg-none p-3" src="../../assets/mascotte/boo-edit-sm.png" alt="Boo Edit Small Image">
+                            <img class="d-none d-lg-block" src="../../assets/mascotte/boo-edit.png" alt="Boo Edit Image" draggable="false">
+                            <img class="d-md-block d-lg-none p-3" src="../../assets/mascotte/boo-edit-sm.png" alt="Boo Edit Small Image" draggable="false">
                         </div>
                     </div>
                     <button>
