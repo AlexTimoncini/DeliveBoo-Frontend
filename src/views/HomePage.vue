@@ -1,4 +1,5 @@
 <script>
+import { store } from '../store';
 import axios from 'axios';
 import Slider from '../components/Slider.vue';
 export default{
@@ -9,18 +10,16 @@ export default{
     data() {
         return {
             search: '',
-            ApiUrl: 'http://127.0.0.1:8000/api/',
+            store,
             filteredTypes: [],
-            allTypes: [],
-            bestRestaurants: []
         }
     },
     methods: {
-        getCategories(){
-            axios.get(this.ApiUrl + 'types')
+        getTypes(){
+            axios.get(store.ApiUrl + 'types')
                 .then( (response) => {
-                    this.allTypes = response.data.data;
-                    this.allTypes.forEach((type, index) => {
+                    store.allTypes = response.data.data;
+                    store.allTypes.forEach((type, index) => {
                     if(index % 2 == 0){
                         this.filteredTypes.push(type);
                     }
@@ -31,9 +30,9 @@ export default{
             });
         },
         getBestRestaurants(){
-            axios.get(this.ApiUrl + 'restaurants/bestSeller')
+            axios.get(store.ApiUrl + 'restaurants/bestSeller')
                 .then( (response) => {
-                    this.bestRestaurants = response.data.data;
+                    store.bestRestaurants = response.data.data;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -41,7 +40,7 @@ export default{
         }
     },
     created(){
-        this.getCategories();
+        this.getTypes();
         this.getBestRestaurants();
     }
 }
@@ -156,7 +155,7 @@ export default{
                 <div class="row">
                     <div class="col-12">
                         <h3 class="title">Our Best Restaurants</h3>
-                        <Slider :slides="bestRestaurants" :autoplay="3000" :pagination="true" />
+                        <Slider :slides="store.bestRestaurants" :autoplay="3000" :pagination="true" />
                     </div>
                 </div>
             </div>
