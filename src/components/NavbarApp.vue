@@ -1,9 +1,12 @@
 <script>
+import { store } from '../store';
 export default {
     name: 'NavbarApp',
     data() {
         return {
             triggerMenu: false,
+            store,
+            counter: 0,
         }
     },
     mounted() {
@@ -11,6 +14,13 @@ export default {
             if (window.innerWidth < 992) {
                 this.triggerMenu = false;
             };
+        };
+        if(localStorage.getItem('cart')){
+            try {
+                store.cart_list = JSON.parse(localStorage.getItem('cart'));
+            } catch(e) {
+                localStorage.removeItem('cart');
+            }
         }
     }
 }
@@ -44,6 +54,9 @@ export default {
                 <div class="cart-btn">
                     <router-link :to="{ name: 'CartCheckout' }">
                         <img src="../assets/icons/cart.svg" alt="cart svg" draggable="false">
+                        <div  v-if="store.cart_list.length !== 0 " class="cart_counter">
+                            <p>{{ store.cart_list.length }}</p> 
+                        </div>
                     </router-link>
                 </div>
             </div>
@@ -103,8 +116,26 @@ nav {
             .cart-btn {
                 width: 35px;
                 aspect-ratio: 1/1;
-                filter: invert(37%) sepia(95%) saturate(780%) hue-rotate(119deg) brightness(91%) contrast(99%);
                 cursor: pointer;
+                position: relative;
+                img{
+                    filter: invert(37%) sepia(95%) saturate(780%) hue-rotate(119deg) brightness(91%) contrast(99%);
+                }
+                .cart_counter{
+                    position: absolute;
+                    width: 18px;
+                    border-radius: 50%;
+                    background-color: red;
+                    border: 4px solid $fontWhite;
+                    color: $fontWhite;
+                    height: 18px;
+                    padding-top: 1px;
+                    font-size: 0.8rem;
+                    text-align: center;
+                    top: -12px;
+                    right: -12px;
+                    box-sizing: content-box;
+                }
             }
         }
 

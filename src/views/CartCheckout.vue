@@ -39,14 +39,7 @@ export default{
     },
     mounted(){
         this.setTotalPrice();
-        if(localStorage.getItem('cart')){
-        try {
-            store.cart_list = JSON.parse(localStorage.getItem('cart'));
-        } catch(e) {
-            localStorage.removeItem('cart');
-        }
         // localStorage.clear();
-    }
     },
 }
 
