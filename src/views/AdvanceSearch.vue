@@ -287,7 +287,7 @@ export default {
 
                 </div>
 
-                <input class="input-range" type="range" min="1" max="100" v-model="rangeNumber" />
+
             </form>
 
             <!-- Main -->
@@ -406,10 +406,11 @@ export default {
 
     label {
         height: 100%;
+        width: 50px;
         aspect-ratio: 1/1;
         cursor: pointer;
-        padding: 0 0.5rem;
-        background-color: white;
+        padding: 0 0.3rem;
+        background-color: $priGreen;
         border: 1px 0 1px 1px solid $secYellow;
         border: 1px solid rgb(237, 237, 237);
         border-radius: 10px 0 0 10px;
@@ -418,7 +419,7 @@ export default {
         svg {
             height: 100%;
             aspect-ratio: 1/1;
-            fill: $priGreen;
+            fill: $fontWhite;
         }
     }
 }
