@@ -130,14 +130,38 @@ export default {
                 }
             }
             console.log(this.params);
+        },
+        searchFromHomeTypes(type_id){
+            const typeParams = {
+                    searchbar: '',
+                    type_ids: [type_id],
+                    category_ids: []
+                }
+                const query = JSON.stringify(typeParams);
+                const url = store.ApiUrl + 'restaurants/search/advance/' + query;
+                axios.get(url)
+                    .then((response) => {
+                        this.filteredRestaurants = response.data.data;
+                        console.log(this.filteredRestaurants);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        this.$router.push('/404');
+                    });
         }
     },
     mounted() {
         this.getTypes();
         this.getBestRestaurants();
         this.getCategories();
-        this.search = this.$route.params.searchInput;
-        this.searchRestaurant();
+        if(this.$route.params.searchType === 'restaurant'){
+            this.search = this.$route.params.searchInput;
+            this.searchRestaurant();
+        } else if (this.$route.params.searchType === 'type'){
+            let type_id = this.$route.params.searchInput;
+            this.params.type_ids.push(parseInt(type_id));
+            this.searchRestaurant();
+        }
     }
 }
 </script>
@@ -241,7 +265,7 @@ export default {
                                 <div class="my_select" v-for="type in allTypes">
 
                                     <input class="my_checkbox" type="checkbox" :id="type.name" name="type" :value="type.id"
-                                        @click="sidebarCheckboxHandler('type', type.id), searchRestaurant()">
+                                        @click="sidebarCheckboxHandler('type', type.id), searchRestaurant()" :checked="params.type_ids.includes(type.id)" >
                                     <label :for="type.name">{{ type.name }}</label>
                                 </div>
 

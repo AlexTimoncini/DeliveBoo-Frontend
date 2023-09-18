@@ -96,7 +96,7 @@ onMounted(async () => {
                         <h3 class="m-0 title">Choose a category</h3>
                     </div>
                     <div v-for="type in filteredTypes" :to="{ name: 'WorkInProgress' }" class="category-card col-6 col-md-3"
-                        @click="this.$router.push({ name: 'AdvanceSearch', params: { searchType: 'category', searchInput: '0' } })">
+                        @click="this.$router.push({ name: 'AdvanceSearch', params: { searchType: 'type', searchInput: type.id } })">
 
                         <div class="card-image">
                             <img class="img-fluid" :src="type.logo" alt="">
