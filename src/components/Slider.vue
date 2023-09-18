@@ -35,9 +35,7 @@ export default {
         getImagePath: function (imgPath) {
             return new URL(imgPath, import.meta.url).href;
         }
-    },
-    mounted() {
-    },
+    }
 }
 </script>
 
@@ -46,7 +44,7 @@ export default {
         <Carousel class="" ref="slider" :items-to-show="2" :autoplay="autoplay" :transition="300" :wrapAround="true"
             :breakpoints="breakpoints" snapAlign="start">
             <Slide class="position-relative" v-for="slide in slides" :key="slide">
-                <router-link :to="{ name: 'RestaurantMenu', params: { id: slide.name } }">
+                <router-link :to="{ name: 'RestaurantMenu', params: { id: slide.id } }">
                     <h3 v-if="title" class="slide-title position-absolute">
                         {{ slide.name }}
                     </h3>
