@@ -47,18 +47,15 @@ export default {
 <template>
     <div class="container pb-5">
         <div class="row">
-            <div class="col-12 navbar d-flex justify-space-between">
-                <div class="btn">
-                    <router-link :to="{ name: 'WorkInProgress' }" class="d-block h-100">
+            <div class="col-12 navbar d-flex justify-content-start">
+                <div class="btn me-5">
+                    <router-link :to="{ name: 'Homepage' }" class="d-block h-100">
                         <img src="../assets/icons/left-arrow.svg" alt="left arrow icon" draggable="false">
                     </router-link>
                 </div>
+
                 <h1 class="title">Shopping Cart</h1>
-                <div class="btn d-none d-sm-block">
-                    <router-link :to="{ name: 'WorkInProgress' }" class="d-block h-100">
-                        <img src="../assets/icons/cart.svg" alt="left arrow icon" draggable="false">
-                    </router-link>
-                </div>
+
             </div>
         </div>
         <div v-if="store.cart_list.length < 1" class="empty_cart col-12 d-flex">
@@ -66,26 +63,37 @@ export default {
                 draggable="false">
         </div>
         <div v-else class="row justify-content-between align-items-start">
-            <ul class="cart col-12 col-lg-6 row">
-                <li v-for="(dish, index) in store.cart_list" class="cart_item col-12">
-                    <div class="dish_img"><img :src="dish.photo" :alt="dish.name + 'image'" draggable="false"></div>
-                    <div class="dish_info">
-                        <div class="dish_name">
-                            <h6>{{ dish.name }}</h6>
-                        </div>
-                        <div class="dish_price">
-                            <p class="m-0">{{ dish.price }}€</p>
+            <ul class="cart col-12 col-lg-6 row m-0 px-0 px-sm-3 mb-4">
+                <li v-for="(dish, index) in store.cart_list" class="cart_item d-flex justify-content-between col-12">
+                    <div class="d-flex col-8 align-items-center align-items-md-start">
+                        <div class="dish_img"><img class="img-fluid" :src="dish.photo" :alt="dish.name + 'image'"
+                                draggable="false"></div>
+                        <div class="dish_info">
+                            <div class="dish_name">
+                                <h6>{{ dish.name }}</h6>
+                            </div>
+                            <div class="dish_price">
+                                <p class="m-0">{{ dish.price }}€</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="dish_quantity_box">
-                        <select class="dish_quantity" @change="removeDishFromCart(index, $event.target.value)">
+                    <div class="col-4 dish_quantity_box p-2 d-flex flex-column flex-md-row">
+                        <div class="buttons d-flex  mb-3 mb-md-0">
+                            <button class="btn_quantity " @click="removeDishFromCart(index, 0)"><svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M 10 2 L 9 3 L 4 3 L 4 5 L 5 5 L 5 20 C 5 20.522222 5.1913289 21.05461 5.5683594 21.431641 C 5.9453899 21.808671 6.4777778 22 7 22 L 17 22 C 17.522222 22 18.05461 21.808671 18.431641 21.431641 C 18.808671 21.05461 19 20.522222 19 20 L 19 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 7 5 L 17 5 L 17 20 L 7 20 L 7 5 z M 9 7 L 9 18 L 11 18 L 11 7 L 9 7 z M 13 7 L 13 18 L 15 18 L 15 7 L 13 7 z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <button class="btn_quantity" @click="incrementQuantity(dish)"><img
+                                    src="../assets/icons/spooky_plus.png" alt="plus img" draggable="false"></button>
+                        </div>
+
+                        <select class="dish_quantity ms-0 ms-md-2 px-3 px-lg-2 px-xl-3 w-75 w-sm-100"
+                            @change="removeDishFromCart(index, $event.target.value)">
                             <option v-for="n, index in dish.quantity" :value="n" :selected="n == dish.quantity">{{ n }}
                             </option>
                         </select>
-                        <button class="btn_quantity  d-none d-sm-block" @click="removeDishFromCart(index, 0)"><img class="minus"
-                                src="../assets/icons/noun-minus-1250855.png" alt="plus img" draggable="false"></button>
-                        <button class="btn_quantity d-none d-sm-block" @click="incrementQuantity(dish)"><img
-                                src="../assets/icons/spooky_plus.png" alt="plus img" draggable="false"></button>
                     </div>
                 </li>
             </ul>
@@ -122,6 +130,9 @@ export default {
 
     .title {
         font-size: 2.5rem;
+        color: $priGreen;
+        font-weight: 700;
+
     }
 
     .btn {
@@ -147,16 +158,14 @@ export default {
     row-gap: 1rem;
 
     .cart_item {
-        width: 100%;
-        background-color: $secYellow;
+        // width: 100%;
         padding: 0;
         box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 7px;
-        display: flex;
-        position: relative;
         border-radius: 10px;
 
         .dish_img {
             width: 70px;
+            height: 100%;
 
             img {
                 width: 100%;
@@ -198,12 +207,16 @@ export default {
         }
 
         .dish_quantity_box {
-            position: absolute;
-            right: 5%;
-            top: 50%;
-            transform: translateY(-50%);
             display: flex;
             align-items: center;
+            background-color: $secYellow;
+            padding: 0 1rem;
+            border-radius: 0 10px 10px 0;
+
+            select {
+                height: 40px;
+
+            }
 
             .dish_quantity {
                 border: none;
@@ -220,35 +233,42 @@ export default {
             }
 
             .btn_quantity {
+                display: flex;
                 padding: .2rem;
-                margin: 0 1rem;
+                margin: 0 .3rem;
                 border: none;
-                background: none;
-                font-size: 2rem;
                 display: block;
-                flex-grow: 1;
-                height: 40px;
-                width: 40px;
+                height: 35px;
+                width: 35px;
                 background-color: white;
                 border-radius: 50%;
 
                 img {
-                    width: 100%;
+                    margin: auto;
+                    width: 90%;
                     display: block;
                     filter: invert(37%) sepia(95%) saturate(780%) hue-rotate(119deg) brightness(91%) contrast(99%);
                     transition: all .3s ease;
 
                     &:hover {
-                        transform: scale(1.15)
+                        transform: scale(1.2)
                     }
 
                     ;
                 }
-            }
 
-            img.minus {
-                transition: all .3s ease;
-                filter: invert(24%) sepia(97%) saturate(2101%) hue-rotate(351deg) brightness(82%) contrast(100%);
+                svg {
+                    margin: auto;
+                    transition: all .3s ease;
+                    width: 90%;
+                    display: block;
+                    filter: invert(24%) sepia(97%) saturate(2101%) hue-rotate(351deg) brightness(82%) contrast(100%);
+                    transition: all .3s ease;
+
+                    &:hover {
+                        transform: scale(1.15)
+                    }
+                }
             }
         }
     }
@@ -256,7 +276,9 @@ export default {
 
 .order_preview {
     position: relative;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 7px;
+    // box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 7px;
+    background-color: #F5F5F5FF;
+    border-radius: 0 0 10px 10px;
 
     strong {
         color: $priGreen;
@@ -281,114 +303,17 @@ export default {
 }
 
 .order_preview::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    transform: translateY(100%);
+    background-image: linear-gradient(135deg, transparent 46%, #E4E4E4FF 50%, #F5F5F5FF 54%), linear-gradient(225deg, #FFFFFFFF 46%, #E4E4E4FF 50%, #F5F5F5FF);
+    background-position: 0 0, 0 0;
+    background-repeat: repeat-x;
+    background-size: 12px 12px;
+    content: "";
+    height: 6px;
     left: 0;
+    position: absolute;
+    top: -6px;
     width: 100%;
-    height: 20px;
-    background-color: rgb(220, 220, 220);
-    clip-path: polygon(0 0,
-            1% 50%,
-            2% 0,
-            3% 50%,
-            4% 0,
-            5% 50%,
-            6% 0,
-            7% 50%,
-            8% 0,
-            9% 50%,
-            10% 0,
-            11% 50%,
-            12% 0,
-            13% 50%,
-            14% 0,
-            15% 50%,
-            16% 0,
-            17% 50%,
-            18% 0,
-            19% 50%,
-            20% 0,
-            21% 50%,
-            22% 0,
-            23% 50%,
-            24% 0,
-            25% 50%,
-            26% 0,
-            27% 50%,
-            28% 0,
-            29% 50%,
-            30% 0,
-            31% 50%,
-            32% 0,
-            33% 50%,
-            34% 0,
-            35% 50%,
-            36% 0,
-            37% 50%,
-            38% 0,
-            39% 50%,
-            40% 0,
-            41% 50%,
-            42% 0,
-            43% 50%,
-            44% 0,
-            45% 50%,
-            46% 0,
-            47% 50%,
-            48% 0,
-            49% 50%,
-            50% 0,
-            51% 50%,
-            52% 0,
-            53% 50%,
-            54% 0,
-            55% 50%,
-            56% 0,
-            57% 50%,
-            58% 0,
-            59% 50%,
-            60% 0,
-            61% 50%,
-            62% 0,
-            63% 50%,
-            64% 0,
-            65% 50%,
-            66% 0,
-            67% 50%,
-            68% 0,
-            69% 50%,
-            70% 0,
-            71% 50%,
-            72% 0,
-            73% 50%,
-            74% 0,
-            75% 50%,
-            76% 0,
-            77% 50%,
-            78% 0,
-            79% 50%,
-            80% 0,
-            81% 50%,
-            82% 0,
-            83% 50%,
-            84% 0,
-            85% 50%,
-            86% 0,
-            87% 50%,
-            88% 0,
-            89% 50%,
-            90% 0,
-            91% 50%,
-            92% 0,
-            93% 50%,
-            94% 0,
-            95% 50%,
-            96% 0,
-            97% 50%,
-            98% 0,
-            99% 50%,
-            100% 0);
 }
+
+@media (max-width: $small) {}
 </style>
