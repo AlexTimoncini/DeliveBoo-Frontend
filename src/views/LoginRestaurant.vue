@@ -144,55 +144,167 @@ function signIn() {
                         </svg>
                     </a>
                 </div>
-                <span>or use your email for registration</span>
+                <span class="mb-3">or use your e-mail for registration</span>
                 <div class="container-input w-100">
                     <div class="row">
                         <div class="col-6">
-                            <input type="text" placeholder="Name" v-model="formRegister.name" />
+                            <label for="name">Restaurant Name</label>
+                            <input type="text" name="name" id="name" v-model="formRegister.name" />
                         </div>
                         <div class="col-6">
-                            <input type="text" placeholder="Email" v-model="formRegister.email" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <input type="text" placeholder="Vat Number" v-model="formRegister.vat_number" />
-                        </div>
-                        <div class="col-6">
-                            <input type="text" placeholder="Address" v-model="formRegister.address" />
+                            <label for="email">E-mail</label>
+                            <input type="mail" name="email" id="email" v-model="formRegister.email" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <input type="text" placeholder="Closer Time" v-model="formRegister.closer_time" />
+                            <label for="vat-number">VAT Number</label>
+                            <input type="text" name="vat-number" id="vat-number" v-model="formRegister.vat_number" />
                         </div>
                         <div class="col-6">
-                            <input type="text" placeholder="Open Time" v-model="formRegister.open_time" />
+                            <label for="address">Address</label>
+                            <input type="text" name="address" id="address" v-model="formRegister.address" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="open-time">Opening Time</label>
+                            <select class="d-block" name="open-time" id="open-time" v-model="formRegister.open_time">
+                                <option value="00:00">00:00</option>
+                                <option value="00:30">00:30</option>
+                                <option value="01:00">01:00</option>
+                                <option value="01:30">01:30</option>
+                                <option value="02:00">02:00</option>
+                                <option value="02:30">02:30</option>
+                                <option value="03:00">03:00</option>
+                                <option value="03:30">03:30</option>
+                                <option value="04:00">04:00</option>
+                                <option value="04:30">04:30</option>
+                                <option value="05:00">05:00</option>
+                                <option value="05:30">05:30</option>
+                                <option value="06:00">06:00</option>
+                                <option value="06:30">06:30</option>
+                                <option value="07:00">07:00</option>
+                                <option value="07:30">07:30</option>
+                                <option value="08:00">08:00</option>
+                                <option value="08:30">08:30</option>
+                                <option value="09:00">09:00</option>
+                                <option value="09:30">09:30</option>
+                                <option value="10:00">10:00</option>
+                                <option value="10:30">10:30</option>
+                                <option value="11:00">11:00</option>
+                                <option value="11:30">11:30</option>
+                                <option value="12:00">12:00</option>
+                                <option value="12:30">12:30</option>
+                                <option value="13:00">13:00</option>
+                                <option value="13:30">13:30</option>
+                                <option value="14:00">14:00</option>
+                                <option value="14:30">14:30</option>
+                                <option value="15:00">15:00</option>
+                                <option value="15:30">15:30</option>
+                                <option value="16:00">16:00</option>
+                                <option value="16:30">16:30</option>
+                                <option value="17:00">17:00</option>
+                                <option value="17:30">17:30</option>
+                                <option value="18:00">18:00</option>
+                                <option value="18:30">18:30</option>
+                                <option value="19:00">19:00</option>
+                                <option value="19:30">19:30</option>
+                                <option value="20:00">20:00</option>
+                                <option value="20:30">20:30</option>
+                                <option value="21:00">21:00</option>
+                                <option value="21:30">21:30</option>
+                                <option value="22:00">22:00</option>
+                                <option value="22:30">22:30</option>
+                                <option value="23:00">23:00</option>
+                                <option value="23:30">23:30</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label for="closer-time">Closing Time</label>
+                            <select class="d-block" name="closer-time" id="closer-time" v-model="formRegister.closer_time">
+                                <option value="00:00">00:00</option>
+                                <option value="00:30">00:30</option>
+                                <option value="01:00">01:00</option>
+                                <option value="01:30">01:30</option>
+                                <option value="02:00">02:00</option>
+                                <option value="02:30">02:30</option>
+                                <option value="03:00">03:00</option>
+                                <option value="03:30">03:30</option>
+                                <option value="04:00">04:00</option>
+                                <option value="04:30">04:30</option>
+                                <option value="05:00">05:00</option>
+                                <option value="05:30">05:30</option>
+                                <option value="06:00">06:00</option>
+                                <option value="06:30">06:30</option>
+                                <option value="07:00">07:00</option>
+                                <option value="07:30">07:30</option>
+                                <option value="08:00">08:00</option>
+                                <option value="08:30">08:30</option>
+                                <option value="09:00">09:00</option>
+                                <option value="09:30">09:30</option>
+                                <option value="10:00">10:00</option>
+                                <option value="10:30">10:30</option>
+                                <option value="11:00">11:00</option>
+                                <option value="11:30">11:30</option>
+                                <option value="12:00">12:00</option>
+                                <option value="12:30">12:30</option>
+                                <option value="13:00">13:00</option>
+                                <option value="13:30">13:30</option>
+                                <option value="14:00">14:00</option>
+                                <option value="14:30">14:30</option>
+                                <option value="15:00">15:00</option>
+                                <option value="15:30">15:30</option>
+                                <option value="16:00">16:00</option>
+                                <option value="16:30">16:30</option>
+                                <option value="17:00">17:00</option>
+                                <option value="17:30">17:30</option>
+                                <option value="18:00">18:00</option>
+                                <option value="18:30">18:30</option>
+                                <option value="19:00">19:00</option>
+                                <option value="19:30">19:30</option>
+                                <option value="20:00">20:00</option>
+                                <option value="20:30">20:30</option>
+                                <option value="21:00">21:00</option>
+                                <option value="21:30">21:30</option>
+                                <option value="22:00">22:00</option>
+                                <option value="22:30">22:30</option>
+                                <option value="23:00">23:00</option>
+                                <option value="23:30">23:30</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label for="phone-number">Phone Number</label>
+                            <input type="text" name="phone-number" id="phone-number" v-model="formRegister.phone" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <input type="text" placeholder="Image" v-model="formRegister.image" />
+                            <label for="image">Image URL</label>
+                            <input type="text" name="image" id="image" v-model="formRegister.image" />
                         </div>
                         <div class="col-6">
-                            <input type="text" placeholder="Logo" v-model="formRegister.logo" />
+                            <label for="image">Logo URL</label>
+                            <input type="text" name="logo" id="logo" v-model="formRegister.logo" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <input type="text" placeholder="Phone Number" v-model="formRegister.phone" />
                         </div>
                         <div class="col-12">
-                            <textarea class="w-100" cols="30" rows="5"
-                                v-model="formRegister.description">Type Description</textarea>
+                            <label for="description">Description</label>
+                            <textarea name="description" id="description" class="w-100" cols="30" rows="2"
+                                v-model="formRegister.description"></textarea>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <input type="password" placeholder="Password" v-model="formRegister.password" />
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" v-model="formRegister.password" />
                         </div>
                         <div class="col-6">
-                            <input type="password" placeholder="Confirm Password" v-model="formRegister.password_confirm" />
+                            <label for="password-confirm">Confirm Password</label>
+                            <input type="password" name="password-confirm" id="password-confirm" v-model="formRegister.password_confirm" />
                         </div>
                     </div>
                     <button>Sign Up</button>
@@ -273,9 +385,11 @@ function signIn() {
                         </svg>
                     </a>
                 </div>
-                <span>or use your account</span>
-                <input type="email" placeholder="Email" v-model="formLogin.email" />
-                <input type="password" placeholder="Password" v-model="formLogin.password" />
+                <span class="mb-5">or use your account</span>
+                <label for="login-email">Email</label>
+                <input type="email" class="mb-4" name="login-email" id="login-email" v-model="formLogin.email" />
+                <label for="login-password">Password</label>
+                <input type="password" name="login-password" id="login-password" v-model="formLogin.password" />
                 <a href="#" style="color: #faf9f5">Forgot your password?</a>
                 <button>Sign In</button>
             </form>
@@ -283,14 +397,16 @@ function signIn() {
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
-                    <h1>Welcome Back!</h1>
-                    <p>To keep connected with us please login with your personal info</p>
+                    <h1>Already registered?</h1>
+                    <p>Don’t be shy like a boo and log in with your personal info!</p>
                     <button class="ghost" @click="signIn">Sign In</button>
+                    <img class="w-50" src="../assets/logos/green_ghost.svg" alt="Boo Green Logo">
                 </div>
                 <div class="overlay-panel overlay-right">
-                    <h1>Hello, Friend!</h1>
-                    <p>Enter your personal details and start journey with us</p>
+                    <h1>Ready for a spooky adventure?</h1>
+                    <p>Enter your personal details and start journey with us!</p>
                     <button class="ghost" @click="signUp">Sign Up</button>
+                    <img class="w-50" src="../assets/logos/green_ghost.svg" alt="Boo Green Logo">
                 </div>
             </div>
         </div>
@@ -305,22 +421,27 @@ h2 {
 }
 
 p {
-    font-size: 14px;
-    font-weight: 100;
-    line-height: 20px;
-    letter-spacing: 0.5px;
     margin: 20px 0 30px;
+    font-size: 1.2rem;
 }
 
 span {
-    font-size: 12px;
+    font-size: 1rem;
 }
 
 a {
     color: #333;
-    font-size: 14px;
+    font-size: 1.2rem;
     text-decoration: none;
     margin: 15px 0;
+}
+
+img {
+    transition: all .3s ease;
+    
+    &:hover {
+        filter: brightness(1.1);
+    }
 }
 
 button {
@@ -334,6 +455,11 @@ button {
     letter-spacing: 1px;
     text-transform: uppercase;
     transition: transform 80ms ease-in;
+    transition: filter .3s ease;
+
+    &:hover {
+        filter: brightness(1.1);
+    }
 }
 
 button:active {
@@ -357,37 +483,57 @@ form {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 0 15px;
+    padding: 0 .7rem;
     height: 100%;
     text-align: center;
 }
 
-input {
-    background-color: #eee;
+label {
+    background-color: $secYellow;
+    padding: .1rem 1.5rem;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    color: black;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+input,
+select {
+    background-color: white;
     border: none;
-    padding: 12px 15px;
-    margin: 8px 0;
+    padding: .5rem;
     width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 20px;
+
+    &:focus {
+        outline: 3px solid $secYellow;
+    }
+}
+
+textarea {
+    resize: none;
+    margin-bottom: 1rem;
+    border-radius: 20px;
+
+    &:focus {
+        outline: 3px solid $secYellow;
+    }
 }
 
 .container {
     background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
-        0 10px 10px rgba(0, 0, 0, 0.22);
     position: relative;
     overflow: hidden;
-    width: 1200px;
-    min-height: 800px;
+    height: calc(100vh - 95px);
     z-index: 0;
-    margin-top: 10rem;
-    margin-bottom: 10rem;
 }
 
 .form-container {
     position: absolute;
-    top: 0;
-    height: 100%;
+    top: 10%;
+    height: 80%;
     transition: all 0.6s ease-in-out;
 }
 
@@ -432,10 +578,10 @@ input {
 
 .overlay-container {
     position: absolute;
-    top: 0;
+    top: 10%;
     left: 50%;
     width: 50%;
-    height: 100%;
+    height: 80%;
     overflow: hidden;
     transition: transform 0.6s ease-in-out;
     z-index: 100;
@@ -454,6 +600,7 @@ input {
     width: 200%;
     transform: translateX(0);
     transition: transform 0.6s ease-in-out;
+    border-radius: 20px;
 }
 
 .container.right-panel-active .overlay {
@@ -505,6 +652,19 @@ input {
     margin: 0 5px;
     height: 40px;
     width: 40px;
+    transition: all .3s ease;
+
+    svg {
+        transition: all .3s ease;
+    }
+
+    &:hover {
+        border: 1px solid $secYellow;
+    }
+
+    &:hover svg {
+        fill: $secYellow;
+    }
 }
 
 /**MEDIA QUERIES**/
