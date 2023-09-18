@@ -17,10 +17,8 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <!-- My Account  -->
-            <li class="nav-item" @click=" this.$router.push({
-                name: 'MyAccount'
-            })">
-                <a href=" #"
+            <li class="nav-item">
+                <router-link to="myaccount" href=" #"
                     class="nav-link my_nav-link active d-flex align-items-center justify-content-center justify-content-md-start"
                     aria-current="page">
                     <svg class="icon me-md-2 active" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
@@ -34,13 +32,11 @@ c0,11.3-9,20.6-20.4,20.6H37.2z" />
                     </svg>
 
                     <span class="d-none d-md-block">Account</span>
-                </a>
+                </router-link>
             </li>
             <!-- Dishes  -->
-            <li @click=" this.$router.push({
-                name: 'Dishes'
-            })">
-                <a href="#"
+            <li>
+                <router-link to="dishes" href="#"
                     class="nav-link my_nav-link  d-flex align-items-center justify-content-center justify-content-md-start">
                     <svg class="icon me-md-2" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 150"
@@ -59,13 +55,11 @@ c0.9-1.2,0.7-2.8-0.5-3.6c-1.2-0.9-2.8-0.7-3.6,0.5c-2.8,3.8-4.2,8.5-4.2,13.2C40.3
 
                     <span class="d-none d-md-block">Dishes</span>
 
-                </a>
+                </router-link>
             </li>
             <!-- Orders -->
-            <li @click=" this.$router.push({
-                name: 'Orders'
-            })">
-                <a href="#"
+            <li>
+                <router-link to="orders" href="#"
                     class="nav-link my_nav-link  d-flex align-items-center justify-content-center justify-content-md-start">
                     <svg class="icon me-md-2" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 150"
@@ -86,13 +80,11 @@ z" />
 
                     <span class="d-none d-md-block">Orders</span>
 
-                </a>
+                </router-link>
             </li>
             <!-- Analytics -->
-            <li @click=" this.$router.push({
-                name: 'Analytics'
-            })">
-                <a href="#"
+            <li>
+                <router-link to="analytics" href="#"
                     class="nav-link my_nav-link d-flex align-items-center justify-content-center justify-content-md-start">
                     <svg class="icon me-md-2" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 150"
@@ -121,10 +113,27 @@ c0-0.7,0.7-1.3,1.3-2c0.7-0.7,1.3-0.7,2.7-1.3c1.3-0.7,2.7-0.7,4-0.7h2.7V33.9L27.2
                         </g>
                     </svg>
                     <span class="d-none d-md-block">Analytics</span>
-                </a>
+                </router-link>
             </li>
 
         </ul>
+
+        <router-link to="myaccount" class="button">
+            <span class="material-icons"></span>
+            <span class="text">My account</span>
+        </router-link>
+        <router-link to="dishes" class="button">
+            <span class="material-icons"></span>
+            <span class="text">Dishes</span>
+        </router-link>
+        <router-link to="orders" class="button">
+            <span class="material-icons"></span>
+            <span class="text">Orders</span>
+        </router-link>
+        <router-link to="analytics" class="button">
+            <span class="material-icons"></span>
+            <span class="text">Analitycs</span>
+        </router-link>
     </div>
 </template>
 
@@ -182,5 +191,6 @@ export default {
         color: $secYellow;
         fill: $secYellow;
     }
+
 }
 </style>
