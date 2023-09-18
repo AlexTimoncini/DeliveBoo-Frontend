@@ -70,7 +70,7 @@ export default{
             z-index: 1;
 
             .card__info-title {
-                height: 150px;
+                height: 250px;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
