@@ -8,8 +8,8 @@
                 <DashboardNavbar />
                 <div class="my_app p-4">
                     <div class="table-container">
-                        <div class="d-flex justify-content-between my-table-header">
-                            <h2 class="mb-0">Your Orders List</h2>
+                        <div class="d-block d-md-flex justify-content-between my-table-header">
+                            <h2 class="mb-3 mb-md-0 ">Your Orders List</h2>
                             <form action="">
                                 <select class="form-select" aria-label="Default select example">
                                     <option selected>This Week</option>
@@ -23,8 +23,8 @@
                             <thead class="">
                                 <tr class="">
                                     <th class="my_thead px-4" scope="col">Order Id</th>
-                                    <th class="my_thead px-4" scope="col">Last Name</th>
-                                    <th class="my_thead px-4" scope="col">First Name</th>
+                                    <th class="my_thead px-4 d-none d-md-table-cell" scope="col">Last Name</th>
+                                    <th class="my_thead px-4 d-none d-md-table-cell" scope="col">First Name</th>
                                     <th class="my_thead px-4" scope="col">Bill</th>
                                     <th class="my_thead px-4" scope="col">View Order</th>
                                 </tr>
@@ -32,8 +32,8 @@
                             <tbody>
                                 <tr class="px-4">
                                     <th class="px-4 " scope="row">1</th>
-                                    <td class="px-4">Mark</td>
-                                    <td class="px-4">Otto</td>
+                                    <td class="px-4 d-none d-md-table-cell">Mark</td>
+                                    <td class="px-4 d-none d-md-table-cell">Otto</td>
                                     <td class="px-4"><span>€</span><span>23</span></td>
                                     <td class="px-4"><button class="btn my_btn m-0" @click=" this.$router.push({
                                         name: 'OrderShow',
@@ -42,8 +42,8 @@
                                 </tr>
                                 <tr class="px-4">
                                     <th class="px-4" scope="row">1</th>
-                                    <td class="px-4">Mark</td>
-                                    <td class="px-4">Otto</td>
+                                    <td class="px-4 d-none d-md-table-cell">Mark</td>
+                                    <td class="px-4 d-none d-md-table-cell">Otto</td>
                                     <td class="px-4"><span>€</span><span>45</span></td>
                                     <td class="px-4"><button class="btn my_btn m-0" @click=" this.$router.push({
                                         name: 'OrderShow',
@@ -52,8 +52,8 @@
                                 </tr>
                                 <tr class="px-4">
                                     <th class="px-4" scope="row">1</th>
-                                    <td class="px-4">Mark</td>
-                                    <td class="px-4">Otto</td>
+                                    <td class="px-4 d-none d-md-table-cell">Mark</td>
+                                    <td class="px-4 d-none d-md-table-cell">Otto</td>
                                     <td class="px-4"><span>€</span><span>12</span></td>
                                     <td class="px-4"><button class="btn my_btn m-0" @click=" this.$router.push({
                                         name: 'OrderShow',
