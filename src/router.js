@@ -5,6 +5,7 @@ import AdvanceSearch from './views/AdvanceSearch.vue';
 import RestaurantMenu from './views/RestaurantMenu.vue';
 import LoginRestaurant from './views/LoginRestaurant.vue';
 import CartCheckout from './views/CartCheckout.vue';
+import OrderSuccess from './views/OrderSuccess.vue';
 import MyAccount from './views/admin/MyAccount.vue';
 import Dishes from './views/admin/Dishes.vue';
 import Orders from './views/admin/Orders.vue';
@@ -48,6 +49,11 @@ const router = createRouter({
             path: '/cart',
             name: 'CartCheckout',
             component: CartCheckout
+        },
+        {
+            path: '/ordersuccess',
+            name: 'OrderSuccess',
+            component: OrderSuccess
         },
         {
             path: '/404',
