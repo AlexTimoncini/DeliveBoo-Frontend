@@ -18,7 +18,7 @@
         <ul class="nav nav-pills flex-column mb-auto">
             <!-- My Account  -->
             <li class="nav-item">
-                <router-link to="myaccount" href=" #"
+                <router-link :to="{ name: 'MyAccount' }" href=" #"
                     class="nav-link my_nav-link d-flex align-items-center justify-content-center justify-content-md-start"
                     aria-current="page">
                     <svg class="icon me-md-2 active" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +36,7 @@ c0,11.3-9,20.6-20.4,20.6H37.2z" />
             </li>
             <!-- Dishes  -->
             <li>
-                <router-link to="dishes" href="#"
+                <router-link :to="{ name: 'Dishes' }" href="#"
                     class="nav-link my_nav-link  d-flex align-items-center justify-content-center justify-content-md-start">
                     <svg class="icon me-md-2" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 150"
@@ -59,7 +59,7 @@ c0.9-1.2,0.7-2.8-0.5-3.6c-1.2-0.9-2.8-0.7-3.6,0.5c-2.8,3.8-4.2,8.5-4.2,13.2C40.3
             </li>
             <!-- Orders -->
             <li>
-                <router-link to="orders" href="#"
+                <router-link :to="{ name: 'Orders' }" href="#"
                     class="nav-link my_nav-link  d-flex align-items-center justify-content-center justify-content-md-start">
                     <svg class="icon me-md-2" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 150"
