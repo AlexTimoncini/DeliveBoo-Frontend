@@ -8,7 +8,7 @@ export default{
     <div class="container">
         <div class="row">
             <div class="col-8 img-box">
-                <img src="../assets/jumbo/workInProgress_jumbo.png" alt="work in progress deliveroo image" draggable="false">
+                <img src="../assets/mascotte/boo-404.png" alt="not found boo image" draggable="false">
             </div>
         </div>
     </div>
