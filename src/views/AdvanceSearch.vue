@@ -31,39 +31,39 @@ export default {
         }
     },
     methods: {
-        getTypes(){
+        getTypes() {
             axios.get(store.ApiUrl + 'types')
-                .then( (response) => {
+                .then((response) => {
                     this.allTypes = response.data.data;
                     this.visibleTypesXl = response.data.data.slice(3, 11);
                     this.visibleTypesLarge = response.data.data.slice(3, 10);
                     this.visibleTypesSmall = response.data.data.slice(3, 8);
-            })
+                })
                 .catch(function (error) {
                     console.log(error);
-            });
+                });
         },
-        getBestRestaurants(){
+        getBestRestaurants() {
             axios.get(store.ApiUrl + 'restaurants/bestSeller')
-                .then( (response) => {
+                .then((response) => {
                     store.bestSellers = response.data.data;
                 })
                 .catch(function (error) {
                     console.log(error);
-            });
+                });
         },
-        getCategories(){
+        getCategories() {
             axios.get(store.ApiUrl + 'categories')
-                .then( (response) => {
+                .then((response) => {
                     this.allCategories = response.data.data;
                     this.visibleCategories = response.data.data.slice(1, 10);
-            })
+                })
                 .catch(function (error) {
                     console.log(error);
-            });
+                });
         },
-        searchRestaurant(typeOrCategory, id){
-            if(typeOrCategory === 'type'){
+        searchRestaurant(typeOrCategory, id) {
+            if (typeOrCategory === 'type') {
                 const typeParams = {
                     searchbar: '',
                     type_ids: [id],
@@ -72,15 +72,15 @@ export default {
                 const query = JSON.stringify(typeParams);
                 const url = store.ApiUrl + 'restaurants/search/advance/' + query;
                 axios.get(url)
-                .then( (response) => {
-                    this.filteredRestaurants = response.data.data;
-                    console.log(this.filteredRestaurants);
-                })
-                .catch( (error) => {
-                    console.log(error);
-                    this.$router.push('/404');
-                });
-            } else if(typeOrCategory === 'category'){
+                    .then((response) => {
+                        this.filteredRestaurants = response.data.data;
+                        console.log(this.filteredRestaurants);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        this.$router.push('/404');
+                    });
+            } else if (typeOrCategory === 'category') {
                 const categoryParams = {
                     searchbar: '',
                     type_ids: [],
@@ -89,40 +89,40 @@ export default {
                 const query = JSON.stringify(categoryParams);
                 const url = store.ApiUrl + 'restaurants/search/advance/' + query;
                 axios.get(url)
-                .then( (response) => {
-                    this.filteredRestaurants = response.data.data;
-                    console.log(this.filteredRestaurants);
-                })
-                .catch( (error) => {
-                    console.log(error);
-                    this.$router.push('/404');
-                });
+                    .then((response) => {
+                        this.filteredRestaurants = response.data.data;
+                        console.log(this.filteredRestaurants);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        this.$router.push('/404');
+                    });
             } else {
                 this.params.searchbar = this.search;
                 const query = JSON.stringify(this.params);
                 const url = store.ApiUrl + 'restaurants/search/advance/' + query;
                 axios.get(url)
-                .then( (response) => {
-                    this.filteredRestaurants = response.data.data;
-                    console.log(this.filteredRestaurants);
-                })
-                .catch( (error) => {
-                    console.log(error);
-                    this.$router.push('/404');
-                });
+                    .then((response) => {
+                        this.filteredRestaurants = response.data.data;
+                        console.log(this.filteredRestaurants);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        this.$router.push('/404');
+                    });
             }
         },
-        sidebarCheckboxHandler(typeOrCategory, id){
-            if(typeOrCategory === 'type'){
-                if(this.params.type_ids.includes(id)){
+        sidebarCheckboxHandler(typeOrCategory, id) {
+            if (typeOrCategory === 'type') {
+                if (this.params.type_ids.includes(id)) {
                     let index = this.params.type_ids.indexOf(id);
                     this.params.type_ids.splice(index, 1);
                 } else {
                     this.params.type_ids.push(id);
                 }
             }
-            if(typeOrCategory === 'category'){
-                if(this.params.category_ids.includes(id)){
+            if (typeOrCategory === 'category') {
+                if (this.params.category_ids.includes(id)) {
                     let index = this.params.category_ids.indexOf(id);
                     this.params.category_ids.splice(index, 1);
                 } else {
@@ -132,7 +132,7 @@ export default {
             console.log(this.params);
         }
     },
-    mounted(){
+    mounted() {
         this.getTypes();
         this.getBestRestaurants();
         this.getCategories();
@@ -161,7 +161,8 @@ export default {
                         </path>
                     </svg>
                 </label>
-                <input type="text" id="home-searchbar" placeholder="Search here" v-model="search" @keyup.enter="searchRestaurant()">
+                <input type="text" id="home-searchbar" placeholder="Search here" v-model="search"
+                    @keyup.enter="searchRestaurant()">
             </div>
         </div>
 
@@ -239,7 +240,8 @@ export default {
 
                                 <div class="my_select" v-for="type in allTypes">
 
-                                    <input class="my_checkbox" type="checkbox" :id="type.name" name="type" :value="type.id" @click="sidebarCheckboxHandler('type', type.id), searchRestaurant()">
+                                    <input class="my_checkbox" type="checkbox" :id="type.name" name="type" :value="type.id"
+                                        @click="sidebarCheckboxHandler('type', type.id), searchRestaurant()">
                                     <label :for="type.name">{{ type.name }}</label>
                                 </div>
 
@@ -259,7 +261,9 @@ export default {
                         </h2>
                         <div id="flush-collapseTwo" class="accordion-collapse " aria-labelledby="flush-headingTwo">
                             <div class="my_select" v-for="category in allCategories">
-                                <input class="my_checkbox" type="checkbox" :id="category.name + 'c'" name="type" :value="category.id" @click="sidebarCheckboxHandler('category', category.id), searchRestaurant()">
+                                <input class="my_checkbox" type="checkbox" :id="category.name + 'c'" name="type"
+                                    :value="category.id"
+                                    @click="sidebarCheckboxHandler('category', category.id), searchRestaurant()">
                                 <label :for="category.name + 'c'">{{ category.name }}</label>
                             </div>
                         </div>
@@ -287,7 +291,7 @@ export default {
             <!-- Main -->
 
             <div class="my_main col-12 col-md-9 mt-4">
-                <div  class="container">
+                <div class="container">
                     <div v-if="filteredRestaurants.length === 0" class="row">
                         <!-- Best sellers  -->
                         <div class="col-12 mb-4">
@@ -298,14 +302,14 @@ export default {
                         <!-- New in town -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">New in Town</h3>
-                            <Slider :slides="store.bestSellers" :autoplay="0" :pagination="false" :title="true" 
-                            :navigation="true" />
+                            <Slider :slides="store.bestSellers" :autoplay="0" :pagination="false" :title="true"
+                                :navigation="true" />
                         </div>
                         <!-- Free delivery -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">Free delivery under 10 bucks</h3>
-                            <Slider :slides="store.bestSellers" :autoplay="0" :pagination="false" :title="true" 
-                            :navigation="true" />
+                            <Slider :slides="store.bestSellers" :autoplay="0" :pagination="false" :title="true"
+                                :navigation="true" />
                         </div>
                         <!-- Discover more -->
                         <div class="col-12 mb-4">
@@ -425,7 +429,7 @@ export default {
         font-weight: 700;
     }
 
-    .pill-container{
+    .pill-container {
         column-gap: 1rem;
     }
 
@@ -538,6 +542,19 @@ div.search-page-container {
                 }
 
                 input[type="range"]::-moz-range-thumb {
+                    background-color: $priGreen;
+                    border: 1px solid white;
+                }
+
+                input[type=range]::-ms-track {
+                    position: relative;
+                    height: 6px;
+                    background-color: rgb(218, 218, 218);
+                    border-radius: 6px;
+                    pointer-events: auto;
+                }
+
+                input[type=range]::-ms-thumb {
                     background-color: $priGreen;
                     border: 1px solid white;
                 }
