@@ -565,53 +565,6 @@ div.search-page-container {
 
                 }
 
-
-                //    input.input-range::-webkit-slider-runnable-track {
-                //         position: relative;
-                //         height: 6px;
-                //         background-color: rgb(218, 218, 218);
-                //         border-radius: 6px;
-                //         pointer-events: auto;
-                //     }
-
-                //     input.input-range[type="range"]::-webkit-slider-thumb {
-                //         background-color: $priGreen;
-                //         border: 1px solid white;
-                //         position: relative;
-                //         top: -5px;
-                //     }
-
-                //     input[type=range]:focus::-webkit-slider-runnable-track {
-                //         background: #ccc;
-
-                //     }
-
-                //     input[type="range"]::-moz-range-track {
-                //         position: relative;
-                //         height: 6px;
-                //         background-color: rgb(218, 218, 218);
-                //         border-radius: 6px;
-                //         pointer-events: auto;
-                //     }
-
-                //     input[type="range"]::-moz-range-thumb {
-                //         background-color: $priGreen;
-                //         border: 1px solid white;
-                //     } 
-
-                //     input[type=range]::-ms-track {
-                //         position: relative;
-                //         height: 6px;
-                //         background-color: rgb(218, 218, 218);
-                //         border-radius: 6px;
-                //         pointer-events: auto;
-                //     }
-
-                //     input[type=range]::-ms-thumb {
-                //         background-color: $priGreen;
-                //         border: 1px solid white;
-                //     }
-
             }
 
         }
@@ -690,5 +643,11 @@ div.search-page-container {
         }
     }
 
+}
+
+@media (max-width: $small) {
+    h5 {
+        font-size: 1.05rem;
+    }
 }
 </style>
