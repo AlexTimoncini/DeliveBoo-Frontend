@@ -31,54 +31,108 @@ export default {
         }
     },
     methods: {
-        getTypes() {
+        getTypes(){
             axios.get(store.ApiUrl + 'types')
-                .then((response) => {
+                .then( (response) => {
                     this.allTypes = response.data.data;
                     this.visibleTypesXl = response.data.data.slice(3, 11);
                     this.visibleTypesLarge = response.data.data.slice(3, 10);
                     this.visibleTypesSmall = response.data.data.slice(3, 8);
-                })
+            })
                 .catch(function (error) {
-                    console.log('ops');
+                    console.log(error);
             });
         },
-        getBestRestaurants() {
+        getBestRestaurants(){
             axios.get(store.ApiUrl + 'restaurants/bestSeller')
-                .then((response) => {
+                .then( (response) => {
                     store.bestSellers = response.data.data;
                 })
                 .catch(function (error) {
                     console.log(error);
-                });
+            });
         },
-        getCategories() {
+        getCategories(){
             axios.get(store.ApiUrl + 'categories')
-                .then((response) => {
+                .then( (response) => {
                     this.allCategories = response.data.data;
                     this.visibleCategories = response.data.data.slice(1, 10);
-                    console.log(this.visibleCategories);
             })
                 .catch(function (error) {
                     console.log(error);
-                });
-        },
-        searchRestaurant(){
-            this.params.searchbar = this.search;
-            let query = encodeURIComponent(JSON.stringify(this.params));
-            axios.get(store.ApiUrl + 'search/advance/' + query)
-            .then( (response) => {
-                this.filteredRestaurants = response.data.data;
-                console.log(this.filteredRestaurants);
-            })
-            .catch(function (error) {
-                    console.log(query);
-                    console.log(error);
             });
         },
-        
+        searchRestaurant(typeOrCategory, id){
+            if(typeOrCategory === 'type'){
+                const typeParams = {
+                    searchbar: '',
+                    type_ids: [id],
+                    category_ids: []
+                }
+                const query = JSON.stringify(typeParams);
+                const url = store.ApiUrl + 'restaurants/search/advance/' + query;
+                axios.get(url)
+                .then( (response) => {
+                    this.filteredRestaurants = response.data.data;
+                    console.log(this.filteredRestaurants);
+                })
+                .catch( (error) => {
+                    console.log(error);
+                    this.$router.push('/404');
+                });
+            } else if(typeOrCategory === 'category'){
+                const categoryParams = {
+                    searchbar: '',
+                    type_ids: [],
+                    category_ids: [id]
+                }
+                const query = JSON.stringify(categoryParams);
+                const url = store.ApiUrl + 'restaurants/search/advance/' + query;
+                axios.get(url)
+                .then( (response) => {
+                    this.filteredRestaurants = response.data.data;
+                    console.log(this.filteredRestaurants);
+                })
+                .catch( (error) => {
+                    console.log(error);
+                    this.$router.push('/404');
+                });
+            } else {
+                this.params.searchbar = this.search;
+                const query = JSON.stringify(this.params);
+                const url = store.ApiUrl + 'restaurants/search/advance/' + query;
+                axios.get(url)
+                .then( (response) => {
+                    this.filteredRestaurants = response.data.data;
+                    console.log(this.filteredRestaurants);
+                })
+                .catch( (error) => {
+                    console.log(error);
+                    this.$router.push('/404');
+                });
+            }
+        },
+        sidebarCheckboxHandler(typeOrCategory, id){
+            if(typeOrCategory === 'type'){
+                if(this.params.type_ids.includes(id)){
+                    let index = this.params.type_ids.indexOf(id);
+                    this.params.type_ids.splice(index, 1);
+                } else {
+                    this.params.type_ids.push(id);
+                }
+            }
+            if(typeOrCategory === 'category'){
+                if(this.params.category_ids.includes(id)){
+                    let index = this.params.category_ids.indexOf(id);
+                    this.params.category_ids.splice(index, 1);
+                } else {
+                    this.params.category_ids.push(id);
+                }
+            }
+            console.log(this.params);
+        }
     },
-    mounted() {
+    mounted(){
         this.getTypes();
         this.getBestRestaurants();
         this.getCategories();
@@ -99,8 +153,7 @@ export default {
             <h1 class="me-3 mb-0 my_search_title">
                 What do you boona eat?
             </h1>
-            <div class="search-bar "
-                @keyup.enter="searchRestaurant()">
+            <div class="search-bar">
                 <label for="home-searchbar">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 101 101" id="search">
                         <path
@@ -235,7 +288,7 @@ export default {
 
             <div class="my_main col-12 col-md-9 mt-4">
                 <div  class="container">
-                    <div v-if="params == null" class="row">
+                    <div v-if="filteredRestaurants.length === 0" class="row">
                         <!-- Best sellers  -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">Our Best Sellers!</h3>
@@ -245,14 +298,14 @@ export default {
                         <!-- New in town -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">New in Town</h3>
-                            <Slider :slides="store.bestSellers" :autoplay="0" :pagination="false" :title="true"
-                                :navigation="true" />
+                            <Slider :slides="store.bestSellers" :autoplay="0" :pagination="false" :title="true" 
+                            :navigation="true" />
                         </div>
                         <!-- Free delivery -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">Free delivery under 10 bucks</h3>
-                            <Slider :slides="store.bestSellers" :autoplay="0" :pagination="false" :title="true"
-                                :navigation="true" />
+                            <Slider :slides="store.bestSellers" :autoplay="0" :pagination="false" :title="true" 
+                            :navigation="true" />
                         </div>
                         <!-- Discover more -->
                         <div class="col-12 mb-4">
@@ -349,9 +402,8 @@ export default {
         height: 100%;
         aspect-ratio: 1/1;
         cursor: pointer;
-        width: 50px;
         padding: 0 0.5rem;
-        background-color: $priGreen;
+        background-color: white;
         border: 1px 0 1px 1px solid $secYellow;
         border: 1px solid rgb(237, 237, 237);
         border-radius: 10px 0 0 10px;
@@ -360,7 +412,7 @@ export default {
         svg {
             height: 100%;
             aspect-ratio: 1/1;
-            fill: $fontWhite;
+            fill: $priGreen;
         }
     }
 }
@@ -373,7 +425,7 @@ export default {
         font-weight: 700;
     }
 
-    .pill-container {
+    .pill-container{
         column-gap: 1rem;
     }
 
@@ -479,15 +531,10 @@ div.search-page-container {
                     pointer-events: auto;
                 }
 
-                input[type=range]::-webkit-slider-thumb {
-                    -webkit-appearance: none;
-                    border: none;
-                    height: 20px;
-                    width: 20px;
-                    border-radius: 50%;
+                input[type="range"]::-webkit-slider-thumb {
                     background-color: $priGreen;
                     border: 1px solid white;
-                    margin-top: -7px;
+
                 }
 
                 input[type="range"]::-moz-range-thumb {
