@@ -26,7 +26,7 @@ export default {
             params: {
                 searchbar: '',
                 type_ids: [],
-                category_id: ''
+                category_ids: []
             }
         }
     },
@@ -40,7 +40,7 @@ export default {
                     this.visibleTypesSmall = response.data.data.slice(3, 8);
             })
                 .catch(function (error) {
-                    console.log('ops');
+                    console.log(error);
             });
         },
         getBestRestaurants(){
@@ -57,31 +57,87 @@ export default {
                 .then( (response) => {
                     this.allCategories = response.data.data;
                     this.visibleCategories = response.data.data.slice(1, 10);
-                    console.log(this.visibleCategories);
             })
                 .catch(function (error) {
                     console.log(error);
             });
         },
-        searchRestaurant(){
-            this.params.searchbar = this.search;
-            let query = encodeURIComponent(JSON.stringify(this.params));
-            axios.get(store.ApiUrl + 'search/advance/' + query)
-            .then( (response) => {
-                this.filteredRestaurants = response.data.data;
-                console.log(this.filteredRestaurants);
-            })
-            .catch(function (error) {
-                    console.log(query);
+        searchRestaurant(typeOrCategory, id){
+            if(typeOrCategory === 'type'){
+                const typeParams = {
+                    searchbar: '',
+                    type_ids: [id],
+                    category_ids: []
+                }
+                const query = JSON.stringify(typeParams);
+                const url = store.ApiUrl + 'restaurants/search/advance/' + query;
+                axios.get(url)
+                .then( (response) => {
+                    this.filteredRestaurants = response.data.data;
+                    console.log(this.filteredRestaurants);
+                })
+                .catch( (error) => {
                     console.log(error);
-            });
+                    this.$router.push('/404');
+                });
+            } else if(typeOrCategory === 'category'){
+                const categoryParams = {
+                    searchbar: '',
+                    type_ids: [],
+                    category_ids: [id]
+                }
+                const query = JSON.stringify(categoryParams);
+                const url = store.ApiUrl + 'restaurants/search/advance/' + query;
+                axios.get(url)
+                .then( (response) => {
+                    this.filteredRestaurants = response.data.data;
+                    console.log(this.filteredRestaurants);
+                })
+                .catch( (error) => {
+                    console.log(error);
+                    this.$router.push('/404');
+                });
+            } else {
+                this.params.searchbar = this.search;
+                const query = JSON.stringify(this.params);
+                const url = store.ApiUrl + 'restaurants/search/advance/' + query;
+                axios.get(url)
+                .then( (response) => {
+                    this.filteredRestaurants = response.data.data;
+                    console.log(this.filteredRestaurants);
+                })
+                .catch( (error) => {
+                    console.log(error);
+                    this.$router.push('/404');
+                });
+            }
         },
-        
+        sidebarCheckboxHandler(typeOrCategory, id){
+            if(typeOrCategory === 'type'){
+                if(this.params.type_ids.includes(id)){
+                    let index = this.params.type_ids.indexOf(id);
+                    this.params.type_ids.splice(index, 1);
+                } else {
+                    this.params.type_ids.push(id);
+                }
+            }
+            if(typeOrCategory === 'category'){
+                if(this.params.category_ids.includes(id)){
+                    let index = this.params.category_ids.indexOf(id);
+                    this.params.category_ids.splice(index, 1);
+                } else {
+                    this.params.category_ids.push(id);
+                }
+            }
+            console.log(this.params);
+        }
     },
     mounted(){
         this.getTypes();
         this.getBestRestaurants();
         this.getCategories();
+        this.search = this.$route.params.searchInput;
+        this.searchRestaurant();
     }
 }
 </script>
@@ -97,8 +153,7 @@ export default {
             <h1 class="me-3 mb-0 my_search_title">
                 What do you boona eat?
             </h1>
-            <div class="search-bar "
-                @keyup.enter="searchRestaurant()">
+            <div class="search-bar">
                 <label for="home-searchbar">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 101 101" id="search">
                         <path
@@ -106,7 +161,7 @@ export default {
                         </path>
                     </svg>
                 </label>
-                <input type="text" id="home-searchbar" placeholder="Search here" v-model="search">
+                <input type="text" id="home-searchbar" placeholder="Search here" v-model="search" @keyup.enter="searchRestaurant()">
             </div>
         </div>
 
@@ -114,7 +169,7 @@ export default {
         <div class="select-type d-none d-md-block">
             <div class="container d-flex justify-content-center pill-container">
                 <a href="#" v-for="type in visibleTypesXl" class="type-pill d-none d-xl-block"
-                    @click="this.$router.push({ name: 'AdvanceSearch', params: { searchType: 'type', searchInput: '0' } })">
+                    @click="searchRestaurant('type', type.id)">
 
                     <div class="type_pill d-flex align-items-center">
                         <img class="type-icon" :src="type.logo" alt="">
@@ -122,7 +177,7 @@ export default {
                     </div>
                 </a>
                 <a href="#" v-for="type in visibleTypesLarge" class="type-pill d-none d-lg-block d-xl-none"
-                    @click="this.$router.push({ name: 'AdvanceSearch', params: { searchType: 'type', searchInput: '0' } })">
+                    @click="searchRestaurant('type', type.id)">
 
                     <div class="type_pill d-flex align-items-center">
                         <img class="type-icon" :src="type.logo" alt="">
@@ -130,7 +185,7 @@ export default {
                     </div>
                 </a>
                 <a href="#" v-for="type in visibleTypesSmall" class="type-pill d-none d-md-block d-lg-none"
-                    @click="this.$router.push({ name: 'AdvanceSearch', params: { searchType: 'type', searchInput: '0' } })">
+                    @click="searchRestaurant('type', type.id)">
 
                     <div class="type_pill d-flex align-items-center">
                         <img class="type-icon" :src="type.logo" alt="">
@@ -144,7 +199,7 @@ export default {
         <div class="select-category d-none d-md-block">
             <div class="container d-flex justify-content-center p-2">
                 <a href="#" class="category-pills" v-for="category in visibleCategories"
-                    @click="this.$router.push({ name: 'AdvanceSearch', params: { searchType: 'category', searchInput: '0' } })">
+                    @click="searchRestaurant('category', category.id)">
                     <p class="m-0">{{ category.name }}</p>
                 </a>
             </div>
@@ -155,11 +210,10 @@ export default {
     <div class=" container-fluid ">
         <div class=" row d-flex search-page-container">
             <!-- Sidebar -->
-            <div class="my_sidebar col-3 d-none d-md-block">
+            <form class="my_sidebar col-3 d-none d-md-block" @submit.prevent="searchRestaurant()">
                 <!-- <h1>Cerca il tuo ristorante</h1> -->
                 <!-- Searchbar  -->
-                <div class="search-bar mb-4 d-md-none d-lg-flex"
-                    @keyup.enter="this.$router.push({ name: 'AdvanceSearch', params: { searchType: 'restaurant', searchInput: this.search } })">
+                <div class="search-bar mb-4 d-md-none d-lg-flex">
                     <label for="home-searchbar">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 101 101" id="search">
                             <path
@@ -185,8 +239,8 @@ export default {
 
                                 <div class="my_select" v-for="type in allTypes">
 
-                                    <input class="my_checkbox" type="checkbox" id="" name="type" :value="type.name">
-                                    <label for="type">{{ type.name }}</label>
+                                    <input class="my_checkbox" type="checkbox" :id="type.name" name="type" :value="type.id" @click="sidebarCheckboxHandler('type', type.id), searchRestaurant()">
+                                    <label :for="type.name">{{ type.name }}</label>
                                 </div>
 
                             </div>
@@ -205,8 +259,8 @@ export default {
                         </h2>
                         <div id="flush-collapseTwo" class="accordion-collapse " aria-labelledby="flush-headingTwo">
                             <div class="my_select" v-for="category in allCategories">
-                                <input class="my_checkbox" type="checkbox" id="" name="type" :value="category.name">
-                                <label for="type">{{ category.name }}</label>
+                                <input class="my_checkbox" type="checkbox" :id="category.name + 'c'" name="type" :value="category.id" @click="sidebarCheckboxHandler('category', category.id), searchRestaurant()">
+                                <label :for="category.name + 'c'">{{ category.name }}</label>
                             </div>
                         </div>
                     </div>
@@ -228,14 +282,13 @@ export default {
                     </div>
 
                 </div>
-
-            </div>
+            </form>
 
             <!-- Main -->
 
             <div class="my_main col-12 col-md-9 mt-4">
                 <div  class="container">
-                    <div v-if="params == null" class="row">
+                    <div v-if="filteredRestaurants.length === 0" class="row">
                         <!-- Best sellers  -->
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">Our Best Sellers!</h3>
@@ -284,13 +337,13 @@ export default {
                             </div>
                         </div>
                     </div>
-                    <div v-if="params == null" class="row">
+                    <div v-else class="row">
                         <div class="col-12 mb-4">
                             <h3 class="cards_title">{{ filteredRestaurants.length }} results</h3>
                             <div class="my_restaurant_card_container container-fluid">
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-6 col-lg-4 mb-4" v-for="restaurant in store.bestSellers"
-                                        @click="this.$router.push({ name: 'RestaurantMenu', params: { id: '0' } })">
+                                    <div class="col-sm-12 col-md-6 col-lg-4 mb-4" v-for="restaurant in filteredRestaurants"
+                                        @click="this.$router.push({ name: 'RestaurantMenu', params: { id: restaurant.id } })">
                                         <div class=" my_card d-flex justify-content-center align-items-center">
                                             <img class="img-fluid" :src="restaurant.image" alt="">
                                             <h3>{{ restaurant.name }}</h3>
