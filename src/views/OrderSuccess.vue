@@ -44,7 +44,7 @@ export default{
                             <li>Interior: <strong>2</strong></li>
                             <li>Doorbell: <strong>3</strong></li>
                         </div>
-                        <img class="d-none d-sm-block" src="../assets/mascotte/ghost_rider.png" alt="Boo Rider">
+                        <img class="d-none d-sm-block" src="../assets/mascotte/ghost_rider.png" alt="Boo Rider" draggable="false">
                     </div>
                 </ul>
                 <button>
@@ -88,6 +88,8 @@ div.container-fluid {
 
             p {
                 margin-bottom: 30px;
+                position: relative;
+                z-index: 1;
                 
                 svg {
                     fill: white;
@@ -101,6 +103,8 @@ div.container-fluid {
                 letter-spacing: 0.15rem;
                 text-shadow: 0 2px rgba(128, 128, 128, 0.6);
                 padding: 1rem;
+                position: relative;
+                z-index: 1;
             }
 
             ul.bg-bubbles {
