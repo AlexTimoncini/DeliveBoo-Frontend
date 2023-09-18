@@ -211,10 +211,10 @@ div.container-fluid {
                 width: 200px;
                 bottom: 0;
                 right: 0;
-                transition: all .5s ease-out;
+                transition: all .5s ease;
 
                 &:hover {
-                    transform: rotate(-20deg);
+                    transform: translateX(50px);
                 }
             }
 
