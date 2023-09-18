@@ -47,7 +47,11 @@ export default{
                         <img class="d-none d-sm-block" src="../assets/mascotte/ghost_rider.png" alt="Boo Rider">
                     </div>
                 </ul>
-                <button>Return to Home</button>
+                <button>
+                    <router-link :to="{ name: 'Homepage' }">
+                            <span>Return to Home</span>
+                        </router-link>
+                </button>
             </div>
         </div>
     </div>
@@ -214,7 +218,7 @@ div.container-fluid {
                 transition: all .5s ease;
 
                 &:hover {
-                    transform: translateX(50px);
+                    transform: translateX(40px);
                 }
             }
 
@@ -244,7 +248,13 @@ div.container-fluid {
                 transition: all .3s ease;
 
                 &:hover {
-                    background-color: #85ddbf;
+                    background-color: #00bb70;
+                }
+
+                a {
+                    color: white;
+                    font-size: 1.2rem;
+                    font-weight: 600;
                 }
             }
         }
