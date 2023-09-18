@@ -553,7 +553,7 @@ div.search-page-container {
                     background-color: $priGreen;
                     border: 1px solid white;
                     position: relative;
-                    top: -5px;
+                    top: -7px;
                 }
 
                 /******** Firefox ********/
@@ -562,7 +562,7 @@ div.search-page-container {
                     background-color: $priGreen;
                     border: 1px solid white;
                     position: relative;
-                    top: -5px;
+
                 }
 
 
