@@ -1,16 +1,33 @@
-<script>
-export default {
-    name: 'LoginRestaurant',
-    methods: {
-        signUp() {
-            let elementContainer = document.getElementById('container');
-            elementContainer.classList.add('right-panel-active')
-        },
-        signIn() {
-            let elementContainer = document.getElementById('container');
-            elementContainer.classList.remove('right-panel-active')
-        }
-    }
+<script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+const router = useRouter()
+const form = ref({
+    name: '',
+    email: '',
+    password: '',
+    password_confirm: ''
+})
+
+const registerUser = async () => {
+    await axios.post('/register', {
+        name: form.value.name,
+        email: form.value.email,
+        password: form.value.password,
+        password_confirmation: form.value.password_confirm
+    }).then((response) => {
+        console.log(response)
+    });
+    router.push('/');
+}
+function signUp() {
+    let elementContainer = document.getElementById('container');
+    elementContainer.classList.add('right-panel-active')
+};
+function signIn() {
+    let elementContainer = document.getElementById('container');
+    elementContainer.classList.remove('right-panel-active')
 }
 </script>
 
@@ -275,8 +292,8 @@ input {
         0 10px 10px rgba(0, 0, 0, 0.22);
     position: relative;
     overflow: hidden;
-    width: 768px;
-    min-height: 480px;
+    width: 1200px;
+    min-height: 600px;
     z-index: 0;
     margin-top: 10rem;
     margin-bottom: 10rem;
