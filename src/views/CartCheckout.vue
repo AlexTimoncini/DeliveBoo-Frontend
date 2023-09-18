@@ -26,11 +26,6 @@ export default {
             this.setTotalPrice();
             this.saveCart();
         },
-        decrementQuantity(dishObj) {
-            dishObj.quantity--;
-            this.setTotalPrice();
-            this.saveCart();
-        },
         saveCart() {
             const parsed = JSON.stringify(store.cart_list);
             localStorage.setItem('cart', parsed);
@@ -44,7 +39,6 @@ export default {
     },
     mounted() {
         this.setTotalPrice();
-        // localStorage.clear();
     },
 }
 
@@ -88,7 +82,7 @@ export default {
                             <option v-for="n, index in dish.quantity" :value="n" :selected="n == dish.quantity">{{ n }}
                             </option>
                         </select>
-                        <button class="btn_quantity  d-none d-sm-block" @click="decrementQuantity(dish)"><img class="minus"
+                        <button class="btn_quantity  d-none d-sm-block" @click="removeDishFromCart(index, 0)"><img class="minus"
                                 src="../assets/icons/noun-minus-1250855.png" alt="plus img" draggable="false"></button>
                         <button class="btn_quantity d-none d-sm-block" @click="incrementQuantity(dish)"><img
                                 src="../assets/icons/spooky_plus.png" alt="plus img" draggable="false"></button>
