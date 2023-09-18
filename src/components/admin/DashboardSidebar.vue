@@ -21,7 +21,7 @@
                 <router-link :to="{ name: 'MyAccount' }" href=" #"
                     class="nav-link my_nav-link d-flex align-items-center justify-content-center justify-content-md-start"
                     aria-current="page">
-                    <svg class="icon me-md-2 active" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
+                    <svg class="icon me-md-2" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 150"
                         style="enable-background:new 0 0 150 150;" xml:space="preserve">
                         <g>
