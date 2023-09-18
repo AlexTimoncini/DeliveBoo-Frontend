@@ -9,7 +9,7 @@
                 <div class="dish-edit">        
                     <h2>Hamburger alla frutta Edit</h2>
                     <div class="row align-items-center">
-                        <div class="dish-info col-6">
+                        <div class="dish-info col-12 col-md-6">
 
                             <form action="">
                                 <label for="name">Name</label>
@@ -44,7 +44,7 @@
                                         <input class="w-100" type="file" id="photo" name="photo">
                                     </div>
                                 </div>
-                                <button type="reset">
+                                <button type="reset" class="mb-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="reset"><path d="M9.5 1.293a6.47 6.47 0 0 0-6.462 6.46v3.002l-1.5-1.5-1.5 1.5 3.991 3.951 4.009-3.951-1.5-1.5-1.5 1.5v-3c0-2.46 2.001-4.462 4.462-4.462s4.462 2.001 4.462 4.462a4.468 4.468 0 0 1-1.458 3.298l1.348 1.479a6.476 6.476 0 0 0 2.11-4.777A6.47 6.47 0 0 0 9.5 1.293z"></path></svg>
                                     <span class="d-none d-md-inline">Reset</span>
                                 </button>
@@ -56,9 +56,9 @@
                                 </button>
                             </form>
                         </div>
-                        <div class="col-6">
-                            <img class="d-none d-lg-block" src="../../assets/mascotte/boo-edit.png" alt="Boo Edit Image">
-                            <img class="d-md-block d-lg-none p-3" src="../../assets/mascotte/boo-edit-sm.png" alt="Boo Edit Small Image">
+                        <div class="d-none d-md-block col-6">
+                            <img class="d-none d-lg-block" src="../../assets/mascotte/boo-edit.png" alt="Boo Edit Image" draggable="false">
+                            <img class="d-md-block d-lg-none p-3" src="../../assets/mascotte/boo-edit-sm.png" alt="Boo Edit Small Image" draggable="false">
                         </div>
                     </div>
                     <button>
@@ -88,8 +88,18 @@ export default {
 @use '../../styles/partials/variables' as *;
 @use '../../styles/partials/mixins' as *;
 
+    .my_app::-webkit-scrollbar {
+        display: none;
+    }
+
     div.dish-edit {
         padding: 5rem 2rem;
+        overflow-y: scroll;
+        height: calc(100vh - 95px - 80px);
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
 
         h2 {
             background-color: $priGreen;

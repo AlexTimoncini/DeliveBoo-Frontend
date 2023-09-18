@@ -10,6 +10,7 @@ import Dishes from './views/admin/Dishes.vue';
 import Orders from './views/admin/Orders.vue';
 import Analytics from './views/admin/Analytics.vue';
 import DishEdit from './views/admin/DishEdit.vue';
+import DishCreate from './views/admin/DishCreate.vue';
 import OrderShow from './views/admin/OrderShow.vue';
 import NotFound from './views/NotFound.vue';
 
@@ -74,12 +75,17 @@ const router = createRouter({
             component: Analytics
         },
         {
-            path: '/admin/dish/:id',
+            path: '/admin/edit/dish/:id',
             name: 'DishEdit',
             component: DishEdit
         },
         {
-            path: '/admin/order/:id',
+            path: '/admin/create/dish',
+            name: 'DishCreate',
+            component: DishCreate
+        },
+        {
+            path: '/admin/order/show/:id',
             name: 'OrderShow',
             component: OrderShow
         },

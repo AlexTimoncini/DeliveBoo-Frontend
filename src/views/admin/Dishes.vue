@@ -9,12 +9,25 @@
                 <div class="my_app px-5">
 
                     <div class="mt-4">
-
+                        <div class="d-flex justify-content-end">
+                            <button class="btn my_button" @click=" this.$router.push({
+                                name: 'DishCreate'
+                            })">
+                                <svg id=" add-dish" viewBox="0 0 800 800">
+                                    <path
+                                        d="m400,700c-18.4,0-33.3-14.9-33.3-33.3v-233.4h-233.4c-18.4,0-33.3-14.9-33.3-33.3s14.9-33.3,33.3-33.3h233.3v-233.4c0-18.4,14.9-33.3,33.3-33.3s33.3,14.9,33.3,33.3v233.3h233.3c18.4,0,33.3,14.9,33.3,33.3s-14.9,33.3-33.3,33.3h-233.2v233.3c0,18.6-14.9,33.5-33.3,33.5Z" />
+                                </svg>
+                            </button>
+                        </div>
                         <!-- Categories  -->
                         <div class="category mb-4 row">
-                            <h3 class="my_title col-12 mb-3 ps-md-3 ps-0">
-                                Panini
-                            </h3>
+
+                            <div class="">
+                                <h3 class="my_title col-12 mb-3 ps-md-3 ps-0">
+                                    Panini
+                                </h3>
+
+                            </div>
                             <!-- Cards  -->
                             <div class="col-12 col-md-6 col-lg-4 p-0 p-md-3">
                                 <div class="dish-card card-container p-3">

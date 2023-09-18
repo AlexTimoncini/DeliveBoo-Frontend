@@ -605,17 +605,7 @@ export default{
             const parsed = JSON.stringify(store.cart_list);
             localStorage.setItem('cart', parsed);
         }
-    }, 
-    mounted() {
-    if(localStorage.getItem('cart')){
-        try {
-            store.cart_list = JSON.parse(localStorage.getItem('cart'));
-        } catch(e) {
-            localStorage.removeItem('cart');
-        }
     }
-    // localStorage.clear();
-  },
 }
 </script>
 
