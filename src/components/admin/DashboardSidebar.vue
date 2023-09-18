@@ -19,7 +19,7 @@
             <!-- My Account  -->
             <li class="nav-item">
                 <router-link to="myaccount" href=" #"
-                    class="nav-link my_nav-link active d-flex align-items-center justify-content-center justify-content-md-start"
+                    class="nav-link my_nav-link d-flex align-items-center justify-content-center justify-content-md-start"
                     aria-current="page">
                     <svg class="icon me-md-2 active" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 150"
@@ -117,23 +117,6 @@ c0-0.7,0.7-1.3,1.3-2c0.7-0.7,1.3-0.7,2.7-1.3c1.3-0.7,2.7-0.7,4-0.7h2.7V33.9L27.2
             </li>
 
         </ul>
-
-        <router-link to="myaccount" class="button">
-            <span class="material-icons"></span>
-            <span class="text">My account</span>
-        </router-link>
-        <router-link to="dishes" class="button">
-            <span class="material-icons"></span>
-            <span class="text">Dishes</span>
-        </router-link>
-        <router-link to="orders" class="button">
-            <span class="material-icons"></span>
-            <span class="text">Orders</span>
-        </router-link>
-        <router-link to="analytics" class="button">
-            <span class="material-icons"></span>
-            <span class="text">Analitycs</span>
-        </router-link>
     </div>
 </template>
 
@@ -180,10 +163,13 @@ export default {
         background-color: rgba(255, 255, 255, 0.131);
     }
 
-    .active {
+    .my_nav-link.router-link-active {
         background-color: white;
-        color: $priGreen;
-        fill: $priGreen;
+        color: $priGreen ;
+
+        svg {
+            fill: $priGreen ;
+        }
     }
 
     .active:hover {
