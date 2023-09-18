@@ -1,21 +1,58 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 const router = useRouter()
-const form = ref({
+const formRegister = ref({
     name: '',
     email: '',
+    vat_number: '',
+    address: '',
+    closer_time: '',
+    open_time: '',
+    image: '',
+    logo: '',
+    phone: '',
+    description: '',
     password: '',
-    password_confirm: ''
+    password_confirm: '',
 })
 
+const formLogin = ref({
+    email: '',
+    password: '',
+})
+
+
+const getToken = async () => {
+    await axios.get('/sanctum/csrf-cookie',);
+}
+
+const loginUser = async () => {
+    await getToken();
+    await axios.post('/login', {
+        email: formLogin.value.email,
+        password: formLogin.value.password
+    });
+    router.push('/');
+}
+
 const registerUser = async () => {
+    console.log(formRegister.vat_number)
+    await getToken();
     await axios.post('/register', {
-        name: form.value.name,
-        email: form.value.email,
-        password: form.value.password,
-        password_confirmation: form.value.password_confirm
+        name: formRegister.value.name,
+        vat_number: formRegister.value.vat_number,
+        email: formRegister.value.email,
+        address: formRegister.value.address,
+        closer_time: formRegister.value.closer_time,
+        open_time: formRegister.value.open_time,
+        image: formRegister.value.image,
+        logo: formRegister.value.logo,
+        phone: formRegister.value.phone,
+        description: formRegister.value.description,
+        password: formRegister.value.password,
+        password_confirmation: formRegister.value.password_confirm
     }).then((response) => {
         console.log(response)
     });
@@ -34,7 +71,7 @@ function signIn() {
 <template>
     <div class="container container-sm" id="container">
         <div class="form-container sign-up-container">
-            <form action="#">
+            <form @submit.prevent="registerUser">
                 <h1>Create Account</h1>
                 <div class="social-container">
                     <a href="" class="social">
@@ -108,14 +145,62 @@ function signIn() {
                     </a>
                 </div>
                 <span>or use your email for registration</span>
-                <input type="text" placeholder="Name" />
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
-                <button>Sign Up</button>
+                <div class="container-input w-100">
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" placeholder="Name" v-model="formRegister.name" />
+                        </div>
+                        <div class="col-6">
+                            <input type="text" placeholder="Email" v-model="formRegister.email" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" placeholder="Vat Number" v-model="formRegister.vat_number" />
+                        </div>
+                        <div class="col-6">
+                            <input type="text" placeholder="Address" v-model="formRegister.address" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" placeholder="Closer Time" v-model="formRegister.closer_time" />
+                        </div>
+                        <div class="col-6">
+                            <input type="text" placeholder="Open Time" v-model="formRegister.open_time" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" placeholder="Image" v-model="formRegister.image" />
+                        </div>
+                        <div class="col-6">
+                            <input type="text" placeholder="Logo" v-model="formRegister.logo" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="text" placeholder="Phone Number" v-model="formRegister.phone" />
+                        </div>
+                        <div class="col-12">
+                            <textarea class="w-100" cols="30" rows="5"
+                                v-model="formRegister.description">Type Description</textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="password" placeholder="Password" v-model="formRegister.password" />
+                        </div>
+                        <div class="col-6">
+                            <input type="password" placeholder="Confirm Password" v-model="formRegister.password_confirm" />
+                        </div>
+                    </div>
+                    <button>Sign Up</button>
+                </div>
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form action="#">
+            <form @submit.prevent="loginUser">
                 <h1>Sign in</h1>
                 <div class="social-container">
                     <a href="" class="social">
@@ -189,8 +274,8 @@ function signIn() {
                     </a>
                 </div>
                 <span>or use your account</span>
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
+                <input type="email" placeholder="Email" v-model="formLogin.email" />
+                <input type="password" placeholder="Password" v-model="formLogin.password" />
                 <a href="#" style="color: #faf9f5">Forgot your password?</a>
                 <button>Sign In</button>
             </form>
@@ -293,7 +378,7 @@ input {
     position: relative;
     overflow: hidden;
     width: 1200px;
-    min-height: 600px;
+    min-height: 800px;
     z-index: 0;
     margin-top: 10rem;
     margin-bottom: 10rem;
