@@ -69,7 +69,7 @@ function signIn() {
 </script>
 
 <template>
-    <div class="container container-sm" id="container">
+    <div class="container" id="container">
         <div class="form-container sign-up-container">
             <form @submit.prevent="registerUser">
                 <h1>Create Account</h1>
@@ -422,7 +422,7 @@ h2 {
 
 p {
     margin: 20px 0 30px;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 span {
@@ -431,7 +431,7 @@ span {
 
 a {
     color: #333;
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-decoration: none;
     margin: 15px 0;
 }
@@ -495,7 +495,7 @@ label {
     border-top-left-radius: 15px;
     color: black;
     font-weight: 600;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 input,
@@ -532,8 +532,8 @@ textarea {
 
 .form-container {
     position: absolute;
-    top: 10%;
-    height: 80%;
+    top: 5%;
+    height: 90%;
     transition: all 0.6s ease-in-out;
 }
 
@@ -578,10 +578,10 @@ textarea {
 
 .overlay-container {
     position: absolute;
-    top: 10%;
+    top: 5%;
     left: 50%;
     width: 50%;
-    height: 80%;
+    height: 90%;
     overflow: hidden;
     transition: transform 0.6s ease-in-out;
     z-index: 100;
