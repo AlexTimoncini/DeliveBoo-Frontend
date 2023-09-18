@@ -47,23 +47,11 @@ export default {
 </script>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-const user = ref();
+import { onMounted } from 'vue';
+import { useAuthStore } from '../stores/auth';
+const authStore = useAuthStore();
 onMounted(async () => {
-    if (user) {
-        await axios.get('/api/user').then((response) => {
-            console.log(response)
-            user.value = response.data;
-            console.log(user.value)
-
-        }).catch((error) => {
-            // Gestisci gli errori durante la registrazione
-            console.error("Errore durante la registrazione:", error.response.data);
-        });
-    } else {
-
-    }
+    await authStore.getUser();
 })
 
 </script>
