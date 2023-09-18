@@ -67,7 +67,7 @@ export default{
         <div class="row">
             
             <!-- Restaurant Header (Title, Types & Description) -->
-            <div class="header col-8 mb-5">
+            <div class="header col-12 col-md-8 text-center text-md-start mb-5">
                 <h1>{{ restaurant.name }}</h1>
                 <span class="me-2" v-for="(type, index) in restaurant.types">{{ type.name }} {{ index + 1 == restaurant.types.length ? '' : '-' }}</span>
 
@@ -76,7 +76,7 @@ export default{
             </div>
 
             <!-- Restaurant Info-Card (Address, Telephone, Mail & VAT Number) -->
-            <div class="info-card card col-4 mb-5">
+            <div class="info-card card col-12 col-md-4 mb-5">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><img src="../assets/icons/gps.svg" alt="GPS Icon"><span>{{ restaurant.address }}</span></li>
                     
