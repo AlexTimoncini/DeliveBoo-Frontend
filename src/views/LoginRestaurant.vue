@@ -1,8 +1,7 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-import { useRouter } from 'vue-router';
-const router = useRouter()
+import { ref } from 'vue';
+import { useAuthStore } from '../stores/auth';
+const authStore = useAuthStore();
 const formRegister = ref({
     name: '',
     email: '',
@@ -23,41 +22,6 @@ const formLogin = ref({
     password: '',
 })
 
-
-const getToken = async () => {
-    await axios.get('/sanctum/csrf-cookie',);
-}
-
-const loginUser = async () => {
-    await getToken();
-    await axios.post('/login', {
-        email: formLogin.value.email,
-        password: formLogin.value.password
-    });
-    router.push('/');
-}
-
-const registerUser = async () => {
-    console.log(formRegister.vat_number)
-    await getToken();
-    await axios.post('/register', {
-        name: formRegister.value.name,
-        vat_number: formRegister.value.vat_number,
-        email: formRegister.value.email,
-        address: formRegister.value.address,
-        closer_time: formRegister.value.closer_time,
-        open_time: formRegister.value.open_time,
-        image: formRegister.value.image,
-        logo: formRegister.value.logo,
-        phone: formRegister.value.phone,
-        description: formRegister.value.description,
-        password: formRegister.value.password,
-        password_confirmation: formRegister.value.password_confirm
-    }).then((response) => {
-        console.log(response)
-    });
-    router.push('/');
-}
 function signUp() {
     let elementContainer = document.getElementById('container');
     elementContainer.classList.add('right-panel-active')
@@ -71,7 +35,7 @@ function signIn() {
 <template>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form @submit.prevent="registerUser">
+            <form @submit.prevent="authStore.registerUser(formRegister)">
                 <h1>Create Account</h1>
                 <div class="social-container">
                     <a href="" class="social">
@@ -304,7 +268,8 @@ function signIn() {
                         </div>
                         <div class="col-6">
                             <label for="password-confirm">Confirm Password</label>
-                            <input type="password" name="password-confirm" id="password-confirm" v-model="formRegister.password_confirm" />
+                            <input type="password" name="password-confirm" id="password-confirm"
+                                v-model="formRegister.password_confirm" />
                         </div>
                     </div>
                     <button>Sign Up</button>
@@ -312,7 +277,7 @@ function signIn() {
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form @submit.prevent="loginUser">
+            <form @submit.prevent="authStore.loginUser(formLogin)">
                 <h1>Sign in</h1>
                 <div class="social-container">
                     <a href="" class="social">
@@ -438,7 +403,7 @@ a {
 
 img {
     transition: all .3s ease;
-    
+
     &:hover {
         filter: brightness(1.1);
     }
