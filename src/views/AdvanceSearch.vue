@@ -282,10 +282,12 @@ export default {
 
                     <div class="input-container d-flex ">
 
-                        <input class="input-range-min" type="range" min="1" max="100" v-model="rangeNumber" />
+                        <input class="input-range" type="range" min="1" max="100" v-model="rangeNumber" />
                     </div>
 
                 </div>
+
+                <input class="input-range" type="range" min="1" max="100" v-model="rangeNumber" />
             </form>
 
             <!-- Main -->
@@ -514,11 +516,15 @@ div.search-page-container {
                 }
 
                 input[type="range"] {
+                    -webkit-appearance: none;
                     appearance: none;
-                    background-color: transparent;
-                    width: 100%;
+                    background: transparent;
+                    cursor: pointer;
+                    width: 15rem;
                 }
 
+                /***** Track Styles *****/
+                /***** Chrome, Safari, Opera, and Edge Chromium *****/
                 input[type="range"]::-webkit-slider-runnable-track {
                     position: relative;
                     height: 6px;
@@ -527,6 +533,7 @@ div.search-page-container {
                     pointer-events: auto;
                 }
 
+                /******** Firefox ********/
                 input[type="range"]::-moz-range-track {
                     position: relative;
                     height: 6px;
@@ -535,29 +542,74 @@ div.search-page-container {
                     pointer-events: auto;
                 }
 
+                /***** Thumb Styles *****/
+                /***** Chrome, Safari, Opera, and Edge Chromium *****/
                 input[type="range"]::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    height: 20px;
+                    width: 20px;
+                    border-radius: 10px;
                     background-color: $priGreen;
                     border: 1px solid white;
-
+                    position: relative;
+                    top: -5px;
                 }
+
+                /******** Firefox ********/
 
                 input[type="range"]::-moz-range-thumb {
                     background-color: $priGreen;
                     border: 1px solid white;
-                }
-
-                input[type=range]::-ms-track {
                     position: relative;
-                    height: 6px;
-                    background-color: rgb(218, 218, 218);
-                    border-radius: 6px;
-                    pointer-events: auto;
+                    top: -5px;
                 }
 
-                input[type=range]::-ms-thumb {
-                    background-color: $priGreen;
-                    border: 1px solid white;
-                }
+
+                //    input.input-range::-webkit-slider-runnable-track {
+                //         position: relative;
+                //         height: 6px;
+                //         background-color: rgb(218, 218, 218);
+                //         border-radius: 6px;
+                //         pointer-events: auto;
+                //     }
+
+                //     input.input-range[type="range"]::-webkit-slider-thumb {
+                //         background-color: $priGreen;
+                //         border: 1px solid white;
+                //         position: relative;
+                //         top: -5px;
+                //     }
+
+                //     input[type=range]:focus::-webkit-slider-runnable-track {
+                //         background: #ccc;
+
+                //     }
+
+                //     input[type="range"]::-moz-range-track {
+                //         position: relative;
+                //         height: 6px;
+                //         background-color: rgb(218, 218, 218);
+                //         border-radius: 6px;
+                //         pointer-events: auto;
+                //     }
+
+                //     input[type="range"]::-moz-range-thumb {
+                //         background-color: $priGreen;
+                //         border: 1px solid white;
+                //     } 
+
+                //     input[type=range]::-ms-track {
+                //         position: relative;
+                //         height: 6px;
+                //         background-color: rgb(218, 218, 218);
+                //         border-radius: 6px;
+                //         pointer-events: auto;
+                //     }
+
+                //     input[type=range]::-ms-thumb {
+                //         background-color: $priGreen;
+                //         border: 1px solid white;
+                //     }
 
             }
 
