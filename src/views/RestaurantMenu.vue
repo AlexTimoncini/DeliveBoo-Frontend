@@ -20,18 +20,25 @@ export default {
     },
     methods: {
         addDishToCart(dishObj) {
-            let cart = store.cart_list;
-            if ((cart.find((item) => item.name === dishObj.name)) !== undefined) {
-                let dish = cart.find((item) => item.name === dishObj.name);
-                dishObj.quantity = dish.quantity + 1;
-                let dishIndex = cart.findIndex((item) => item.name === dishObj.name);
-                store.cart_list.splice(dishIndex, 1, dishObj);
-
+            if (store.cart_list == []) {
+                store.cartRestaurantID = dishObj.restaurant_id;
+            }
+            if (store.cartRestaurantID !== dishObj.restaurant_id) {
+                alert("You can't add this dish to your cart, you already have others from a different restaurant.");
             } else {
-                dishObj.quantity = 1;
-                store.cart_list.push(dishObj);
-            };
-            this.saveCart();
+                let cart = store.cart_list;
+                if ((cart.find((item) => item.name === dishObj.name)) !== undefined) {
+                    let dish = cart.find((item) => item.name === dishObj.name);
+                    dishObj.quantity = dish.quantity + 1;
+                    let dishIndex = cart.findIndex((item) => item.name === dishObj.name);
+                    store.cart_list.splice(dishIndex, 1, dishObj);
+
+                } else {
+                    dishObj.quantity = 1;
+                    store.cart_list.push(dishObj);
+                };
+                this.saveCart();
+            }
         },
         saveCart() {
             console.log(store.cart_list);
