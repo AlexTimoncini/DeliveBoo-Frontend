@@ -15,15 +15,24 @@ export default {
                 this.triggerMenu = false;
             };
         };
-        if(localStorage.getItem('cart')){
+        if (localStorage.getItem('cart')) {
             try {
                 store.cart_list = JSON.parse(localStorage.getItem('cart'));
-            } catch(e) {
+            } catch (e) {
                 localStorage.removeItem('cart');
             }
         }
     }
 }
+</script>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useAuthStore } from '../stores/auth';
+const authStore = useAuthStore();
+onMounted(async () => {
+    await authStore.getUser();
+})
 </script>
 
 <template>
@@ -48,14 +57,17 @@ export default {
                     <li><router-link :to="{ name: 'WorkInProgress' }">About</router-link></li>
                     <li><router-link :to="{ name: 'WorkInProgress' }">Contact</router-link></li>
                 </ul>
-                <div class="login-btn">
+                <div class="login-btn" v-if="!authStore.user">
                     <router-link :to="{ name: 'LoginRestaurant' }">Are you a restaurant?</router-link>
+                </div>
+                <div v-else class="login-btn" @click="authStore.logout">
+                    Logout
                 </div>
                 <div class="cart-btn">
                     <router-link :to="{ name: 'CartCheckout' }">
                         <img src="../assets/icons/cart.svg" alt="cart svg" draggable="false">
-                        <div  v-if="store.cart_list.length !== 0 " class="cart_counter">
-                            <p>{{ store.cart_list.length }}</p> 
+                        <div v-if="store.cart_list.length !== 0" class="cart_counter">
+                            <p>{{ store.cart_list.length }}</p>
                         </div>
                     </router-link>
                 </div>
@@ -118,10 +130,12 @@ nav {
                 aspect-ratio: 1/1;
                 cursor: pointer;
                 position: relative;
-                img{
+
+                img {
                     filter: invert(37%) sepia(95%) saturate(780%) hue-rotate(119deg) brightness(91%) contrast(99%);
                 }
-                .cart_counter{
+
+                .cart_counter {
                     position: absolute;
                     width: 18px;
                     border-radius: 50%;
