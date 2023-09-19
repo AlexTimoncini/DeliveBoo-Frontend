@@ -51,6 +51,12 @@ export const useAuthStore = defineStore('auth', {
                 console.log(response)
             });
             this.router.push('/admin/myaccount');
+        },
+
+        async logout() {
+            axios.post('/logout');
+            this.authUser = null;
+            this.router.push('/');
         }
     }
 })
