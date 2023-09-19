@@ -1,14 +1,14 @@
 <template>
     <div class="my_navbar d-flex align-items-center px-3">
-        <ul class="d-flex justify-content-between align-items-center m-0 p-0 w-100">
+        <ul class="d-flex justify-content-between align-items-center m-4 p-0 w-100">
             <li>
                 <h3>My Account</h3>
             </li>
             <li>
-                <div>
-                    <span class="me-3">Restaurant Name</span>
+                <div class="d-flex align-items-center">
+                    <span class="me-3">{{ authStore.user ? authStore.user.name : 'Restaurant Name' }}</span>
                     <div class="logo d-inline-block">
-                        <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png" alt="Logged user logo">
+                        <img class="img-fluid" :src="authStore.user ? authStore.user.logo : ''" alt="Logo">
                     </div>
                 </div>
             </li>
@@ -20,11 +20,26 @@
 export default {
     name: 'DashboardNavbar',
 
-
     data() {
-
+        return {
+            isDisabled: true
+        }
+    },
+    methods: {
+        toggle() {
+            this.isDisabled = !this.isDisabled;
+        }
     }
 }
+</script>
+
+<script setup>
+import { onMounted } from 'vue';
+import { useAuthStore } from '../../stores/auth';
+const authStore = useAuthStore();
+onMounted(async () => {
+    await authStore.getUser();
+})
 </script>
 
 <style lang="scss" scoped>
@@ -44,6 +59,15 @@ export default {
             object-fit: contain;
             padding: .5rem;
             box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+            overflow: hidden;
+
+            img {
+                transition: all .3s ease;
+            }
+
+            &:hover img {
+                transform: scale(1.5);
+            }
         }
     }
 </style>
