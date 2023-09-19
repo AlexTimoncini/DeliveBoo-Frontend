@@ -62,12 +62,14 @@
                                         </div>
                                         <div class="form-group mb-2">
                                             <label for="dishDesc">Dish Description</label>
-                                            <textarea class="form-control" name="dishDescription" id="dishDesc" rows="3" disabled>{{ dish.description }}</textarea>
+                                            <textarea class="form-control" name="dishDescription" id="dishDesc" rows="3"
+                                                disabled>{{ dish.description }}</textarea>
                                         </div>
                                         <div class="form-group mb-2">
                                             <label for="dishIngredients">Ingredients</label>
                                             <div type="text" class="fake-input mb-1" id="dishIngredients">
-                                                <span v-for="ingredient, index in dish.ingredients">{{ ingredient.name }}{{ index + 1 === dish.ingredients.length ? '' : ', ' }}</span>
+                                                <span v-for="ingredient, index in dish.ingredients">{{ ingredient.name }}{{
+                                                    index + 1 === dish.ingredients.length ? '' : ', ' }}</span>
                                             </div>
                                         </div>
                                         <div class="form-group mb-2 d-flex">
@@ -79,9 +81,7 @@
                                             </div>
                                             <div class="form-group mb-2 d-flex flex-column">
                                                 <label for="">Image</label>
-                                                <img class="thumb"
-                                                    :src="dish.photo"
-                                                    :alt="dish.name">
+                                                <img class="thumb" :src="dish.photo" :alt="dish.name">
                                             </div>
 
                                         </div>
@@ -111,12 +111,8 @@ export default {
 </script>
 
 <script setup>
-import { onMounted } from 'vue';
 import { useAuthStore } from '../../stores/auth';
 const authStore = useAuthStore();
-onMounted(async () => {
-    await authStore.getUser();
-})
 </script>
 
 <style lang="scss" scoped>
@@ -173,7 +169,7 @@ onMounted(async () => {
         border-radius: 10px;
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
-        .fake-input{
+        .fake-input {
             background-color: #E9ECEF;
             padding: 0.375rem 0.75rem;
             border-radius: 0.375rem;

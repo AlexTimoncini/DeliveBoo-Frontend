@@ -7,42 +7,40 @@
             <div class="col-md-9 col-10 p-0">
                 <DashboardNavbar />
                 <div class="dish-edit">
-                    <h2>Hamburger alla frutta Edit</h2>
+                    <h2>{{ authStore.user ? authStore.user.dishes[idDish].name : '' }}</h2>
                     <div class="row align-items-center">
                         <div class="dish-info col-12 col-md-6">
 
-                            <form action="">
+                            <form @submit.prevent="updateDish()">
                                 <label for="name">Name</label>
-                                <input class="w-100" type="text" id="name" name="name" value="Hamburger alla frutta">
+                                <input class="w-100" type="text" id="name" name="name" v-model="formData.name">
                                 <label for="description">Description</label>
-                                <textarea class="w-100" name="description" id="description" cols="30"
-                                    rows="3">Che buona combinazione!</textarea>
+                                <textarea v-model="formData.description" class="w-100" name="description" id="description"
+                                    cols="30" rows="3"></textarea>
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="category">Category</label>
                                         <select name="category" id="category">
-                                            <option value="Burger">Burger</option>
-                                            <option value="Pizza">Pizza</option>
-                                            <option value="Sushi">Sushi</option>
+                                            <option v-for="category in categories" :value="category.id">{{ category.name }}
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="col-6">
                                         <label for="ingredients">Ingredients</label>
                                         <select name="ingredients" id="ingredients">
-                                            <option value="Tomato">Tomato</option>
-                                            <option value="Bacon">Cheese</option>
-                                            <option value="Cheese">Bacon</option>
+                                            <option v-for="ingredient in authStore.user.dishes[idDish].ingredients"
+                                                :value="ingredient.name">{{ ingredient.name }}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="price">Price</label>
-                                        <input class="w-100" type="text" id="price" name="price" value=45.00>
+                                        <input v-model="formData.price" class="w-100" type="text" id="price" name="price">
                                     </div>
                                     <div class="col-6">
                                         <label for="photo">Photo</label>
-                                        <input class="w-100" type="file" id="photo" name="photo">
+                                        <input class="w-100" type="text" id="photo" name="photo">
                                     </div>
                                 </div>
 
@@ -94,16 +92,78 @@
 </template>
 
 <script>
+import axios from 'axios';
 import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
+import { useRoute } from 'vue-router';
 export default {
     name: 'DishEdit',
     data() {
+        return {
+            categories: [],
+
+        }
     },
-    components: { DashboardSidebar, DashboardNavbar }
+    components: { DashboardSidebar, DashboardNavbar },
+    methods: {
+        getCategory() {
+            axios.get('/api/categories')
+                .then((response) => {
+                    this.categories = response.data.data;
+                    console.log(this.categories)
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+        },
+
+    },
+    mounted() {
+        this.getCategory();
+    }
 }
 </script>
 
+<script setup>
+import { onMounted } from 'vue';
+import { useAuthStore } from '../../stores/auth';
+const authStore = useAuthStore();
+const route = useRoute();
+let idDish = 0;
+const formData = {
+    id: null,
+    name: '',
+    description: '',
+    price: '',
+};
+function updateDish() {
+    formData.id = idDish + 1;
+    axios.put(`/api/update/${formData.id}`, {
+        name: formData.name,
+        description: formData.description,
+        price: formData.price,
+        category_id: 1,
+        user_id: 1,
+        visible: 1,
+        available: 1,
+        photo: 'Ciao sono una stringa',
+    })
+        .then((response) => {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+}
+onMounted(async () => {
+    idDish = route.params.id - 1;
+    console.log(authStore.user)
+    formData.name = authStore.user.dishes[idDish].name;
+    formData.description = authStore.user.dishes[idDish].description;
+    formData.price = authStore.user.dishes[idDish].price;
+})
+</script>
 <style lang="scss" scoped>
 @use '../../styles/partials/variables' as *;
 @use '../../styles/partials/mixins' as *;
@@ -257,4 +317,5 @@ div.dish-edit {
     img {
         width: 100%;
     }
-}</style>
+}
+</style>
