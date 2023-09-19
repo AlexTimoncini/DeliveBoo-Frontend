@@ -25,9 +25,9 @@
 
                             <ul class="order_preview col-12 col-lg-6 m-0">
                                 <li>
-                                    <h4 class="title mt-3">Order n° <span>1234567</span></h4>
+                                    <h4 class="title mt-3">Order n° <span>{{ }}</span></h4>
                                 </li>
-                                <li class="order_item d-flex justify-content-between">
+                                <li v-for="order in allOrders" class="order_item d-flex justify-content-between">
                                     <div class="dish_name m-0">
                                         <h6>BoolDoubleBurger <strong>x1</strong></h6>
                                     </div>
@@ -36,31 +36,6 @@
                                     </div>
                                 </li>
 
-                                <li class="order_item d-flex justify-content-between">
-                                    <div class="dish_name m-0">
-                                        <h6>BoolDoubleBurger <strong>x1</strong></h6>
-                                    </div>
-                                    <div class="dish_price m-0">
-                                        <p class="m-0">15.00€</p>
-                                    </div>
-                                </li>
-                                <li class="order_item d-flex justify-content-between">
-                                    <div class="dish_name m-0">
-                                        <h6>BoolDoubleBurger <strong>x1</strong></h6>
-                                    </div>
-                                    <div class="dish_price m-0">
-                                        <p class="m-0">15.00€</p>
-                                    </div>
-                                </li>
-
-                                <li class="order_item d-flex justify-content-between">
-                                    <div class="dish_name m-0">
-                                        <h6>BoolDoubleBurger <strong>x1</strong></h6>
-                                    </div>
-                                    <div class="dish_price m-0">
-                                        <p class="m-0">15.00€</p>
-                                    </div>
-                                </li>
                                 <li class="order_item d-flex justify-content-between total_price">
                                     <div class="dish_name m-0">
                                         <h6>Total Invoice</h6>
@@ -84,12 +59,32 @@
 <script>
 import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
+import axios from 'axios';
 export default {
     name: 'OrderShow',
+
     data() {
+        return {
+            apiUrl: 'http://127.0.0.1:8000/api/orders',
+            order: {}
+        }
     },
-    components: { DashboardSidebar, DashboardNavbar }
+
+    methods: {
+        getOrder() {
+            axios.get(`${this.apiUrl}/1`).then(response => {
+                console.log(response.data);
+                this.order = response.data;
+            })
+                .catch(error => console.error(error))
+        }
+    },
+
+    mounted() {
+        this.getOrder();
+    }
 }
+
 </script>
 
 <style lang="scss" scoped>
