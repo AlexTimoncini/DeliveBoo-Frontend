@@ -21,43 +21,16 @@
                         </div>
                         <table class="table table-striped table-hover">
                             <thead class="">
-                                <tr class="">
-                                    <th class="my_thead px-4" scope="col">Order Id</th>
-                                    <th class="my_thead px-4 d-none d-md-table-cell" scope="col">Last Name</th>
-                                    <th class="my_thead px-4 d-none d-md-table-cell" scope="col">First Name</th>
-                                    <th class="my_thead px-4" scope="col">Bill</th>
-                                    <th class="my_thead px-4" scope="col">View Order</th>
-                                </tr>
                             </thead>
                             <tbody>
-                                <tr class="px-4">
+                                <tr v-for="order in authStore.user.orders" class="px-4" :order="order">
                                     <th class="px-4 " scope="row">1</th>
-                                    <td class="px-4 d-none d-md-table-cell">Mark</td>
-                                    <td class="px-4 d-none d-md-table-cell">Otto</td>
-                                    <td class="px-4"><span>€</span><span>23</span></td>
+                                    <td class="px-4 d-none d-md-table-cell">{{ order.first_name }}</td>
+                                    <td class="px-4 d-none d-md-table-cell">{{ order.last_name }}</td>
+                                    <td class="px-4"><span>€</span><span>{{ order.total_price }}</span></td>
                                     <td class="px-4"><button class="btn my_btn m-0" @click=" this.$router.push({
                                         name: 'OrderShow',
                                         params: { id: '0' }
-                                    })">View</button></td>
-                                </tr>
-                                <tr class="px-4">
-                                    <th class="px-4" scope="row">1</th>
-                                    <td class="px-4 d-none d-md-table-cell">Mark</td>
-                                    <td class="px-4 d-none d-md-table-cell">Otto</td>
-                                    <td class="px-4"><span>€</span><span>45</span></td>
-                                    <td class="px-4"><button class="btn my_btn m-0" @click=" this.$router.push({
-                                        name: 'OrderShow',
-                                        params: { id: '1' }
-                                    })">View</button></td>
-                                </tr>
-                                <tr class="px-4">
-                                    <th class="px-4" scope="row">1</th>
-                                    <td class="px-4 d-none d-md-table-cell">Mark</td>
-                                    <td class="px-4 d-none d-md-table-cell">Otto</td>
-                                    <td class="px-4"><span>€</span><span>12</span></td>
-                                    <td class="px-4"><button class="btn my_btn m-0" @click=" this.$router.push({
-                                        name: 'OrderShow',
-                                        params: { id: '2' }
                                     })">View</button></td>
                                 </tr>
 
@@ -78,8 +51,17 @@ export default {
     name: 'Orders',
     data() {
     },
-    components: { DashboardSidebar, DashboardNavbar }
-}
+    components: { DashboardSidebar, DashboardNavbar },
+
+} 
+</script >
+<script setup>
+import { onMounted } from 'vue';
+import { useAuthStore } from '../../stores/auth';
+const authStore = useAuthStore();
+onMounted(async () => {
+    await authStore.getUser();
+})
 </script>
 
 <style lang="scss" scoped>
