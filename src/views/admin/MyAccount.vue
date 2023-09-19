@@ -11,8 +11,7 @@
                     <!-- Upper section with restaurant image & buttons -->
                     <div class="row">
                         <div class="col-10 p-0">
-                            <img src="https://www1.lovethatdesign.com/wp-content/uploads/2021/08/Love-That-Design-McDonalds-Oxford-Street-London-07.jpg"
-                                alt="Restaurant image">
+                            <img :src="authStore.user ? authStore.user.image : ''" alt="Restaurant Image">
                         </div>
                         <div class="col-2 buttons p-0">
                             <button @click="toggle">
