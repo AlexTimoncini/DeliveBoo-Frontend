@@ -21,14 +21,6 @@ export default {
     name: 'DashboardNavbar',
 
     data() {
-        return {
-            isDisabled: true
-        }
-    },
-    methods: {
-        toggle() {
-            this.isDisabled = !this.isDisabled;
-        }
     }
 }
 </script>
