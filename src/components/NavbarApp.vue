@@ -64,13 +64,12 @@ onMounted(async () => {
                 </div>
                 <div class="d-flex" v-else>
                     <div>
-                        <button @click="authStore.logout">Logout</button>
-                    </div>
-
-                    <div>
                         <router-link :to="{ name: 'MyAccount' }">
                             <button>Dashboard</button>
                         </router-link>
+                    </div>
+                    <div>
+                        <button @click="authStore.logout">Logout</button>
                     </div>
                 </div>
                 <div class="cart-btn">
@@ -122,6 +121,7 @@ nav {
             .nav-links {
                 column-gap: .5rem;
                 margin-bottom: 0;
+                margin-right: 1rem;
 
                 li {
                     height: 100%;
@@ -145,7 +145,7 @@ nav {
             }
 
             button {
-                margin: 0 2rem;
+                margin-right: 1rem;
                 border: none;
                 background-color: $secYellow;
                 padding: 0.5rem 1.5rem;
