@@ -29,11 +29,11 @@ export const useAuthStore = defineStore('auth', {
                 email: dataLogin.email,
                 password: dataLogin.password
             });
-            this.router.push('/');
+            this.router.push('/admin/myaccount');
         },
 
         async registerUser(dataRegister) {
-            await getToken();
+            await this.getToken();
             await axios.post('/register', {
                 name: dataRegister.name,
                 vat_number: dataRegister.vat_number,
@@ -50,7 +50,7 @@ export const useAuthStore = defineStore('auth', {
             }).then((response) => {
                 console.log(response)
             });
-            this.router.push('/');
+            this.router.push('/admin/myaccount');
         }
     }
 })
