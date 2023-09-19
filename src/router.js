@@ -18,6 +18,9 @@ import NotFound from './views/NotFound.vue';
 
 
 const router = createRouter({
+    scrollBehavior() {
+        return { top: 0 }
+    },
     history: createWebHistory(),
     routes: [
         {
