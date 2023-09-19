@@ -62,8 +62,16 @@ onMounted(async () => {
                         <button>Are you a restaurant?</button>
                     </router-link>
                 </div>
-                <div v-else>
-                    <button @click="authStore.logout">Logout</button>
+                <div class="d-flex" v-else>
+                    <div>
+                        <button @click="authStore.logout">Logout</button>
+                    </div>
+
+                    <div>
+                        <router-link :to="{ name: 'MyAccount' }">
+                            <button>Dashboard</button>
+                        </router-link>
+                    </div>
                 </div>
                 <div class="cart-btn">
                     <router-link :to="{ name: 'CartCheckout' }">
