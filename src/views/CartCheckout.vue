@@ -12,6 +12,9 @@ export default {
         removeDishFromCart(dishIndex, finalQuantity) {
             if (finalQuantity == 0) {
                 store.cart_list.splice(dishIndex, 1);
+                if (store.cart_list.length == 0) {
+                    store.cartRestaurantID = null;
+                }
             } else {
                 let dishCopy = store.cart_list[dishIndex];
                 dishCopy.quantity = parseInt(finalQuantity);
@@ -123,6 +126,9 @@ export default {
 <style lang="scss" scoped>
 @use '../styles/partials/variables' as *;
 
+div.container {
+    height: calc(100vh - 95px);
+}
 .navbar {
     height: 90px;
     padding: 1rem 0;

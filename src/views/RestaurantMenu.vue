@@ -20,11 +20,13 @@ export default {
     },
     methods: {
         addDishToCart(dishObj) {
-            if (store.cart_list == []) {
-                store.cartRestaurantID = dishObj.restaurant_id;
+            if ((store.cart_list.length == 0) && (store.cartRestaurantID == null)) {
+                console.log(dishObj.user_id);
+                store.cartRestaurantID = dishObj.user_id;
             }
-            if (store.cartRestaurantID !== dishObj.restaurant_id) {
+            if (store.cartRestaurantID !== dishObj.user_id) {
                 alert("You can't add this dish to your cart, you already have others from a different restaurant.");
+                
             } else {
                 let cart = store.cart_list;
                 if ((cart.find((item) => item.name === dishObj.name)) !== undefined) {
