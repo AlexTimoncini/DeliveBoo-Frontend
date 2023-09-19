@@ -9,7 +9,7 @@
                 <div class="my_app p-4">
                     <div class="table-container">
                         <div class="d-block d-md-flex justify-content-between my-table-header">
-                            <h2 class="mb-3 mb-md-0 ">Your Orders List</h2>
+                            <h2 class="mb-3 mb-md-0 ">Your Orders</h2>
                             <form action="">
                                 <select class="form-select" aria-label="Default select example">
                                     <option selected>This Week</option>
@@ -19,18 +19,25 @@
                                 </select>
                             </form>
                         </div>
-                        <table class="table table-striped table-hover">
-                            <thead class="">
+                        <table class="table table-striped table-hover text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="row">ID</th>
+                                    <td class="d-none d-md-table-cell">First Name</td>
+                                    <td class="d-none d-md-table-cell">Last Name</td>
+                                    <td>Total Price</td>
+                                    <td></td>
+                                </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="order in authStore.user.orders" class="px-4" :order="order">
-                                    <th class="px-4 " scope="row">1</th>
-                                    <td class="px-4 d-none d-md-table-cell">{{ order.first_name }}</td>
-                                    <td class="px-4 d-none d-md-table-cell">{{ order.last_name }}</td>
-                                    <td class="px-4"><span>€</span><span>{{ order.total_price }}</span></td>
-                                    <td class="px-4"><button class="btn my_btn m-0" @click=" this.$router.push({
+                                <tr v-for="order in authStore.user.orders" :order="order">
+                                    <th scope="row">{{ order.id }}</th>
+                                    <td class="d-none d-md-table-cell">{{ order.first_name }}</td>
+                                    <td class="d-none d-md-table-cell">{{ order.last_name }}</td>
+                                    <td><span>€ </span><span>{{ order.total_price }}</span></td>
+                                    <td><button class="btn my_btn m-0" @click=" this.$router.push({
                                         name: 'OrderShow',
-                                        params: { id: '0' }
+                                        params: { id: order.id }
                                     })">View</button></td>
                                 </tr>
 
@@ -95,8 +102,11 @@ onMounted(async () => {
                 color: $fontWhite;
             }
         }
+    }
 
-
+    th,
+    td {
+        vertical-align: middle;
     }
 
     .my_thead {
