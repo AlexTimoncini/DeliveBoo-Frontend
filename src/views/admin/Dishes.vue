@@ -29,7 +29,7 @@
 
                             </div>
                             <!-- Cards  -->
-                            <div class="col-12 col-md-6 col-lg-4 p-0 p-md-3">
+                            <div class="col-12 col-md-6 col-lg-4 p-0 p-md-3" v-for="dish in authStore.user.dishes">
                                 <div class="dish-card card-container p-3">
                                     <div class="card-buttons-container d-flex justify-content-end">
                                         <div class="card-button btn">
@@ -41,7 +41,7 @@
                                         </div>
                                         <div class="card-button btn" @click=" this.$router.push({
                                             name: 'DishEdit',
-                                            params: { id: '0' }
+                                            params: { id: dish.id }
                                         })">
                                             <svg version=" 1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg" x="0px"
                                                 y="0px" viewBox="0 0 800 800" style="enable-background:new 0 0 800 800;"
@@ -56,41 +56,38 @@
                                     </div>
                                     <form>
                                         <div class="form-group mb-2">
-                                            <label for="exampleFormControlInput1">Dish Name</label>
-                                            <input type="text" class="form-control " id="" placeholder="Nome Piatto"
-                                                disabled>
+                                            <label for="dishName">Dish Name</label>
+                                            <input type="text" class="form-control " id="dishName" :placeholder="dish.name"
+                                                disabled :value="dish.name">
                                         </div>
                                         <div class="form-group mb-2">
-                                            <label for="dishDescription">Dish Description</label>
-                                            <textarea class="form-control" name="dishDescription" rows="3" disabled>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde modi delectus officia aut pariatur magnam quos aliquid, ab fuga illo perferendis sit saepe ut suscipit expedita culpa, dignissimos soluta voluptates.
-                                        </textarea>
+                                            <label for="dishDesc">Dish Description</label>
+                                            <textarea class="form-control" name="dishDescription" id="dishDesc" rows="3" disabled>{{ dish.description }}</textarea>
                                         </div>
                                         <div class="form-group mb-2">
-                                            <label for="exampleFormControlInput1">Ingredients</label>
-                                            <input type="text" class="form-control mb-1" id=""
-                                                placeholder="Pane, Formaggio, Carne, Cetrioli" disabled>
+                                            <label for="dishIngredients">Ingredients</label>
+                                            <div type="text" class="fake-input mb-1" id="dishIngredients">
+                                                <span v-for="ingredient, index in dish.ingredients">{{ ingredient.name }}{{ index + 1 === dish.ingredients.length ? '' : ', ' }}</span>
+                                            </div>
                                         </div>
                                         <div class="form-group mb-2 d-flex">
 
                                             <div class="form-group mb-2 me-3">
-                                                <label for="exampleFormControlInput1">Price</label>
-                                                <input type="text" class="form-control mb-1" id=""
-                                                    placeholder="Pane, Formaggio, Carne, Cetrioli" disabled>
+                                                <label for="dishPrice">Price</label>
+                                                <input type="text" class="form-control mb-1" id="dishPrice"
+                                                    placeholder="9.99€" :value="dish.price" disabled>
                                             </div>
                                             <div class="form-group mb-2 d-flex flex-column">
-                                                <label for="exampleFormControlInput1">Image</label>
+                                                <label for="">Image</label>
                                                 <img class="thumb"
-                                                    src="https://www.buttalapasta.it/wp-content/uploads/2016/01/hamburger-di-carne-americano.jpg"
-                                                    alt="">
+                                                    :src="dish.photo"
+                                                    :alt="dish.name">
                                             </div>
 
                                         </div>
                                     </form>
                                 </div>
                             </div>
-
-
-
                         </div>
 
 
@@ -107,9 +104,19 @@ import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
 export default {
     name: 'Dishes',
     data() {
+
     },
     components: { DashboardSidebar, DashboardNavbar }
 }
+</script>
+
+<script setup>
+import { onMounted } from 'vue';
+import { useAuthStore } from '../../stores/auth';
+const authStore = useAuthStore();
+onMounted(async () => {
+    await authStore.getUser();
+})
 </script>
 
 <style lang="scss" scoped>
@@ -165,6 +172,13 @@ export default {
         // background-color: #efebe0;
         border-radius: 10px;
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+        .fake-input{
+            background-color: #E9ECEF;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            min-height: 60px;
+        }
 
         .btn.card-button {
             height: 30px;
