@@ -162,10 +162,18 @@ onMounted(async () => {
 @use '../../styles/partials/variables' as *;
 @use '../../styles/partials/mixins' as *;
 
+div.my-account::-webkit-scrollbar {
+    display: none;
+}
+
 div.my-account {
     height: calc(100vh - 95px - 80px);
     padding: 1rem 2rem;
-    overflow: scroll;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 
     img {
         width: 100%;
