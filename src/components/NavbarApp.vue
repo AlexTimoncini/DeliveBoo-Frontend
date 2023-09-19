@@ -57,11 +57,13 @@ onMounted(async () => {
                     <li><router-link :to="{ name: 'WorkInProgress' }">About</router-link></li>
                     <li><router-link :to="{ name: 'WorkInProgress' }">Contact</router-link></li>
                 </ul>
-                <div class="login-btn" v-if="!authStore.user">
-                    <router-link :to="{ name: 'LoginRestaurant' }">Are you a restaurant?</router-link>
+                <div v-if="!authStore.user">
+                    <router-link :to="{ name: 'LoginRestaurant' }">
+                        <button>Are you a restaurant?</button>
+                    </router-link>
                 </div>
-                <div v-else class="login-btn" @click="authStore.logout">
-                    Logout
+                <div v-else>
+                    <button @click="authStore.logout">Logout</button>
                 </div>
                 <div class="cart-btn">
                     <router-link :to="{ name: 'CartCheckout' }">
@@ -110,19 +112,41 @@ nav {
             height: 100%;
 
             .nav-links {
-                column-gap: 1.5rem;
+                column-gap: .5rem;
                 margin-bottom: 0;
 
                 li {
                     height: 100%;
+                    padding: .2rem .7rem;
+                    transition: all .3s ease;
+                    border-radius: 30px;
+                    cursor: pointer;
+
+                    a {
+                        transition: all .3s ease;
+                    }
+
+                    &:hover {
+                        background-color: $priGreen;
+
+                        a {
+                            color: white;
+                        }
+                    }
                 }
             }
 
-            .login-btn {
+            button {
                 margin: 0 2rem;
+                border: none;
                 background-color: $secYellow;
                 padding: 0.5rem 1.5rem;
                 border-radius: 30px;
+                transition: all .3s ease;
+
+                &:hover {
+                    filter: brightness(1.2);
+                }
             }
 
             .cart-btn {
@@ -131,24 +155,33 @@ nav {
                 cursor: pointer;
                 position: relative;
 
+                &:hover img {
+                    transform: scale(1.1);
+                }
+
+                &:hover .cart_counter {
+                    transform: scale(1.4);
+                }
+
                 img {
                     filter: invert(37%) sepia(95%) saturate(780%) hue-rotate(119deg) brightness(91%) contrast(99%);
+                    transition: all .3s ease;
                 }
 
                 .cart_counter {
                     position: absolute;
                     width: 18px;
-                    border-radius: 50%;
+                    border-radius: 50px;
                     background-color: red;
-                    border: 4px solid $fontWhite;
                     color: $fontWhite;
                     height: 18px;
-                    padding-top: 1px;
-                    font-size: 0.8rem;
+                    line-height: 18px;
+                    font-size: 1rem;
                     text-align: center;
-                    top: -12px;
-                    right: -12px;
+                    top: -7px;
+                    right: -7px;
                     box-sizing: content-box;
+                    transition: all .3s ease;
                 }
             }
         }
