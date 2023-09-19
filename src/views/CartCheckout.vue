@@ -181,11 +181,11 @@ export default {
         .dish_info {
             padding: 0.5rem 2rem;
             background-color: white;
-            width: 50%;
+            width: 100%;
 
             &:hover h6,
             &:hover .dish_price {
-                transform: translateX(-10%);
+                transform: translateX(-5%);
             }
 
             h6 {
