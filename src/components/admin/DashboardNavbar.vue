@@ -2,7 +2,7 @@
     <div class="my_navbar d-flex align-items-center px-3">
         <ul class="d-flex justify-content-between align-items-center m-4 p-0 w-100">
             <li>
-                <h3>My Account</h3>
+                <h3>{{ $route.name }}</h3>
             </li>
             <li>
                 <div class="d-flex align-items-center">
