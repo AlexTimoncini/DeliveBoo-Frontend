@@ -9,8 +9,7 @@
                     <div class="card__info-title">
                         <h3>{{ dish.name }}</h3>
                         <p>{{ dish.description }}</p>
-                        <p><span class="me-2" v-for="ingredient, index in dish.ingredients">{{ ingredient.name }} {{ ((index
-                            + 1) == dish.ingredients.length) ? '' : '-' }} </span></p>
+                        <p><span class="me-2" v-for="ingredient, index in dish.ingredients">{{ ingredient.name }} {{ ((index + 1) == dish.ingredients.length) ? '' : '-' }} </span></p>
                     </div>
                 </div>
                 <div class="card__price col-4">
@@ -63,7 +62,7 @@ export default {
             outline: 10px solid white;
 
             &:hover {
-                transform: rotate(0deg) translate(25px, 25px) scale(1.3);
+                transform: rotate(0deg) translate(-10px, -10px) scale(1.1);
             }
         }
     }
