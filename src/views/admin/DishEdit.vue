@@ -6,8 +6,8 @@
             </div>
             <div class="col-md-9 col-10 p-0">
                 <DashboardNavbar />
-                <div class="dish-edit">
-                    <h2>{{ authStore.user ? authStore.user.dishes[idDish].name : '' }}</h2>
+                <div v-if="authStore.user" class="dish-edit">
+                    <h2>{{ store.editingDish ? store.editingDish.name : '' }}</h2>
                     <div class="row align-items-center">
                         <div class="dish-info col-12 col-md-6">
 
@@ -20,15 +20,15 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="category">Category</label>
-                                        <select name="category" id="category">
-                                            <option v-for="category in categories" :value="category.id">{{ category.name }}
+                                        <select name="category" id="category" @change="formData.category_id = $event.target.value; console.log(parseInt(formData.category_id))">
+                                            <option v-for="category in store.categories" :value="category.id" :selected="category.id === store.editingDish.category_id">{{ category.name }}
                                             </option>
                                         </select>
                                     </div>
                                     <div class="col-6">
                                         <label for="ingredients">Ingredients</label>
                                         <select name="ingredients" id="ingredients">
-                                            <option v-for="ingredient in authStore.user.dishes[idDish].ingredients"
+                                            <option v-for="ingredient in store.editingDish.ingredients"
                                                 :value="ingredient.name">{{ ingredient.name }}</option>
                                         </select>
                                     </div>
@@ -93,63 +93,134 @@
 </template>
 
 <script>
-import axios from 'axios';
 import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
 import { useRoute } from 'vue-router';
 export default {
     name: 'DishEdit',
-    data() {
-        return {
-            categories: [],
-
-        }
-    },
     components: { DashboardSidebar, DashboardNavbar },
-    methods: {
-        getCategory() {
-            axios.get('/api/categories')
-                .then((response) => {
-                    this.categories = response.data.data;
-                    console.log(this.categories)
-                })
-                .catch(function (error) {
-                    // handle error
-                    console.log(error);
-                })
-        },
-
-    },
-    mounted() {
-        this.getCategory();
-    }
 }
 </script>
 
 <script setup>
+import axios from 'axios';
 import { onMounted } from 'vue';
 import { useAuthStore } from '../../stores/auth';
+import { store } from '../../store';
 const authStore = useAuthStore();
 const route = useRoute();
 let idDish = 0;
 const formData = {
     id: null,
-    name: '',
-    description: '',
-    price: '',
+    name: null,
+    description: null,
+    price: null,
+    category_id: null,
+    user_id: null
 };
-function updateDish() {
-    formData.id = idDish + 1;
-    axios.put(`/api/update/${formData.id}`, {
-        name: formData.name,
-        description: formData.description,
-        price: formData.price,
-        category_id: 1,
-        user_id: 1,
-        visible: 1,
-        available: 1,
-        photo: 'Ciao sono una stringa',
+const formDataValidate = {
+    name: false,
+    description: false,
+    price: false,
+    category_id: false,
+}
+let validate = false;
+function getDish(id) {
+    axios.get(`/api/dishes/${id}`)
+    .then((response) => {
+        store.editingDish = response.data.data;
+        console.log(response.data.data.ingredients);
+        formData.id = store.editingDish.id;
+        formData.name = store.editingDish.name;
+        formData.description = store.editingDish.description;
+        formData.price = store.editingDish.price;
+        formData.category_id = store.editingDish.category_id;
+        formData.user_id = store.editingDish.user_id;
     })
+    .catch(function (error) {
+        console.log(error);
+    })
+};
+
+function getCategory() {
+    axios.get('/api/categories')
+        .then((response) => {
+            store.categories = response.data.data;
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+}
+function errorPopUp(){
+    if(!formDataValidate.name){
+        console.log('The Name isn\'t in the right format');
+    }
+    if(!formDataValidate.description){
+        console.log('The description isn\'t in the right format');
+    }
+    if(!formDataValidate.price){
+        console.log('The price isn\'t in the right format');
+    }
+    if(!formDataValidate.category_id){
+        console.log('Category isn\'t in the right format');
+    }
+};
+function checkValidation(){
+    /**VALIDATION**/
+    //name
+    if(
+        formData.price !== null &&
+        typeof(formData.name) === 'string' &&
+        formData.name.length >= 3 && formData.name.length <= 100){
+
+        formDataValidate.name = true
+    }
+
+    //description
+    if(
+        typeof(formData.description) === 'string' &&
+        formData.description.length <= 65535){
+
+        formDataValidate.description = true
+    }
+
+    //price
+    if(
+        formData.price !== null &&
+        parseInt(formData.price) <= 999){
+
+        formDataValidate.price = true
+    }
+
+    //category id
+    if(
+    formData.category_id !== null &&
+    parseInt(formData.category_id) > 0 && parseInt(formData.category_id) <= store.categories.length)
+    {
+
+    formDataValidate.category_id = true;
+    }
+    /**VALIDATION MANAGEMENT**/
+    if(formDataValidate.name && formDataValidate.price && formDataValidate.description && formDataValidate.category_id){
+        validate = true
+    } else {
+        errorPopUp();
+    }
+};
+
+function updateDish() {
+    checkValidation();
+    if(validate){
+        axios.put(`/api/update/${formData.id}`, {
+            name: formData.name,
+            description: formData.description,
+            price: formData.price,
+            category_id: formData.category_id,
+            user_id: formData.user_id,
+            visible: 1,
+            available: 1,
+            photo: 'Ciao sono una stringa',
+        })
         .then((response) => {
             console.log(response);
             window.location.href = '/admin/dishes';
@@ -157,13 +228,13 @@ function updateDish() {
         .catch(function (error) {
             console.log(error);
         })
-}
+    }
+};
+
 onMounted(async () => {
-    idDish = route.params.id - 1;
-    console.log(authStore.user)
-    formData.name = authStore.user.dishes[idDish].name;
-    formData.description = authStore.user.dishes[idDish].description;
-    formData.price = authStore.user.dishes[idDish].price;
+    getCategory();
+    idDish = route.params.id;
+    getDish(idDish);
 })
 </script>
 <style lang="scss" scoped>
