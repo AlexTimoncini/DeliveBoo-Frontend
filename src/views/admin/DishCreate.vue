@@ -173,6 +173,7 @@ function storeDish() {
     })
         .then((response) => {
             console.log(response);
+            window.location.href = '/admin/dishes';
         })
         .catch(function (error) {
             console.log(error);
