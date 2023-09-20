@@ -2,7 +2,8 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 export const useAuthStore = defineStore('auth', {
     state: () => ({
-        authUser: null
+        authUser: null,
+        messageErrors: ''
     }),
     getters: {
         user: (state) => state.authUser
@@ -44,9 +45,10 @@ export const useAuthStore = defineStore('auth', {
                 password: dataRegister.password,
                 password_confirmation: dataRegister.password_confirm
             }).then((response) => {
-                console.log(response)
+                this.router.push('/admin/myaccount');
+            }).catch((error) => {
+                this.messageErrors = error.response.data.errors
             });
-            this.router.push('/admin/myaccount');
         },
 
         async logout() {

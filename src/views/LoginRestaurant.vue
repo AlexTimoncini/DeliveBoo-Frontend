@@ -33,8 +33,12 @@ function signIn() {
 </script>
 
 <template>
+    <div class="position-absolute errors" v-if="authStore.messageErrors">
+        <div v-for="(error, index) in authStore.messageErrors" :class="authStore.messageErrors ? 'w-cs' : 'w-0'">
+            <p class="m-0 text-danger fw-bold">{{ error[0] }}</p>
+        </div>
+    </div>
     <div class="container d-none d-lg-block" id="container">
-
         <!-- Desktop view  -->
         <div class="form-container sign-up-container">
             <form @submit.prevent="authStore.registerUser(formRegister)">
@@ -848,6 +852,32 @@ textarea {
     overflow: hidden;
     height: calc(100vh - 95px);
     z-index: 0;
+}
+
+.errors {
+    right: 0;
+    transition: all 1s ease;
+
+    .w-cs {
+        width: 260px;
+    }
+
+    .w-0 {
+        width: 0;
+    }
+
+    div {
+        border-top: 5px solid $priGreen;
+        margin-top: 1rem;
+        transition: all 1s ease;
+
+
+        p {
+            background-color: $secYellow;
+            padding: 1rem .22rem;
+            transition: all 1s ease;
+        }
+    }
 }
 
 .form-container {
