@@ -21,7 +21,7 @@
                                 <span class="d-none d-md-inline">Back</span>
                             </button>
                         </div>
-                        <div class="row d-flex justify-content-center">
+                        <div class="row d-flex align-items-center justify-content-center">
 
                             <ul class="order_preview col-12 col-lg-6 m-0">
                                 <li>
@@ -35,12 +35,11 @@
                                         <p class="m-0">{{ dish.price }}</p>
                                     </div>
                                 </li>
-
                                 <li class="order_item d-flex justify-content-between total_price">
                                     <div class="dish_name m-0">
                                         <h6>Total Invoice</h6>
                                     </div>
-                                    <p class="m-0">{{ totalPrice }}</p>
+                                    <p class="m-0">{{ totalPrice }}€</p>
                                 </li>
                             </ul>
                             <div class="col-lg-5 d-none d-lg-block">
@@ -70,6 +69,7 @@ export default {
             totalPrice: 0,
         }
     },
+    components: { DashboardSidebar, DashboardNavbar },
 
     methods: {
         getOrder() {
