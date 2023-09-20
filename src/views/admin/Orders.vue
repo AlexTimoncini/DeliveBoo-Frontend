@@ -7,7 +7,7 @@
             <div class="col-md-9 col-10 p-0">
                 <DashboardNavbar />
                 <div class="my_app p-4">
-                    <div class="table-container">
+                    <div class="table-container " v-if="authStore.user">
                         <div class="d-block d-md-flex justify-content-between my-table-header">
                             <h2 class="mb-3 mb-md-0 ">Your Orders</h2>
                             <form action="">

@@ -8,7 +8,7 @@
                 <div class="d-flex align-items-center">
                     <span class="me-3">{{ authStore.user ? authStore.user.name : 'Restaurant Name' }}</span>
                     <div class="logo d-inline-block">
-                        <img class="img-fluid"
+                        <img class="logo-img"
                             :src="authStore.user ? 'http://127.0.0.1:8000/storage/' + authStore.user.logo : ''" alt=""
                             draggable="false">
                     </div>
@@ -53,12 +53,12 @@ div.my_navbar {
         aspect-ratio: 1;
         background-color: white;
         border-radius: 50%;
-        object-fit: contain;
-        padding: .5rem;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         overflow: hidden;
 
-        img {
+        img.logo-img {
+            width: 100%;
+            object-fit: cover;
             transition: all .3s ease;
         }
 

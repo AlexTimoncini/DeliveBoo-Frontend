@@ -20,16 +20,14 @@
                             </button>
                         </div>
                         <!-- Categories  -->
-                        <div class="category mb-4 row">
+                        <div class="category mb-4 row" v-if="authStore.user">
 
-                            <div class="">
-
-                            </div>
                             <!-- Cards  -->
-                            <div class="col-12 col-md-6 col-lg-4 p-0 p-md-3" v-for="dish in authStore.user.dishes" :key="dish.id">
+                            <div class="col-12 col-md-6 col-lg-4 p-0 p-md-3" v-for="dish in authStore.user.dishes"
+                                :key="dish.id">
                                 <div class="dish-card card-container p-3">
-                                    <div class="card-buttons-container d-flex justify-content-end">
-                                        <div class="card-button btn" @click="deleteDish(dish.id)">
+                                    <div class="card-buttons-container d-flex justify-content-end mb-2">
+                                        <div class="card-button btn" @click=" deleteDish(dish.id)">
                                             <svg viewBox="0 0 24 24">
                                                 <path
                                                     d="M 10 2 L 9 3 L 4 3 L 4 5 L 5 5 L 5 20 C 5 20.522222 5.1913289 21.05461 5.5683594 21.431641 C 5.9453899 21.808671 6.4777778 22 7 22 L 17 22 C 17.522222 22 18.05461 21.808671 18.431641 21.431641 C 18.808671 21.05461 19 20.522222 19 20 L 19 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 7 5 L 17 5 L 17 20 L 7 20 L 7 5 z M 9 7 L 9 18 L 11 18 L 11 7 L 9 7 z M 13 7 L 13 18 L 15 18 L 15 7 L 13 7 z">
@@ -52,6 +50,22 @@
                                         </div>
                                     </div>
                                     <form>
+                                        <div
+                                            class="d-flex flex-column flex-xl-row align-items-start justify-content-center justify-content-xl-start">
+                                            <div class="d-flex align-items-center mb-2 justify-content-center me-xl-4">
+                                                <div class="visibility-indicator me-2"
+                                                    :class="!dish.visible ? 'false' : ''">
+                                                </div>
+                                                <p v-if="dish.visible" class="more-info-txt m-0">Visible</p>
+                                                <p v-if="!dish.visible" class="more-info-txt m-0">Not Visible</p>
+                                            </div>
+                                            <div class="d-flex align-items-center mb-2 ">
+                                                <div class="visibility-indicator me-2"
+                                                    :class="!dish.available ? 'false' : ''"></div>
+                                                <p v-if="dish.available" class="more-info-txt m-0">Available</p>
+                                                <p v-if="!dish.available" class="more-info-txt m-0">Not Available</p>
+                                            </div>
+                                        </div>
                                         <div class="form-group mb-2">
                                             <label for="dishName">Dish Name</label>
                                             <input type="text" class="form-control " id="dishName" :placeholder="dish.name"
@@ -110,13 +124,13 @@ export default {
         deleteDish(dishID) {
             if (window.confirm('Are you sure you want to delete this dish?')) {
                 axios.delete(`/api/delete/${dishID}`)
-                .then((response) => {
-                    console.log(response);
-                    window.location.href = '/admin/dishes';
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
+                    .then((response) => {
+                        console.log(response);
+                        window.location.href = '/admin/dishes';
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
             }
         }
     }
@@ -218,6 +232,17 @@ const authStore = useAuthStore();
             height: 35px;
             border-radius: 5px;
         }
+    }
+
+    .visibility-indicator {
+        height: 1rem;
+        width: 1rem;
+        border-radius: 50%;
+        background-color: #028450;
+    }
+
+    .false {
+        background-color: rgb(200, 5, 5);
     }
 }
 </style>

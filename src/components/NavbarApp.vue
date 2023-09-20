@@ -62,14 +62,34 @@ onMounted(async () => {
                         <button>Are you a restaurant?</button>
                     </router-link>
                 </div>
-                <div class="d-flex" v-else>
-                    <div>
-                        <router-link :to="{ name: 'MyAccount' }">
-                            <button>Dashboard</button>
-                        </router-link>
+                <div class="d-flex align-items-center" v-else>
+                    <div class="btn-class">
+                        <img :src="authStore.user ? 'http://127.0.0.1:8000/storage/' + authStore.user.logo : ''" alt="">
                     </div>
-                    <div>
-                        <button @click="authStore.logout">Logout</button>
+                    <div class="menu-profile">
+                        <button @click="openCloseMenu">
+                            <svg fill="#000000" height="10px" width="10px" version="1.1" id="Layer_1"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                viewBox="0 0 330 330" xml:space="preserve">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path id="XMLID_225_"
+                                        d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z">
+                                    </path>
+                                </g>
+                            </svg>
+                        </button>
+                        <div class="menu">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <router-link :to="{ name: 'MyAccount' }">Dashboard</router-link>
+                                </li>
+                                <li @click="authStore.logout">
+                                    Logout
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="cart-btn">
@@ -154,6 +174,73 @@ nav {
 
                 &:hover {
                     filter: brightness(1.2);
+                }
+            }
+
+            .btn-class {
+                position: relative;
+                margin-right: 1rem;
+                border: none;
+                height: 60px;
+                width: 60px;
+                background-color: $secYellow;
+                border-radius: 50%;
+                transition: all .3s ease;
+                overflow: hidden;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                &:hover {
+                    filter: brightness(1.2);
+                }
+            }
+
+            .menu-profile {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: all 0.5s;
+
+                button {
+                    border-radius: 50%;
+                    padding: .3rem;
+                    height: 30px;
+                    width: 30px;
+                }
+
+                &:hover {
+                    .menu {
+                        width: 120px;
+                    }
+                }
+
+                .menu {
+                    width: 0px;
+                    position: absolute;
+                    top: 2.4rem;
+                    transition: all 0.5s;
+
+                    ul {
+                        padding-top: 3rem;
+                        border-radius: 30px;
+                        margin: 0;
+                        overflow: hidden;
+                        transition: all 0.5s;
+
+                        li {
+                            padding: .22rem 1rem;
+                            background-color: $priGreen;
+                            transition: all 0.5s;
+                            cursor: pointer;
+
+                            &:hover {
+                                filter: brightness(1.2);
+                            }
+                        }
+                    }
                 }
             }
 
