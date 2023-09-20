@@ -8,7 +8,9 @@
                 <div class="d-flex align-items-center">
                     <span class="me-3">{{ authStore.user ? authStore.user.name : 'Restaurant Name' }}</span>
                     <div class="logo d-inline-block">
-                        <img class="img-fluid" :src="authStore.user ? authStore.user.logo : ''" alt="Logo">
+                        <img class="img-fluid"
+                            :src="authStore.user ? 'http://127.0.0.1:8000/storage/' + authStore.user.logo : ''" alt=""
+                            draggable="false">
                     </div>
                 </div>
             </li>
@@ -19,9 +21,11 @@
 <script>
 export default {
     name: 'DashboardNavbar',
-
     data() {
-    }
+        return {
+        }
+    },
+
 }
 </script>
 
@@ -29,6 +33,7 @@ export default {
 import { onMounted } from 'vue';
 import { useAuthStore } from '../../stores/auth';
 const authStore = useAuthStore();
+
 onMounted(async () => {
     await authStore.getUser();
 })
@@ -38,28 +43,28 @@ onMounted(async () => {
 @use '../../styles/partials/variables' as *;
 @use '../../styles/partials/mixins' as *;
 
-    div.my_navbar {
-        background-color: $secYellow;
-        height: 80px;
-        box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+div.my_navbar {
+    background-color: $secYellow;
+    height: 80px;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 
-        div.logo {
-            width: 50px;
-            aspect-ratio: 1;
-            background-color: white;
-            border-radius: 50%;
-            object-fit: contain;
-            padding: .5rem;
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-            overflow: hidden;
+    div.logo {
+        width: 50px;
+        aspect-ratio: 1;
+        background-color: white;
+        border-radius: 50%;
+        object-fit: contain;
+        padding: .5rem;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        overflow: hidden;
 
-            img {
-                transition: all .3s ease;
-            }
+        img {
+            transition: all .3s ease;
+        }
 
-            &:hover img {
-                transform: scale(1.5);
-            }
+        &:hover img {
+            transform: scale(1.5);
         }
     }
+}
 </style>
