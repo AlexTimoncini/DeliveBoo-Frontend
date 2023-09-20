@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
 
-                                <button type="submit" @click="this.$router.push({ name: 'Dishes' })">
+                                <button type="submit">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" id="save">
                                         <switch>
                                             <g>
@@ -152,6 +152,7 @@ function updateDish() {
     })
         .then((response) => {
             console.log(response);
+            window.location.href = '/admin/dishes';
         })
         .catch(function (error) {
             console.log(error);
