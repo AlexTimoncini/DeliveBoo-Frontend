@@ -23,9 +23,6 @@
                         <div class="category mb-4 row">
 
                             <div class="">
-                                <h3 class="my_title col-12 mb-3 ps-md-3 ps-0">
-                                    Panini
-                                </h3>
 
                             </div>
                             <!-- Cards  -->
