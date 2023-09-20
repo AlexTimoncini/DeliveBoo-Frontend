@@ -51,7 +51,7 @@ export default {
     <div class="container pb-5">
         <div class="row">
             <div class="col-12 navbar d-flex justify-content-start">
-                <div class="btn me-5">
+                <div class="btn me-2 me-md-5">
                     <router-link :to="{ name: 'Homepage' }" class="d-block h-100">
                         <img src="../assets/icons/left-arrow.svg" alt="left arrow icon" draggable="false">
                     </router-link>
@@ -321,5 +321,14 @@ div.container {
     width: 100%;
 }
 
-@media (max-width: $small) {}
+@media (max-width: 370px) {
+    .navbar .title {
+        font-size: 2rem;
+    }
+
+    .navbar .btn img {
+        height: 2rem;
+    }
+
+}
 </style>
