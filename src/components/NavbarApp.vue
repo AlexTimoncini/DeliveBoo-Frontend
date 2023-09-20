@@ -203,12 +203,24 @@ nav {
                 justify-content: center;
                 align-items: center;
                 transition: all 0.5s;
+                cursor: pointer;
 
                 button {
                     border-radius: 50%;
                     padding: .3rem;
                     height: 30px;
                     width: 30px;
+                    z-index: 1;
+
+                    &:hover svg {
+                        transform: scale(1.7) translateY(20%);
+                    }
+
+                    svg {
+                        transform: scale(1.7) translateY(-20%);
+                        z-index: 0;
+                        transition: all .3s ease;
+                    }
                 }
 
                 &:hover {
@@ -231,10 +243,18 @@ nav {
                         transition: all 0.5s;
 
                         li {
-                            padding: .22rem 1rem;
+                            padding: .5rem 1rem;
                             background-color: $priGreen;
+                            text-align: center;
                             transition: all 0.5s;
                             cursor: pointer;
+                            color: white;
+                            font-weight: 500;
+                            border-bottom: 3px solid $secYellow;
+
+                            a {
+                                color: white;
+                            }
 
                             &:hover {
                                 filter: brightness(1.2);
