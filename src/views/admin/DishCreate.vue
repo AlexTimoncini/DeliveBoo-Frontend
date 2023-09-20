@@ -43,6 +43,22 @@
                                         <input class="w-100" type="text" id="photo" name="photo" v-model="formData.photo">
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="available">Available?</label>
+                                        <select name="available" id="available" v-model="formData.available">
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="visible">Visible?</label>
+                                        <select name="visible" id="visible" v-model="formData.visible">
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <button type="reset" class="mb-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="reset">
                                         <path
@@ -140,7 +156,9 @@ const formData = {
     description: '',
     price: '',
     category: '',
-    photo: ''
+    photo: '',
+    available: '',
+    visible: ''
 };
 function storeDish() {
     axios.post(`/api/store`, {
@@ -150,11 +168,12 @@ function storeDish() {
         price: formData.price,
         category_id: formData.category,
         photo: formData.photo,
-        available: 1,
-        visible: 1,
+        available: formData.available,
+        visible: formData.visible,
     })
         .then((response) => {
             console.log(response);
+            window.location.href = '/admin/dishes';
         })
         .catch(function (error) {
             console.log(error);

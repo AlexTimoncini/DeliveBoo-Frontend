@@ -21,10 +21,6 @@
 <script>
 export default {
     name: 'DashboardNavbar',
-    data() {
-        return {
-        }
-    },
 
 }
 </script>
