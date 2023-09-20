@@ -60,7 +60,7 @@ export default {
                     .then((response) => {
                         console.log(response);
                         const logoFileName = response.data.logoFileName;
-                        const logoUrl = `/storage/public/${logoFileName}`;
+                        const logoUrl = `/storage/${logoFileName}`;
                         this.restaurant_logo = logoUrl;
                         console.log(logoUrl);   
                     })
