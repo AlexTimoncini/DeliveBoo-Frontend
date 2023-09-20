@@ -52,11 +52,21 @@ export default {
                 .then((response) => {
                     this.restaurant = response.data.data;
                     this.bestDishes = this.restaurant.dishes.slice(0, 3);
-                    this.restaurant_logo = this.restaurant.logo;
                 })
                 .catch(() => {
                     this.$router.push('/404');
                 });
+                axios.get(`${store.ApiUrl}restaurants/logo/${this.restaurant_id}`)
+                    .then((response) => {
+                        console.log(response);
+                        const logoFileName = response.data.logoFileName;
+                        const logoUrl = `/storage/public/${logoFileName}`;
+                        this.restaurant_logo = logoUrl;
+                        console.log(logoUrl);   
+                    })
+                    .catch((error) => {
+                        console.error('Errore durante il recupero dell\'immagine:', error);
+                    });
         }
     },
     mounted() {
@@ -74,7 +84,7 @@ export default {
             <div class="image-container col-12">
                 <img class="image img-fluid" :src="restaurant.image" :alt="restaurant.name + ' image'" draggable="false">
                 <img class="logo img-fluid"
-                    :src="restaurant_logo.startsWith('http') ? restaurant.logo : '../../public/assets/restaurant-logos' + restaurant.logo"
+                    :src="`http://127.0.0.1:8000${this.restaurant_logo}`"
                     :alt="restaurant.name + ' image'" draggable="false" @click="console.log(restaurant.logo)">
             </div>
         </div>
