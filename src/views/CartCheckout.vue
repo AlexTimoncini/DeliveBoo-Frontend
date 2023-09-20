@@ -71,16 +71,16 @@ export default {
                     <div class="d-flex col-8 align-items-center align-items-md-start">
                         <div class="dish_img"><img class="img-fluid" :src="dish.photo" :alt="dish.name + 'image'"
                                 draggable="false"></div>
-                        <div class="dish_info">
-                            <div class="dish_name">
-                                <h6>{{ dish.name }}</h6>
+                        <div class="dish_info pe-0">
+                            <div class="dish_name ">
+                                <h6 class="">{{ dish.name }}</h6>
                             </div>
                             <div class="dish_price">
                                 <p class="m-0">{{ dish.price }}€</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-4 dish_quantity_box p-2 d-flex flex-column flex-md-row">
+                    <div class=" col-lg-5 dish_quantity_box p-2 d-flex flex-column flex-md-row">
                         <div class="buttons d-flex  mb-3 mb-md-0">
                             <button class="btn_quantity " @click="removeDishFromCart(index, 0)"><svg viewBox="0 0 24 24">
                                     <path
@@ -100,7 +100,7 @@ export default {
                     </div>
                 </li>
             </ul>
-            <ul class="order_preview col-12 col-lg-6 m-0">
+            <ul class="order_preview col-12 col-lg-5 m-0">
                 <li>
                     <h4 class="title mt-3">Order Preview</h4>
                 </li>
@@ -129,6 +129,7 @@ export default {
 div.container {
     height: calc(100vh - 95px);
 }
+
 .navbar {
     height: 90px;
     padding: 1rem 0;
@@ -282,7 +283,6 @@ div.container {
 
 .order_preview {
     position: relative;
-    // box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 7px;
     background-color: #F5F5F5FF;
     border-radius: 0 0 10px 10px;
 
