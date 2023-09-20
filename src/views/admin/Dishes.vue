@@ -52,7 +52,7 @@
                                     <form>
                                         <div
                                             class="d-flex flex-column flex-xl-row align-items-start justify-content-center justify-content-xl-start">
-                                            <div class="d-flex align-items-start mb-2 justify-content-center me-xl-4">
+                                            <div class="d-flex align-items-center mb-2 justify-content-center me-xl-4">
                                                 <div class="visibility-indicator me-2"
                                                     :class="!dish.visible ? 'false' : ''">
                                                 </div>
