@@ -1,19 +1,26 @@
 <template>
     <div class="card col-sm-12 col-md-6 col-lg-4">
         <div class="row justify-content-between h-100">
-            <div class="card__image col-12">
+            <div class="card__image col-12 " :class="!dish.available ? 'disabled' : ''">
                 <img :src="dish.photo" :alt="dish.name + ' image'" draggable="false">
             </div>
             <div class="row">
                 <div class="card__info col-8">
                     <div class="card__info-title">
                         <h3>{{ dish.name }}</h3>
+                        <div class="d-flex align-items-center">
+                            <div class="visibility-indicator me-2" :class="!dish.available ? 'false' : ''"></div>
+                            <p v-if="dish.available" class="more-info-txt m-0">Available</p>
+                            <p v-if="!dish.available" class="more-info-txt m-0">Not Available</p>
+                        </div>
                         <p>{{ dish.description }}</p>
-                        <p><span class="me-2" v-for="ingredient, index in dish.ingredients">{{ ingredient.name }} {{ ((index + 1) == dish.ingredients.length) ? '' : '-' }} </span></p>
+                        <p><span class="me-2" v-for="ingredient, index in dish.ingredients">{{ ingredient.name }} {{ ((index
+                            + 1) == dish.ingredients.length) ? '' : '-' }} </span></p>
                     </div>
                 </div>
                 <div class="card__price col-4">
-                    <button @click="$emit('add')">
+                    <button :class="!dish.available ? 'disabled' : ''"
+                        @click="dish.available ? $emit('add') : 'not available'">
                         <img src="../assets/icons/cart.svg" alt="Cart SVG" draggable="false">
                     </button>
                     <p> {{ dish.price + ' €' }}</p>
@@ -148,6 +155,25 @@ export default {
                 }
             }
         }
+    }
+
+    .disabled {
+        filter: saturate(.15);
+    }
+
+    p.more-info-txt {
+        font-weight: 300;
+    }
+
+    .visibility-indicator {
+        height: 1rem;
+        width: 1rem;
+        border-radius: 50%;
+        background-color: #028450;
+    }
+
+    .false {
+        background-color: rgb(200, 5, 5);
     }
 }
 </style>
