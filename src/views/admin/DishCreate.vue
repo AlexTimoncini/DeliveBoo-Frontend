@@ -7,23 +7,21 @@
             <div class="col-md-9 col-10 p-0">
                 <DashboardNavbar />
                 <div class="dish-edit">
-                    <h2>Create a new Dish</h2>
+                    <h2>Add New Dish</h2>
                     <div class="row align-items-center">
                         <div class="dish-info col-12 col-md-6">
 
-                            <form action="">
+                            <form @submit.prevent="storeDish()">
                                 <label for="name">Name</label>
-                                <input class="w-100" type="text" id="name" name="name" placeholder="Name of the dish">
+                                <input class="w-100" type="text" id="name" name="name" v-model="formData.name">
                                 <label for="description">Description</label>
-                                <textarea class="w-100" name="description" id="description" cols="30" rows="3"
-                                    placeholder="Your dish description here"></textarea>
+                                <textarea class="w-100" name="description" id="description" cols="30" rows="3" v-model="formData.description"></textarea>
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="ingredients">Categories</label>
-                                        <select name="ingredients" id="ingredients">
-                                            <option value="Tomato">Burger</option>
-                                            <option value="Bacon">Appetizer</option>
-                                            <option value="Cheese">Sushi</option>
+                                        <select name="category" id="category" v-model="formData.category">
+                                            <option v-for="category in categories" :value="category.id">{{ category.name }}
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="col-6">
@@ -38,11 +36,11 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="price">Price</label>
-                                        <input class="w-100" type="text" id="price" name="price" placeholder=45.00>
+                                        <input class="w-100" type="text" id="price" name="price" v-model="formData.price">
                                     </div>
                                     <div class="col-6">
                                         <label for="photo">Photo</label>
-                                        <input class="w-100" type="file" id="photo" name="photo">
+                                        <input class="w-100" type="text" id="photo" name="photo" v-model="formData.photo">
                                     </div>
                                 </div>
                                 <button type="reset" class="mb-3">
@@ -101,13 +99,66 @@
 </template>
 
 <script>
+import axios from 'axios';
 import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
+import { useRoute } from 'vue-router';
 export default {
     name: 'DishCreate',
     data() {
+        return {
+            categories: [],
+        }
     },
-    components: { DashboardSidebar, DashboardNavbar }
+    components: { DashboardSidebar, DashboardNavbar },
+    methods: {
+        getCategory() {
+            axios.get('/api/categories')
+                .then((response) => {
+                    this.categories = response.data.data;
+                    console.log(this.categories)
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+        },
+
+    },
+    mounted() {
+        this.getCategory();
+    }
+}
+</script>
+
+<script setup>
+import { useAuthStore } from '../../stores/auth';
+const authStore = useAuthStore();
+const route = useRoute();
+const formData = {
+    name: '',
+    description: '',
+    price: '',
+    category: '',
+    photo: ''
+};
+function storeDish() {
+    axios.post(`/api/store`, {
+        user_id: authStore.user.id,
+        name: formData.name,
+        description: formData.description,
+        price: formData.price,
+        category_id: formData.category,
+        photo: formData.photo,
+        available: 1,
+        visible: 1,
+    })
+        .then((response) => {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
 }
 </script>
 
