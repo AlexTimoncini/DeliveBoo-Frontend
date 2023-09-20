@@ -26,7 +26,7 @@
                             <div class="col-12 col-md-6 col-lg-4 p-0 p-md-3" v-for="dish in authStore.user.dishes"
                                 :key="dish.id">
                                 <div class="dish-card card-container p-3">
-                                    <div class="card-buttons-container d-flex justify-content-end">
+                                    <div class="card-buttons-container d-flex justify-content-end mb-2">
                                         <div class="card-button btn" @click=" deleteDish(dish.id)">
                                             <svg viewBox="0 0 24 24">
                                                 <path
@@ -50,6 +50,22 @@
                                         </div>
                                     </div>
                                     <form>
+                                        <div
+                                            class="d-flex flex-column flex-xl-row align-items-start justify-content-center justify-content-xl-start">
+                                            <div class="d-flex align-items-start mb-2 justify-content-center me-xl-4">
+                                                <div class="visibility-indicator me-2"
+                                                    :class="!dish.visible ? 'false' : ''">
+                                                </div>
+                                                <p v-if="dish.visible" class="more-info-txt m-0">Visible</p>
+                                                <p v-if="!dish.visible" class="more-info-txt m-0">Not Visible</p>
+                                            </div>
+                                            <div class="d-flex align-items-center mb-2 ">
+                                                <div class="visibility-indicator me-2"
+                                                    :class="!dish.available ? 'false' : ''"></div>
+                                                <p v-if="dish.available" class="more-info-txt m-0">Available</p>
+                                                <p v-if="!dish.available" class="more-info-txt m-0">Not Available</p>
+                                            </div>
+                                        </div>
                                         <div class="form-group mb-2">
                                             <label for="dishName">Dish Name</label>
                                             <input type="text" class="form-control " id="dishName" :placeholder="dish.name"
@@ -216,6 +232,17 @@ const authStore = useAuthStore();
             height: 35px;
             border-radius: 5px;
         }
+    }
+
+    .visibility-indicator {
+        height: 1rem;
+        width: 1rem;
+        border-radius: 50%;
+        background-color: #028450;
+    }
+
+    .false {
+        background-color: rgb(200, 5, 5);
     }
 }
 </style>
