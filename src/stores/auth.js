@@ -15,11 +15,7 @@ export const useAuthStore = defineStore('auth', {
             this.getToken();
             await axios.get('/api/user').then((response) => {
                 this.authUser = response.data;
-                console.log(this.authUser)
-
             }).catch((error) => {
-                // Gestisci gli errori durante la registrazione
-                console.error("Errore durante la registrazione:", error.response.data);
             });
         },
 
