@@ -123,11 +123,6 @@ c0-0.7,0.7-1.3,1.3-2c0.7-0.7,1.3-0.7,2.7-1.3c1.3-0.7,2.7-0.7,4-0.7h2.7V33.9L27.2
 <script>
 export default {
     name: 'DashboardSidebar',
-
-
-    data() {
-
-    }
 }
 </script>
 

@@ -115,9 +115,6 @@ import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
 export default {
     name: 'Dishes',
-    data() {
-
-    },
     components: { DashboardSidebar, DashboardNavbar },
 
     methods: {
