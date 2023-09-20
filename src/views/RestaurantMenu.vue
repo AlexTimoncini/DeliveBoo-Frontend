@@ -16,6 +16,7 @@ export default {
             bestDishes: [],
             restaurant_id: null,
             restaurant_logo: '',
+            alert: false,
         }
     },
     methods: {
@@ -25,8 +26,8 @@ export default {
                 store.cartRestaurantID = dishObj.user_id;
             }
             if (store.cartRestaurantID !== dishObj.user_id) {
-                alert("You can't add this dish to your cart, you already have others from a different restaurant.");
-                
+                this.alert = true;
+                // alert("You can't add this dish to your cart, you already have others from a different restaurant.");
             } else {
                 let cart = store.cart_list;
                 if ((cart.find((item) => item.name === dishObj.name)) !== undefined) {
@@ -56,17 +57,17 @@ export default {
                 .catch(() => {
                     this.$router.push('/404');
                 });
-                axios.get(`${store.ApiUrl}restaurants/logo/${this.restaurant_id}`)
-                    .then((response) => {
-                        console.log(response);
-                        const logoFileName = response.data.logoFileName;
-                        const logoUrl = `/storage/${logoFileName}`;
-                        this.restaurant_logo = logoUrl;
-                        console.log(logoUrl);   
-                    })
-                    .catch((error) => {
-                        console.error('Errore durante il recupero dell\'immagine:', error);
-                    });
+            axios.get(`${store.ApiUrl}restaurants/logo/${this.restaurant_id}`)
+                .then((response) => {
+                    console.log(response);
+                    const logoFileName = response.data.logoFileName;
+                    const logoUrl = `/storage/${logoFileName}`;
+                    this.restaurant_logo = logoUrl;
+                    console.log(logoUrl);
+                })
+                .catch((error) => {
+                    console.error('Errore durante il recupero dell\'immagine:', error);
+                });
         }
     },
     mounted() {
@@ -83,8 +84,7 @@ export default {
             <!-- Restaurant Photo & Logo -->
             <div class="image-container col-12">
                 <img class="image img-fluid" :src="restaurant.image" :alt="restaurant.name + ' image'" draggable="false">
-                <img class="logo img-fluid"
-                    :src="`http://127.0.0.1:8000${this.restaurant_logo}`"
+                <img class="logo img-fluid" :src="`http://127.0.0.1:8000${this.restaurant_logo}`"
                     :alt="restaurant.name + ' image'" draggable="false" @click="console.log(restaurant.logo)">
             </div>
         </div>
@@ -121,16 +121,30 @@ export default {
         <!-- Restaurant Popular Dishes List -->
         <div class="popular-dishes col-12 mb-5">
             <h2>Boo-tifully Popular and Delicious</h2>
-            <div class="row">
+            <div class="row position-relative d-flex">
                 <Card v-for="    dish     in     bestDishes    " :dish="dish" @add="addDishToCart(dish)" />
+                <div class="my_alert alert alert-warning alert-dismissible  col-lg-5 col-md-6 col-10 p-4"
+                    :class="!alert ? 'd-none' : 'd-block'">
+                    <h4 class="alert-heading">Boo are you doing?!</h4>
+                    <p>You can't add this dish to your cart, you already have others from a different restaurant.</p>
+                    <div class="d-flex justify-content-end"><button class="btn btn btn-danger"
+                            @click="alert = false">Ok</button></div>
+                </div>
             </div>
         </div>
 
         <!-- Menu -->
         <div class="menu col-12">
             <h2>{{ restaurant.name }} Menu</h2>
-            <div class="row">
+            <div class="row position-relative">
                 <Card v-for="    dish     in     restaurant.dishes    " :dish="dish" @add="addDishToCart(dish)" />
+                <div class="my_alert alert alert-warning alert-dismissible  col-lg-5 col-md-6 col-10 p-4"
+                    :class="!alert ? 'd-none' : 'd-block'">
+                    <h4 class="alert-heading">Boo are you doing?!</h4>
+                    <p>You can't add this dish to your cart, you already have others from a different restaurant.</p>
+                    <div class="d-flex justify-content-end"><button class="btn btn btn-danger"
+                            @click="alert = false">Ok</button></div>
+                </div>
             </div>
         </div>
     </div>
@@ -142,6 +156,23 @@ export default {
 @use '../styles/partials/variables' as *;
 
 div.container {
+
+    position: relative;
+
+    div.my_alert {
+        background-color: rgb(255, 183, 157);
+        border-radius: 10px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        // opacity: .9;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        color: black;
+
+
+    }
 
     div.image-container {
         position: relative;
@@ -242,5 +273,6 @@ div.container {
             margin-bottom: 1.5rem;
         }
     }
+
 }
 </style>
