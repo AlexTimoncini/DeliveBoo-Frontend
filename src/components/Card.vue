@@ -2,7 +2,7 @@
     <div class="card col-sm-12 col-md-6 col-lg-4">
         <div class="row justify-content-between h-100">
             <div class="card__image col-12 " :class="!dish.available ? 'disabled' : ''">
-                <img :src="dish.photo" :alt="dish.name + ' image'" draggable="false">
+                <img :src="dish.photo.startsWith('/dish/') ? (`http://127.0.0.1:8000/storage${dish.photo}`) : dish.photo" :alt="dish.name + ' image'" draggable="false">
             </div>
             <div class="row">
                 <div class="card__info col-8">
