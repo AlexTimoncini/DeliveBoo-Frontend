@@ -211,11 +211,10 @@ nav {
                 cursor: pointer;
 
                 button {
-                    border-radius: 30px;
+                    border-radius: 50%;
                     padding: .3rem;
                     height: 30px;
                     width: 30px;
-                    z-index: 1;
 
                     &:hover svg {
                         transform: scale(1.7) translateY(20%);
@@ -229,17 +228,18 @@ nav {
                 }
 
                 @media (min-width: 1200px) {
-                    &:hover {
-                        .menu {
-                            width: 120px;
-                        }
+                    &:hover .menu {
+                        width: 120px;
+                    }
+                    
+                    .menu {
+                        top: 2.4rem;
                     }
                 }
 
                 .menu {
                     width: 0px;
                     position: absolute;
-                    top: 2.4rem;
                     transition: all 0.5s;
 
                     ul {
@@ -247,7 +247,7 @@ nav {
                         border-radius: 30px;
                         margin: 0;
                         overflow: hidden;
-                        transition: all 0.5s;
+                        transition: all 0.3s ease;
 
                         li {
                             padding: .5rem 1rem;
@@ -258,7 +258,6 @@ nav {
                             color: white;
                             font-weight: 500;
                             border-bottom: 3px solid $secYellow;
-                            border-radius: 30px;
 
                             a {
                                 color: white;
@@ -322,13 +321,6 @@ nav {
             width: 100vw;
             background-color: white;
             box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px inset;
-            overflow-y: scroll;
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-
-            &::-webkit-scrollbar {
-                display: none;
-            }
 
             .nav-links {
                 width: fit-content;
@@ -338,9 +330,8 @@ nav {
                 li {
                     width: 100%;
                     display: flex;
-                    padding: 2rem 0;
                     transition: all 0.33s ease;
-                    padding: .5rem 1rem;
+                    padding: 0.2rem 1rem;
                     border: 5px solid $secYellow;
                     margin-bottom: 1rem;
 
@@ -393,12 +384,19 @@ nav {
                 transition: all .3s ease;
                 overflow: hidden;
                 border: 5px solid $secYellow;
+                margin-bottom: 1rem;
 
                 img {
                     width: 100%;
                     height: 100%;
                     transition: all .3s ease;
                 }
+            }
+
+            .menu-profile {
+                padding: 0;
+                margin: 0;
+                margin-bottom: 1rem;
             }
 
             .menu {
@@ -414,14 +412,15 @@ nav {
                     border-radius: 0;
 
                     li {
-                        padding: .5rem 1rem;
+                        padding: 0.2rem 1rem;
                         background-color: white;
                         transition: all 0.3s;
                         color: $priGreen;
                         font-size: 2rem;
                         text-transform: uppercase;
                         border: 5px solid $secYellow;
-                        margin-bottom: 1.5rem;
+                        margin-bottom: 1rem;
+                        border-radius: 30px;
 
                         a {
                             color: $priGreen;
@@ -433,6 +432,7 @@ nav {
 
                         &:hover {
                             background-color: $priGreen;
+                            filter: none;
 
                             span {
                                 color: white;
@@ -446,7 +446,6 @@ nav {
 
             .cart-btn {
                 width: 50px;
-                margin-bottom: 2rem;
 
                 &:hover img {
                     transform: scale(1.1);
