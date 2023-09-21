@@ -160,11 +160,6 @@ export default {
 }
 </script>
 
-<script setup>
-import { useAuthStore } from '../../stores/auth';
-const authStore = useAuthStore();
-</script>
-
 <style lang="scss" scoped>
 @use '../../styles/partials/variables' as *;
 @use '../../styles/partials/mixins' as *;
