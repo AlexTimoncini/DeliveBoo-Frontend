@@ -27,7 +27,7 @@ export default {
     },
     methods: {
         addDishToCart(dishObj) {
-            if ((store.cart_list.length == 0) && (store.cartRestaurantID == null)) {
+            if ((store.cart_list.length == 0) && (store.cartRestaurantID == null) || (store.cartRestaurantID == dishObj.user_id)) {
                 console.log(dishObj.user_id);
                 store.cartRestaurantID = dishObj.user_id;
             }
@@ -48,11 +48,6 @@ export default {
                 };
                 this.saveCart();
             }
-        },
-        saveCart() {
-            console.log(store.cart_list);
-            const parsed = JSON.stringify(store.cart_list);
-            localStorage.setItem('cart', parsed);
         },
         getData() {
             axios.get(store.ApiUrl + 'restaurants/' + this.restaurant_id)
@@ -89,39 +84,43 @@ export default {
                 store.cart_list.splice(dishIndex, 1, dishCopy);
             }
             console.log(store.cart_list);
-            this.setTotalPrice();
             this.saveCart();
         },
 
         removeAllDishesFromCart() {
-            while (store.cart_list.length > 0) {
-                store.cart_list.pop();
-            }
-            console.log(store.cart_list);
-            this.setTotalPrice();
+            store.cart_list = [];
             this.saveCart();
         },
 
         incrementQuantity(dishObj) {
             dishObj.quantity++;
-            this.setTotalPrice();
             this.saveCart();
         },
         saveCart() {
             const parsed = JSON.stringify(store.cart_list);
             localStorage.setItem('cart', parsed);
+            this.setTotalPrice();
+            this.setCartId();
         },
         setTotalPrice() {
             this.totalPrice = 0;
             store.cart_list.forEach((dish) => {
                 this.totalPrice += parseFloat(dish.price) * parseInt(dish.quantity);
             });
+        },
+        setCartId(){
+            if(store.cart_list.length === 0){
+                store.cartRestaurantID = null
+            } else {
+                store.cartRestaurantID = store.cart_list[0].user_id;
+            }
         }
     },
     mounted() {
         this.restaurant_id = this.$route.params.id;
         this.getData();
         this.setTotalPrice();
+        this.setCartId();
     }
 }
 </script>

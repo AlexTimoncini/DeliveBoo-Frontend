@@ -12,44 +12,45 @@ export default {
         removeDishFromCart(dishIndex, finalQuantity) {
             if (finalQuantity == 0) {
                 store.cart_list.splice(dishIndex, 1);
-                if (store.cart_list.length == 0) {
-                    store.cartRestaurantID = null;
-                }
             } else {
                 let dishCopy = store.cart_list[dishIndex];
                 dishCopy.quantity = parseInt(finalQuantity);
                 store.cart_list.splice(dishIndex, 1, dishCopy);
             }
             console.log(store.cart_list);
-            this.setTotalPrice();
             this.saveCart();
         },
         removeAllDishesFromCart() {
-            while (store.cart_list.length > 0) {
-                store.cart_list.pop();
-            }
-            console.log(store.cart_list);
-            this.setTotalPrice();
+            store.cart_list = [];
             this.saveCart();
         },
         incrementQuantity(dishObj) {
             dishObj.quantity++;
-            this.setTotalPrice();
             this.saveCart();
         },
         saveCart() {
             const parsed = JSON.stringify(store.cart_list);
             localStorage.setItem('cart', parsed);
+            this.setTotalPrice();
+            this.setCartId();
         },
         setTotalPrice() {
             this.totalPrice = 0;
             store.cart_list.forEach((dish) => {
                 this.totalPrice += parseFloat(dish.price) * parseInt(dish.quantity);
             });
+        },
+        setCartId(){
+            if(store.cart_list.length === 0){
+                store.cartRestaurantID = null
+            } else {
+                store.cartRestaurantID = store.cart_list[0].user_id;
+            }
         }
     },
     mounted() {
         this.setTotalPrice();
+        this.setCartId();
     },
 }
 
