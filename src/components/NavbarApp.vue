@@ -227,7 +227,7 @@ nav {
                     }
                 }
 
-                @media (min-width: 1200px) {
+                @media (min-width: 992px) {
                     &:hover .menu {
                         width: 120px;
                     }
