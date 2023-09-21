@@ -63,54 +63,18 @@ export default {
                 });
         },
         searchRestaurant(typeOrCategory, id) {
-            if (typeOrCategory === 'type') {
-                const typeParams = {
-                    searchbar: '',
-                    type_ids: [id],
-                    category_ids: []
-                }
-                const query = JSON.stringify(typeParams);
-                const url = store.ApiUrl + 'restaurants/search/advance/' + query;
-                axios.get(url)
-                    .then((response) => {
-                        this.filteredRestaurants = response.data.data;
-                        console.log(this.filteredRestaurants);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        this.$router.push('/404');
-                    });
-            } else if (typeOrCategory === 'category') {
-                const categoryParams = {
-                    searchbar: '',
-                    type_ids: [],
-                    category_ids: [id]
-                }
-                const query = JSON.stringify(categoryParams);
-                const url = store.ApiUrl + 'restaurants/search/advance/' + query;
-                axios.get(url)
-                    .then((response) => {
-                        this.filteredRestaurants = response.data.data;
-                        console.log(this.filteredRestaurants);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        this.$router.push('/404');
-                    });
-            } else {
-                this.params.searchbar = this.search;
-                const query = JSON.stringify(this.params);
-                const url = store.ApiUrl + 'restaurants/search/advance/' + query;
-                axios.get(url)
-                    .then((response) => {
-                        this.filteredRestaurants = response.data.data;
-                        console.log(this.filteredRestaurants);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        this.$router.push('/404');
-                    });
-            }
+            this.params.searchbar = this.search;
+            const query = JSON.stringify(this.params);
+            const url = store.ApiUrl + 'restaurants/search/advance/' + query;
+            axios.get(url)
+                .then((response) => {
+                    this.filteredRestaurants = response.data.data;
+                    console.log(this.filteredRestaurants);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$router.push('/404');
+                });
         },
         sidebarCheckboxHandler(typeOrCategory, id) {
             if (typeOrCategory === 'type') {
@@ -130,24 +94,6 @@ export default {
                 }
             }
             console.log(this.params);
-        },
-        searchFromHomeTypes(type_id){
-            const typeParams = {
-                    searchbar: '',
-                    type_ids: [type_id],
-                    category_ids: []
-                }
-                const query = JSON.stringify(typeParams);
-                const url = store.ApiUrl + 'restaurants/search/advance/' + query;
-                axios.get(url)
-                    .then((response) => {
-                        this.filteredRestaurants = response.data.data;
-                        console.log(this.filteredRestaurants);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        this.$router.push('/404');
-                    });
         }
     },
     mounted() {
@@ -193,26 +139,26 @@ export default {
         <!-- Type filter  -->
         <div class="select-type d-none d-md-block">
             <div class="container d-flex justify-content-center pill-container">
-                <a href="#" v-for="type in visibleTypesXl" class="type-pill d-none d-xl-block"
-                    @click="searchRestaurant('type', type.id)">
+                <a href="#" v-for="type in visibleTypesXl" class="d-none d-xl-block"
+                    @click="sidebarCheckboxHandler('type', type.id); searchRestaurant()">
 
-                    <div class="type_pill d-flex align-items-center">
+                    <div class="type_pill d-flex align-items-center" :class="params.type_ids.includes(type.id) ? 'seleceted' : ''">
                         <img class="type-icon" :src="type.logo" alt="">
                         <p class="m-0">{{ type.name }}</p>
                     </div>
                 </a>
-                <a href="#" v-for="type in visibleTypesLarge" class="type-pill d-none d-lg-block d-xl-none"
-                    @click="searchRestaurant('type', type.id)">
+                <a href="#" v-for="type in visibleTypesLarge" class="d-none d-lg-block d-xl-none"
+                    @click="sidebarCheckboxHandler('type', type.id); searchRestaurant()">
 
-                    <div class="type_pill d-flex align-items-center">
+                    <div class="type_pill d-flex align-items-center" :class="params.type_ids.includes(type.id) ? 'seleceted' : ''">
                         <img class="type-icon" :src="type.logo" alt="">
                         <p class="m-0">{{ type.name }}</p>
                     </div>
                 </a>
-                <a href="#" v-for="type in visibleTypesSmall" class="type-pill d-none d-md-block d-lg-none"
-                    @click="searchRestaurant('type', type.id)">
+                <a href="#" v-for="type in visibleTypesSmall" class="d-none d-md-block d-lg-none"
+                    @click="sidebarCheckboxHandler('type', type.id); searchRestaurant()">
 
-                    <div class="type_pill d-flex align-items-center">
+                    <div class="type_pill d-flex align-items-center" :class="params.type_ids.includes(type.id) ? 'seleceted' : ''">
                         <img class="type-icon" :src="type.logo" alt="">
                         <p class="m-0">{{ type.name }}</p>
                     </div>
@@ -223,8 +169,8 @@ export default {
         <!-- Category filter  -->
         <div class="select-category d-none d-md-block">
             <div class="container d-flex justify-content-center p-2">
-                <a href="#" class="category-pills" v-for="category in visibleCategories"
-                    @click="searchRestaurant('category', category.id)">
+                <a href="#" class="category-pills" v-for="category in visibleCategories" :class="params.category_ids.includes(category.id) ? 'seleceted' : ''"
+                    @click="sidebarCheckboxHandler('category', category.id), searchRestaurant();">
                     <p class="m-0">{{ category.name }}</p>
                 </a>
             </div>
@@ -235,7 +181,7 @@ export default {
     <div class=" container-fluid ">
         <div class=" row d-flex search-page-container">
             <!-- Sidebar -->
-            <form class="my_sidebar col-3 d-none d-md-block" @submit.prevent="searchRestaurant()">
+            <form class="my_sidebar col-3 d-none d-md-block">
                 <!-- <h1>Cerca il tuo ristorante</h1> -->
                 <!-- Searchbar  -->
                 <div class="search-bar mb-4 d-md-none d-lg-flex">
@@ -246,7 +192,7 @@ export default {
                             </path>
                         </svg>
                     </label>
-                    <input type="text" id="home-searchbar" placeholder="Search here" v-model="search">
+                    <input type="text" id="home-searchbar" placeholder="Search here" v-model="search" @keyup="searchRestaurant()">
                 </div>
 
                 <!-- Types and Categories-->
@@ -287,7 +233,8 @@ export default {
                             <div class="my_select" v-for="category in allCategories">
                                 <input class="my_checkbox" type="checkbox" :id="category.name + 'c'" name="type"
                                     :value="category.id"
-                                    @click="sidebarCheckboxHandler('category', category.id), searchRestaurant()">
+                                    @click="sidebarCheckboxHandler('category', category.id), searchRestaurant()"
+                                    :checked="params.category_ids.includes(category.id)">
                                 <label :for="category.name + 'c'">{{ category.name }}</label>
                             </div>
                         </div>
@@ -482,6 +429,17 @@ export default {
         .type_pill:hover {
             transform: scale(1.1);
         }
+
+        .type_pill.seleceted{
+        background-color: $priGreen;
+        color: $fontWhite;
+        border: 1px solid $fontWhite;
+        }
+
+        .type_pill.seleceted:hover{
+            color: $fontWhite;
+            transform: scale(1.05);
+        }
     }
 
     .category-pills {
@@ -491,11 +449,23 @@ export default {
         padding: .5rem .7rem;
         margin: .5rem .3rem;
         transition: all .2s ease-in;
+        border: 1px solid $priGreen;
     }
 
     .category-pills:hover {
         transform: scale(1.05);
         color: $priGreen;
+    }
+
+    .category-pills.seleceted{
+        background-color: $priGreen;
+        color: $fontWhite;
+        border: 1px solid $fontWhite;
+    }
+
+    .category-pills.seleceted:hover{
+        color: $fontWhite;
+        transform: scale(1.05);
     }
 
 }
