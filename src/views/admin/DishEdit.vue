@@ -43,7 +43,22 @@
                                         <input class="w-100" type="text" id="photo" name="photo">
                                     </div>
                                 </div>
-
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="available">Available?</label>
+                                        <select name="available" id="available" @change="formData.available = $event.target.value; console.log((formData.available))">
+                                            <option value="1" :selected="formData.available">Yes</option>
+                                            <option value="0" :selected="!formData.available">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="visible">Visible?</label>
+                                        <select name="visible" id="visible" @change="formData.visible = $event.target.value; console.log((formData.visible))">
+                                            <option value="1" :selected="formData.visible">Yes</option>
+                                            <option value="0" :selected="!formData.visible">No</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <button type="submit">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" id="save">
                                         <switch>
@@ -116,13 +131,17 @@ const formData = {
     description: null,
     price: null,
     category_id: null,
-    user_id: null
+    user_id: null,
+    available: null,
+    visible: null,
 };
 const formDataValidate = {
     name: false,
     description: false,
     price: false,
     category_id: false,
+    available: false,
+    visible: false,
 }
 let validate = false;
 function getDish(id) {
@@ -136,6 +155,8 @@ function getDish(id) {
         formData.price = store.editingDish.price;
         formData.category_id = store.editingDish.category_id;
         formData.user_id = store.editingDish.user_id;
+        formData.available = store.editingDish.available;
+        formData.visible = store.editingDish.visible;
     })
     .catch(function (error) {
         console.log(error);
@@ -151,7 +172,68 @@ function getCategory() {
             console.log(error);
         })
 }
-function errorPopUp(){
+function checkValidation(){
+    /**VALIDATION**/
+    //name
+    if(
+        formData.price !== null &&
+        typeof(formData.name) === 'string' &&
+        formData.name.length >= 3 && formData.name.length <= 100){
+
+            formDataValidate.name = true
+        }
+        
+        //description
+    if(
+        typeof(formData.description) === 'string' &&
+        formData.description.length <= 65535){
+
+        formDataValidate.description = true
+    }
+    
+    //price
+    if(
+        formData.price !== null &&
+        parseInt(formData.price) <= 999){
+
+            formDataValidate.price = true
+    }
+    
+    //category id
+    if(
+        formData.category_id !== null &&
+    parseInt(formData.category_id) > 0 && parseInt(formData.category_id) <= store.categories.length)
+    {
+        
+        formDataValidate.category_id = true;
+    }
+
+    //available
+    if(
+    formData.available !== null &&
+    typeof(formData.available) === 'boolean')
+    {
+        
+        formDataValidate.available = true;
+    }
+
+    //visible
+    if(
+    formData.visible !== null &&
+    typeof(formData.visible) === 'boolean')
+    {
+        
+        formDataValidate.visible = true;
+    }
+    /**VALIDATION MANAGEMENT**/
+    if(formDataValidate.name && formDataValidate.price && formDataValidate.description && formDataValidate.category_id){
+        validate = true
+    } else {
+        errorPopUp();
+    }
+};
+
+function errorPopUp(serverErrors){
     if(!formDataValidate.name){
         console.log('The Name isn\'t in the right format');
     }
@@ -164,49 +246,20 @@ function errorPopUp(){
     if(!formDataValidate.category_id){
         console.log('Category isn\'t in the right format');
     }
-};
-function checkValidation(){
-    /**VALIDATION**/
-    //name
-    if(
-        formData.price !== null &&
-        typeof(formData.name) === 'string' &&
-        formData.name.length >= 3 && formData.name.length <= 100){
-
-        formDataValidate.name = true
+    if(!formDataValidate.available){
+        console.log('Available attribute isn\'t in the right format');
     }
-
-    //description
-    if(
-        typeof(formData.description) === 'string' &&
-        formData.description.length <= 65535){
-
-        formDataValidate.description = true
+    if(!formDataValidate.visible){
+        console.log('Visible attribute isn\'t in the right format');
     }
-
-    //price
-    if(
-        formData.price !== null &&
-        parseInt(formData.price) <= 999){
-
-        formDataValidate.price = true
-    }
-
-    //category id
-    if(
-    formData.category_id !== null &&
-    parseInt(formData.category_id) > 0 && parseInt(formData.category_id) <= store.categories.length)
-    {
-
-    formDataValidate.category_id = true;
-    }
-    /**VALIDATION MANAGEMENT**/
-    if(formDataValidate.name && formDataValidate.price && formDataValidate.description && formDataValidate.category_id){
-        validate = true
-    } else {
-        errorPopUp();
+    if(serverErrors){
+        Object.values(serverErrors).forEach(e => {
+            console.log(e[0]);
+        });
     }
 };
+
+let messageErrors;
 
 function updateDish() {
     checkValidation();
@@ -217,17 +270,19 @@ function updateDish() {
             price: formData.price,
             category_id: formData.category_id,
             user_id: formData.user_id,
-            visible: 1,
-            available: 1,
+            visible: formData.visible,
+            available: formData.available,
             photo: 'Ciao sono una stringa',
         })
         .then((response) => {
             console.log(response);
             window.location.href = '/admin/dishes';
         })
-        .catch(function (error) {
-            console.log(error);
-        })
+        .catch((error) => {
+            messageErrors = error.response.data.errors;
+            console.log(messageErrors);
+            errorPopUp(messageErrors);
+        });
     }
 };
 
