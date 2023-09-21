@@ -856,10 +856,10 @@ textarea {
 
 .errors {
     right: 0;
-    transition: all 1s ease;
 
     .w-cs {
         width: 260px;
+
     }
 
     .w-0 {
@@ -869,13 +869,12 @@ textarea {
     div {
         border-top: 5px solid $priGreen;
         margin-top: 1rem;
-        transition: all 1s ease;
 
 
         p {
             background-color: $secYellow;
             padding: 1rem .22rem;
-            transition: all 1s ease;
+
         }
     }
 }
