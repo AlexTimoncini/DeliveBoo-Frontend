@@ -40,8 +40,6 @@ export const useAuthStore = defineStore('auth', {
                 address: dataRegister.address,
                 closer_time: dataRegister.closer_time,
                 open_time: dataRegister.open_time,
-                image: dataRegister.image,
-                logo: dataRegister.logo,
                 phone: dataRegister.phone,
                 description: dataRegister.description,
                 password: dataRegister.password,

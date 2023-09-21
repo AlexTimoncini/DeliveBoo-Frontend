@@ -9,8 +9,6 @@ const formRegister = ref({
     address: '',
     closer_time: '',
     open_time: '',
-    image: '',
-    logo: '',
     phone: '',
     description: '',
     password: '',
@@ -30,6 +28,18 @@ function signIn() {
     let elementContainer = document.getElementById('container');
     elementContainer.classList.remove('right-panel-active')
 }
+
+function uploadFile(file) {
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    axios.post(`api/restaurants/image/upload/File/${formData.id}`, file, config).then(function (response) {
+        console.log(response.data);
+        checkImage = response.data.status;
+    });
+    axios.post(`api/restaurants/logo/upload/File/${formData.id}`, file, config).then(function (response) {
+        console.log(response.data);
+        checkImage = response.data.status;
+    });
+}
 </script>
 
 <template>
@@ -41,7 +51,7 @@ function signIn() {
     <div class="container d-none d-lg-block" id="container">
         <!-- Desktop view  -->
         <div class="form-container sign-up-container">
-            <form @submit.prevent="authStore.registerUser(formRegister)">
+            <form @submit.prevent="authStore.registerUser(formRegister)" enctype="multipart/form-data">
                 <button class="my_btn">Create Account</button>
                 <div class="social-container">
                     <a href="" class="social">
@@ -246,16 +256,6 @@ function signIn() {
                         <div class="col-4">
                             <label for="phone-number">Phone Number</label>
                             <input type="text" name="phone-number" id="phone-number" v-model="formRegister.phone" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="image">Image URL</label>
-                            <input type="text" name="image" id="image" v-model="formRegister.image" />
-                        </div>
-                        <div class="col-6">
-                            <label for="image">Logo URL</label>
-                            <input type="text" name="logo" id="logo" v-model="formRegister.logo" />
                         </div>
                     </div>
                     <div class="row">
