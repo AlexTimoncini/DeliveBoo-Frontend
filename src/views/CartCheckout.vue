@@ -24,6 +24,14 @@ export default {
             this.setTotalPrice();
             this.saveCart();
         },
+        removeAllDishesFromCart() {
+            while (store.cart_list.length > 0) {
+                store.cart_list.pop();
+            }
+            console.log(store.cart_list);
+            this.setTotalPrice();
+            this.saveCart();
+        },
         incrementQuantity(dishObj) {
             dishObj.quantity++;
             this.setTotalPrice();
@@ -66,40 +74,52 @@ export default {
                 draggable="false">
         </div>
         <div v-else class="row justify-content-between align-items-start">
-            <ul class="cart col-12 col-lg-6 row m-0 px-0 px-sm-3 mb-4">
-                <li v-for="(dish, index) in store.cart_list" class="cart_item d-flex justify-content-between col-12">
-                    <div class="d-flex col-8 align-items-center align-items-md-start">
-                        <div class="dish_img"><img class="img-fluid" :src="dish.photo" :alt="dish.name + 'image'"
-                                draggable="false"></div>
-                        <div class="dish_info pe-0">
-                            <div class="dish_name ">
-                                <h6 class="">{{ dish.name }}</h6>
-                            </div>
-                            <div class="dish_price">
-                                <p class="m-0">{{ dish.price }}€</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" col-lg-5 dish_quantity_box p-2 d-flex flex-column flex-md-row">
-                        <div class="buttons d-flex  mb-3 mb-md-0">
-                            <button class="btn_quantity " @click="removeDishFromCart(index, 0)"><svg viewBox="0 0 24 24">
-                                    <path
-                                        d="M 10 2 L 9 3 L 4 3 L 4 5 L 5 5 L 5 20 C 5 20.522222 5.1913289 21.05461 5.5683594 21.431641 C 5.9453899 21.808671 6.4777778 22 7 22 L 17 22 C 17.522222 22 18.05461 21.808671 18.431641 21.431641 C 18.808671 21.05461 19 20.522222 19 20 L 19 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 7 5 L 17 5 L 17 20 L 7 20 L 7 5 z M 9 7 L 9 18 L 11 18 L 11 7 L 9 7 z M 13 7 L 13 18 L 15 18 L 15 7 L 13 7 z">
-                                    </path>
-                                </svg>
-                            </button>
-                            <button class="btn_quantity" @click="incrementQuantity(dish)"><img
-                                    src="../assets/icons/spooky_plus.png" alt="plus img" draggable="false"></button>
-                        </div>
 
-                        <select class="dish_quantity ms-0 ms-md-2 px-3 px-lg-2 px-xl-3 w-75 w-sm-100"
-                            @change="removeDishFromCart(index, $event.target.value)">
-                            <option v-for="n, index in dish.quantity" :value="n" :selected="n == dish.quantity">{{ n }}
-                            </option>
-                        </select>
-                    </div>
-                </li>
-            </ul>
+            <!-- Cart  -->
+            <div class="cart col-12 col-lg-6 row m-0 px-0 px-sm-3 mb-4">
+                <ul>
+                    <li v-for="(dish, index) in store.cart_list" class="cart_item d-flex justify-content-between col-12">
+                        <div class="d-flex col-8 align-items-center align-items-md-start">
+                            <div class="dish_img"><img class="img-fluid" :src="dish.photo" :alt="dish.name + 'image'"
+                                    draggable="false"></div>
+                            <div class="dish_info pe-0">
+                                <div class="dish_name ">
+                                    <h6 class="">{{ dish.name }}</h6>
+                                </div>
+                                <div class="dish_price">
+                                    <p class="m-0">{{ dish.price }}€</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" col-lg-5 dish_quantity_box p-2 d-flex flex-column flex-md-row">
+                            <div class="buttons d-flex  mb-3 mb-md-0">
+                                <button class="btn_quantity " @click="removeDishFromCart(index, 0)"><svg
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M 10 2 L 9 3 L 4 3 L 4 5 L 5 5 L 5 20 C 5 20.522222 5.1913289 21.05461 5.5683594 21.431641 C 5.9453899 21.808671 6.4777778 22 7 22 L 17 22 C 17.522222 22 18.05461 21.808671 18.431641 21.431641 C 18.808671 21.05461 19 20.522222 19 20 L 19 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 7 5 L 17 5 L 17 20 L 7 20 L 7 5 z M 9 7 L 9 18 L 11 18 L 11 7 L 9 7 z M 13 7 L 13 18 L 15 18 L 15 7 L 13 7 z">
+                                        </path>
+                                    </svg>
+                                </button>
+                                <button class="btn_quantity" @click="incrementQuantity(dish)"><img
+                                        src="../assets/icons/spooky_plus.png" alt="plus img" draggable="false"></button>
+                            </div>
+
+                            <select class="dish_quantity ms-0 ms-md-2 px-3 px-lg-2 px-xl-3 w-75 w-sm-100"
+                                @change="removeDishFromCart(index, $event.target.value)">
+                                <option v-for="n, index in dish.quantity" :value="n" :selected="n == dish.quantity">{{ n }}
+                                </option>
+                            </select>
+                        </div>
+                    </li>
+                </ul>
+                <div><button class="btn order-btn order mb-4" @click=" this.$router.push({
+                    name: 'CartCheckout'
+                })">Order Now</button>
+                    <button class="btn btn-danger  ms-sm-3 mb-4" @click="removeAllDishesFromCart()">Empty Cart</button>
+                </div>
+            </div>
+
+            <!-- Order Preview  -->
             <ul class="order_preview col-12 col-lg-5 m-0">
                 <li>
                     <h4 class="title mt-3">Order Preview</h4>
@@ -278,6 +298,11 @@ div.container {
                 }
             }
         }
+    }
+
+    button.order {
+        background-color: $priGreen;
+        color: white;
     }
 }
 
