@@ -1,3 +1,8 @@
+<script setup>
+import { useAuthStore } from '../../stores/auth';
+const authStore = useAuthStore();
+
+</script>
 <template>
     <div class="container-fluid">
         <div class="row">
@@ -107,7 +112,8 @@
                                             </div>
                                             <div class="form-group mb-2 d-flex flex-column">
                                                 <label for="">Image</label>
-                                                <img class="thumb" :src="dish.photo" :alt="dish.name">
+                                                <img class="thumb" :src="`http://127.0.0.1:8000/storage${dish.photo}`"
+                                                    :alt="dish.name">
                                             </div>
 
                                         </div>
@@ -124,20 +130,14 @@
 </template>
 
 <script>
+
 import axios from 'axios';
 import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
 export default {
     name: 'Dishes',
-    components: { DashboardSidebar, DashboardNavbar },
 
-    data() {
-        return {
-            isAlertOn: false,
-            AlertID: 0,
-            confirmDelete: false,
-        }
-    },
+    components: { DashboardSidebar, DashboardNavbar },
     methods: {
         alertMessage(dishID) {
             this.isAlertOn = true;
@@ -145,17 +145,16 @@ export default {
         },
 
         deleteDish(dishID) {
-            axios.delete(`/api/delete/${dishID}`)
-                .then((response) => {
-                    console.log(response);
-                    window.location.href = '/admin/dishes';
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-            this.isAlertOn = false;
-            this.confirmDelete = false;
-
+            if (window.confirm('Are you sure you want to delete this dish?')) {
+                axios.delete(`/api/delete/${dishID}`)
+                    .then((response) => {
+                        console.log(response);
+                        window.location.href = '/admin/dishes';
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+            }
         }
     }
 }
@@ -164,8 +163,6 @@ export default {
 <script setup>
 import { useAuthStore } from '../../stores/auth';
 const authStore = useAuthStore();
-
-
 </script>
 
 <style lang="scss" scoped>

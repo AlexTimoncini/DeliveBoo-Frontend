@@ -11,7 +11,7 @@
                     <div class="row align-items-center">
                         <div class="dish-info col-12 col-md-6">
 
-                            <form @submit.prevent="updateDish()">
+                            <form @submit.prevent="updateDish()" enctype="multipart/form-data">
                                 <label for="name">Name</label>
                                 <input class="w-100" type="text" id="name" name="name" v-model="formData.name">
                                 <label for="description">Description</label>
@@ -20,8 +20,11 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="category">Category</label>
-                                        <select name="category" id="category" @change="formData.category_id = $event.target.value; console.log(parseInt(formData.category_id))">
-                                            <option v-for="category in store.categories" :value="category.id" :selected="category.id === store.editingDish.category_id">{{ category.name }}
+                                        <select name="category" id="category"
+                                            @change="formData.category_id = $event.target.value; console.log(parseInt(formData.category_id))">
+                                            <option v-for="category in store.categories" :value="category.id"
+                                                :selected="category.id === store.editingDish.category_id">{{ category.name
+                                                }}
                                             </option>
                                         </select>
                                     </div>
@@ -41,22 +44,25 @@
                                     </div>
                                     <div class="col-6">
                                         <label for="photo">Photo</label>
-                                        <input class="w-100" type="text" id="photo" name="photo" disabled placeholder="Work in progress">
+                                        <input class="w-100" type="file" id="photo" name="photo"
+                                            @change="formData.photo = $event.target.files; console.log(formData.photo[0])">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="available">Available?</label>
-                                        <select name="available" id="available" @change="formData.available = $event.target.value; console.log((formData.available))">
+                                        <select name="available" id="available"
+                                            @change="formData.available = $event.target.value; console.log((formData.available))">
                                             <option value="1" :selected="formData.available">Yes</option>
                                             <option value="0" :selected="!formData.available">No</option>
                                         </select>
                                     </div>
                                     <div class="col-6">
                                         <label for="visible">Visible?</label>
-                                        <select name="visible" id="visible" @change="formData.visible = $event.target.value; console.log((formData.visible))">
-                                            <option value="1" :selected="formData.visible">Yes</option>
-                                            <option value="0" :selected="!formData.visible">No</option>
+                                        <select name="visible" id="visible"
+                                            @change="formData.visible = $event.target.value; console.log((formData.visible))">
+                                            <option value=1 :selected="formData.visible">Yes</option>
+                                            <option value=0 :selected="!formData.visible">No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -126,6 +132,7 @@ import { store } from '../../store';
 const authStore = useAuthStore();
 const route = useRoute();
 let idDish = 0;
+let checkImage;
 const formData = {
     id: null,
     name: null,
@@ -135,6 +142,7 @@ const formData = {
     user_id: null,
     available: null,
     visible: null,
+    photo: null,
 };
 const formDataValidate = {
     name: false,
@@ -143,25 +151,26 @@ const formDataValidate = {
     category_id: false,
     available: false,
     visible: false,
+    photo: false,
 }
 let validate = false;
 function getDish(id) {
     axios.get(`/api/dishes/${id}`)
-    .then((response) => {
-        store.editingDish = response.data.data;
-        console.log(response.data.data.ingredients);
-        formData.id = store.editingDish.id;
-        formData.name = store.editingDish.name;
-        formData.description = store.editingDish.description;
-        formData.price = store.editingDish.price;
-        formData.category_id = store.editingDish.category_id;
-        formData.user_id = store.editingDish.user_id;
-        formData.available = store.editingDish.available;
-        formData.visible = store.editingDish.visible;
-    })
-    .catch(function (error) {
-        console.log(error);
-    })
+        .then((response) => {
+            store.editingDish = response.data.data;
+            console.log(response.data.data.ingredients);
+            formData.id = store.editingDish.id;
+            formData.name = store.editingDish.name;
+            formData.description = store.editingDish.description;
+            formData.price = store.editingDish.price;
+            formData.category_id = store.editingDish.category_id;
+            formData.user_id = store.editingDish.user_id;
+            formData.available = store.editingDish.available;
+            formData.visible = store.editingDish.visible;
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
 };
 
 function getCategory() {
@@ -173,87 +182,101 @@ function getCategory() {
             console.log(error);
         })
 }
-function checkValidation(){
+async function checkValidation() {
     /**VALIDATION**/
     //name
-    if(
+    if (
         formData.price !== null &&
-        typeof(formData.name) === 'string' &&
-        formData.name.length >= 3 && formData.name.length <= 100){
+        typeof (formData.name) === 'string' &&
+        formData.name.length >= 3 && formData.name.length <= 100) {
 
-            formDataValidate.name = true
-        }
-        
-        //description
-    if(
-        typeof(formData.description) === 'string' &&
-        formData.description.length <= 65535){
+        formDataValidate.name = true
+    }
+
+    //description
+    if (
+        typeof (formData.description) === 'string' &&
+        formData.description.length <= 65535) {
 
         formDataValidate.description = true
     }
-    
-    //price
-    if(
-        formData.price !== null &&
-        parseInt(formData.price) <= 999){
 
-            formDataValidate.price = true
+    //price
+    if (
+        formData.price !== null &&
+        parseInt(formData.price) <= 999) {
+
+        formDataValidate.price = true
     }
-    
+
     //category id
-    if(
+    if (
         formData.category_id !== null &&
-    parseInt(formData.category_id) > 0 && parseInt(formData.category_id) <= store.categories.length)
-    {
-        
+        parseInt(formData.category_id) > 0 && parseInt(formData.category_id) <= store.categories.length) {
+
         formDataValidate.category_id = true;
     }
 
     //available
-    if(
-    formData.available !== null &&
-    typeof(formData.available) === 'boolean')
-    {
-        
+    if (
+        formData.available !== null &&
+        typeof (formData.available) === 'number') {
+
         formDataValidate.available = true;
     }
 
     //visible
-    if(
-    formData.visible !== null &&
-    typeof(formData.visible) === 'boolean')
-    {
-        
+    if (formData.visible !== null && typeof (formData.visible) === 'number') {
         formDataValidate.visible = true;
     }
+
+    try {
+        const data = await uploadFile();
+        console.log(data);
+    } catch (error) {
+        console.log(checkImage, 'we')
+    }
+    if (checkImage) {
+        formDataValidate.photo = true;
+    }
     /**VALIDATION MANAGEMENT**/
-    if(formDataValidate.name && formDataValidate.price && formDataValidate.description && formDataValidate.category_id){
+    if (formDataValidate.name && formDataValidate.price && formDataValidate.description && formDataValidate.category_id && formDataValidate.photo) {
         validate = true
     } else {
         errorPopUp();
     }
 };
+async function uploadFile(file) {
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    await axios.post(`api/upload/File/${formData.id}`, file, config).then(function (response) {
+        console.log(response.data);
+        checkImage = response.data.status;
+    });
+}
 
-function errorPopUp(serverErrors){
-    if(!formDataValidate.name){
+function errorPopUp(serverErrors) {
+    if (!formDataValidate.name) {
         console.log('The Name isn\'t in the right format');
     }
-    if(!formDataValidate.description){
+    if (!formDataValidate.description) {
         console.log('The description isn\'t in the right format');
     }
-    if(!formDataValidate.price){
+    if (!formDataValidate.price) {
         console.log('The price isn\'t in the right format');
     }
-    if(!formDataValidate.category_id){
+    if (!formDataValidate.category_id) {
         console.log('Category isn\'t in the right format');
     }
-    if(!formDataValidate.available){
+    if (!formDataValidate.available) {
         console.log('Available attribute isn\'t in the right format');
     }
-    if(!formDataValidate.visible){
+    if (!formDataValidate.visible) {
         console.log('Visible attribute isn\'t in the right format');
     }
-    if(serverErrors){
+    if (!formDataValidate.photo) {
+        console.log('Photo attribute isn\'t in the right format');
+    }
+    if (serverErrors) {
         Object.values(serverErrors).forEach(e => {
             console.log(e[0]);
         });
@@ -263,8 +286,9 @@ function errorPopUp(serverErrors){
 let messageErrors;
 
 function updateDish() {
+    uploadFile(formData.photo);
     checkValidation();
-    if(validate){
+    if (validate) {
         axios.put(`/api/update/${formData.id}`, {
             name: formData.name,
             description: formData.description,
@@ -273,17 +297,17 @@ function updateDish() {
             user_id: formData.user_id,
             visible: formData.visible,
             available: formData.available,
-            photo: 'Ciao sono una stringa',
+            photo: formData.photo,
         })
-        .then((response) => {
-            console.log(response);
-            window.location.href = '/admin/dishes';
-        })
-        .catch((error) => {
-            messageErrors = error.response.data.errors;
-            console.log(messageErrors);
-            errorPopUp(messageErrors);
-        });
+            .then((response) => {
+                console.log(response);
+                window.location.href = '/admin/dishes';
+            })
+            .catch((error) => {
+                messageErrors = error.response.data.errors;
+                console.log(messageErrors);
+                errorPopUp(messageErrors);
+            });
     }
 };
 
