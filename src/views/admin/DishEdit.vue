@@ -186,7 +186,7 @@ async function checkValidation() {
     /**VALIDATION**/
     //name
     if (
-        formData.price !== null &&
+        formData.name !== null &&
         typeof (formData.name) === 'string' &&
         formData.name.length >= 3 && formData.name.length <= 100) {
 
@@ -229,8 +229,20 @@ async function checkValidation() {
     if (formData.visible !== null && typeof (formData.visible) === 'number') {
         formDataValidate.visible = true;
     }
+
+    //photo
+    if (typeof(formData.photo) === 'object' || formData.photo === null) {
+        formDataValidate.photo = true;
+    }
+
     /**VALIDATION MANAGEMENT**/
-    if (formDataValidate.name && formDataValidate.price && formDataValidate.description && formDataValidate.category_id) {
+    if (formDataValidate.name && 
+        formDataValidate.price && 
+        formDataValidate.description && 
+        formDataValidate.category_id && 
+        formDataValidate.available && 
+        formDataValidate.visible && 
+        formDataValidate.photo) {
         validate = true
     } else {
         errorPopUp();
@@ -263,6 +275,9 @@ function errorPopUp(serverErrors) {
     if (!formDataValidate.visible) {
         console.log('Visible attribute isn\'t in the right format');
     }
+    if (!formDataValidate.photo) {
+        console.log('Photo isn\'t in the right format');
+    }
     if (serverErrors) {
         Object.values(serverErrors).forEach(e => {
             console.log(e[0]);
@@ -273,9 +288,10 @@ function errorPopUp(serverErrors) {
 let messageErrors;
 
 function updateDish() {
-    uploadFile(formData.photo);
     checkValidation();
+    console.log(validate);
     if (validate) {
+        uploadFile(formData.photo);
         axios.put(`/api/update/${formData.id}`, {
             name: formData.name,
             description: formData.description,
@@ -284,7 +300,6 @@ function updateDish() {
             user_id: formData.user_id,
             visible: formData.visible,
             available: formData.available,
-            photo: formData.photo,
         })
             .then((response) => {
                 console.log(response);

@@ -113,7 +113,7 @@ const authStore = useAuthStore();
                                             </div>
                                             <div class="form-group mb-2 d-flex flex-column">
                                                 <label for="">Image</label>
-                                                <img class="thumb" :src="`http://127.0.0.1:8000/storage${dish.photo}`"
+                                                <img class="thumb" :src="dish.photo.startsWith('/dish/') ? (`http://127.0.0.1:8000/storage${dish.photo}`) : dish.photo"
                                                     :alt="dish.name">
                                             </div>
 
