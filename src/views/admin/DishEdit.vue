@@ -229,26 +229,16 @@ async function checkValidation() {
     if (formData.visible !== null && typeof (formData.visible) === 'number') {
         formDataValidate.visible = true;
     }
-
-    try {
-        const data = await uploadFile();
-        console.log(data);
-    } catch (error) {
-        console.log(checkImage, 'we')
-    }
-    if (checkImage) {
-        formDataValidate.photo = true;
-    }
     /**VALIDATION MANAGEMENT**/
-    if (formDataValidate.name && formDataValidate.price && formDataValidate.description && formDataValidate.category_id && formDataValidate.photo) {
+    if (formDataValidate.name && formDataValidate.price && formDataValidate.description && formDataValidate.category_id) {
         validate = true
     } else {
         errorPopUp();
     }
 };
-async function uploadFile(file) {
+function uploadFile(file) {
     const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-    await axios.post(`api/upload/File/${formData.id}`, file, config).then(function (response) {
+    axios.post(`api/upload/File/${formData.id}`, file, config).then(function (response) {
         console.log(response.data);
         checkImage = response.data.status;
     });
@@ -272,9 +262,6 @@ function errorPopUp(serverErrors) {
     }
     if (!formDataValidate.visible) {
         console.log('Visible attribute isn\'t in the right format');
-    }
-    if (!formDataValidate.photo) {
-        console.log('Photo attribute isn\'t in the right format');
     }
     if (serverErrors) {
         Object.values(serverErrors).forEach(e => {
