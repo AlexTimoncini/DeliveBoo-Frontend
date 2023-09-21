@@ -36,7 +36,7 @@ export default {
         setTotalPrice() {
             this.totalPrice = 0;
             store.cart_list.forEach((dish) => {
-                this.totalPrice += parseInt(dish.price) * parseInt(dish.quantity);
+                this.totalPrice += parseFloat(dish.price) * parseInt(dish.quantity);
             });
         }
     },
