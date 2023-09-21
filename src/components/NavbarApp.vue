@@ -53,21 +53,21 @@ onMounted(async () => {
             </div>
             <div class="navbar d-none d-lg-flex flex-lg-nowrap" :class="triggerMenu ? 'active' : ''">
                 <ul class="nav-links d-flex flex-column flex-lg-row">
-                    <li><router-link :to="{ name: 'Homepage' }">Home</router-link></li>
-                    <li><router-link :to="{ name: 'WorkInProgress' }">About</router-link></li>
-                    <li><router-link :to="{ name: 'WorkInProgress' }">Contact</router-link></li>
+                    <li @click="triggerMenu = false"><router-link :to="{ name: 'Homepage' }">Home</router-link></li>
+                    <li @click="triggerMenu = false"><router-link :to="{ name: 'WorkInProgress' }">About</router-link></li>
+                    <li @click="triggerMenu = false"><router-link :to="{ name: 'WorkInProgress' }">Contact</router-link></li>
                 </ul>
-                <div v-if="!authStore.user">
+                <div class="are-you-a-restaurant-btn" v-if="!authStore.user">
                     <router-link :to="{ name: 'LoginRestaurant' }">
-                        <button>Are you a restaurant?</button>
+                        <button @click="triggerMenu = false"><span>Are you a restaurant?</span></button>
                     </router-link>
                 </div>
-                <div class="d-flex align-items-center" v-else>
+                <div class="d-lg-flex align-items-center" v-else>
                     <div class="btn-class">
                         <img :src="authStore.user ? 'http://127.0.0.1:8000/storage/' + authStore.user.logo : ''" alt="">
                     </div>
                     <div class="menu-profile">
-                        <button @click="openCloseMenu">
+                        <button @click="openCloseMenu" class="d-none d-lg-block">
                             <svg fill="#000000" height="10px" width="10px" version="1.1" id="Layer_1"
                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 viewBox="0 0 330 330" xml:space="preserve">
@@ -82,17 +82,17 @@ onMounted(async () => {
                         </button>
                         <div class="menu">
                             <ul class="list-unstyled">
-                                <li>
-                                    <router-link :to="{ name: 'MyAccount' }">Dashboard</router-link>
+                                <li @click="triggerMenu = false">
+                                    <router-link :to="{ name: 'MyAccount' }"><span>Dashboard</span></router-link>
                                 </li>
                                 <li @click="authStore.logout">
-                                    Logout
+                                    <span>Logout</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class="cart-btn">
+                <div class="cart-btn" @click="triggerMenu = false">
                     <router-link :to="{ name: 'CartCheckout' }">
                         <img src="../assets/icons/cart.svg" alt="cart svg" draggable="false">
                         <div v-if="store.cart_list.length !== 0" class="cart_counter">
@@ -191,10 +191,15 @@ nav {
                 img {
                     width: 100%;
                     height: 100%;
+                    transition: all .3s ease;
                 }
 
                 &:hover {
-                    filter: brightness(1.2);
+                    transform: scale(1.2);
+
+                    img {
+                        transform: scale(1.2);
+                    }
                 }
             }
 
@@ -206,7 +211,7 @@ nav {
                 cursor: pointer;
 
                 button {
-                    border-radius: 50%;
+                    border-radius: 30px;
                     padding: .3rem;
                     height: 30px;
                     width: 30px;
@@ -223,9 +228,11 @@ nav {
                     }
                 }
 
-                &:hover {
-                    .menu {
-                        width: 120px;
+                @media (min-width: 1200px) {
+                    &:hover {
+                        .menu {
+                            width: 120px;
+                        }
                     }
                 }
 
@@ -251,6 +258,7 @@ nav {
                             color: white;
                             font-weight: 500;
                             border-bottom: 3px solid $secYellow;
+                            border-radius: 30px;
 
                             a {
                                 color: white;
@@ -305,7 +313,7 @@ nav {
             display: flex !important;
             flex-direction: column;
             flex-wrap: nowrap;
-            justify-content: flex-start;
+            justify-content: space-around;
             align-items: center;
             position: absolute;
             top: 100%;
@@ -314,37 +322,146 @@ nav {
             width: 100vw;
             background-color: white;
             box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px inset;
+            overflow-y: scroll;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
 
             .nav-links {
-                margin-bottom: 0;
-                width: 100%;
+                width: fit-content;
+                padding: 0;
+                background-color: white;
 
                 li {
                     width: 100%;
                     display: flex;
                     padding: 2rem 0;
+                    transition: all 0.33s ease;
+                    padding: .5rem 1rem;
+                    border: 5px solid $secYellow;
+                    margin-bottom: 1rem;
+
+                    &:hover a {
+                        color: white;
+                        transform: scale(1.05);
+                    }
 
                     a {
                         text-transform: uppercase;
-                        font-size: 5rem;
+                        font-size: 2rem;
                         color: $priGreen;
                         margin: auto;
-                        transition: all 0.33s ease;
-                    }
-
-                    a:hover {
-                        letter-spacing: 0.9rem;
                     }
                 }
             }
 
-            .login-btn {
-                font-size: 3rem;
+            .are-you-a-restaurant-btn {
+                
+                button {
+                    font-size: 2rem;
+                    background-color: white;
+                    border: 3px solid $secYellow;
+                    color: $priGreen;
+                    text-transform: uppercase;
+                    margin: 0;
+
+                    span {
+                        transition: all .3s ease;
+                    }
+
+                    &:hover {
+                        background-color: $priGreen;
+                        color: white;
+
+                        span {
+                            display: inline-block;
+                            transform: scale(1.05);
+                        }
+                    }
+                }
+            }
+
+            .btn-class {
+                margin: auto;
+                height: 100px;
+                width: 100px;
+                background-color: $secYellow;
+                border-radius: 50%;
+                transition: all .3s ease;
+                overflow: hidden;
+                border: 5px solid $secYellow;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    transition: all .3s ease;
+                }
+            }
+
+            .menu {
+                width: fit-content;
+                position: relative;
+                transition: all 0.3s;
+
+                .list-unstyled {
+                    padding: 0;
+                    width: 100%;
+                    margin: 0;
+                    transition: all 0.3s;
+                    border-radius: 0;
+
+                    li {
+                        padding: .5rem 1rem;
+                        background-color: white;
+                        transition: all 0.3s;
+                        color: $priGreen;
+                        font-size: 2rem;
+                        text-transform: uppercase;
+                        border: 5px solid $secYellow;
+                        margin-bottom: 1.5rem;
+
+                        a {
+                            color: $priGreen;
+                        }
+
+                        span {
+                            transition: all .3s ease;
+                        }
+
+                        &:hover {
+                            background-color: $priGreen;
+
+                            span {
+                                color: white;
+                                display: inline-block;
+                                transform: scale(1.05);
+                            }
+                        }
+                    }
+                } 
             }
 
             .cart-btn {
-                margin-top: 3rem;
-                width: 200px;
+                width: 50px;
+                margin-bottom: 2rem;
+
+                &:hover img {
+                    transform: scale(1.1);
+                }
+
+                &:hover .cart_counter {
+                    transform: scale(1.4);
+                }
+
+                .cart_counter {
+                    width: 20px;
+                    height: 20px;
+                    line-height: 20px;
+                    font-size: 1rem;
+                }
             }
         }
 
