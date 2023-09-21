@@ -22,12 +22,27 @@
                         <!-- Categories  -->
                         <div class="category mb-4 row" v-if="authStore.user">
 
-                            <!-- Cards  -->
-                            <div class="col-12 col-md-6 col-lg-4 p-0 p-md-3" v-for="dish in authStore.user.dishes"
+                            <div class="col-12 col-md-6 col-lg-4 p-0 p-md-3 " v-for="dish in authStore.user.dishes"
                                 :key="dish.id">
-                                <div class="dish-card card-container p-3">
+
+                                <!-- Dish Card  -->
+
+                                <div class="dish-card card-container p-3 position-relative">
+
+                                    <!-- Error message  -->
+                                    <div class="error-message d-flex flex-column justify-content-center align-items-center"
+                                        :class="isAlertOn & dish.id == AlertID ? '' : 'd-none'">
+                                        <img class="my-3" src="../../assets/mascotte/Boo_eraser.png"
+                                            alt="Boo ghost with an eraser in his hands">
+                                        <p><strong>Are you sure</strong> you want to <strong>delete</strong> this dish?</p>
+                                        <div class="buttons-container d-flex justify-content-center">
+                                            <button class="btn cancel" @click="isAlertOn = false">Cancel</button>
+                                            <button class="btn" @click="deleteDish(dish.id)">Ok</button>
+                                        </div>
+                                    </div>
+
                                     <div class="card-buttons-container d-flex justify-content-end mb-2">
-                                        <div class="card-button btn" @click=" deleteDish(dish.id)">
+                                        <div class="card-button btn" @click="alertMessage(dish.id)">
                                             <svg viewBox="0 0 24 24">
                                                 <path
                                                     d="M 10 2 L 9 3 L 4 3 L 4 5 L 5 5 L 5 20 C 5 20.522222 5.1913289 21.05461 5.5683594 21.431641 C 5.9453899 21.808671 6.4777778 22 7 22 L 17 22 C 17.522222 22 18.05461 21.808671 18.431641 21.431641 C 18.808671 21.05461 19 20.522222 19 20 L 19 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 7 5 L 17 5 L 17 20 L 7 20 L 7 5 z M 9 7 L 9 18 L 11 18 L 11 7 L 9 7 z M 13 7 L 13 18 L 15 18 L 15 7 L 13 7 z">
@@ -98,10 +113,9 @@
                                         </div>
                                     </form>
                                 </div>
+
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -117,18 +131,31 @@ export default {
     name: 'Dishes',
     components: { DashboardSidebar, DashboardNavbar },
 
+    data() {
+        return {
+            isAlertOn: false,
+            AlertID: 0,
+            confirmDelete: false,
+        }
+    },
     methods: {
+        alertMessage(dishID) {
+            this.isAlertOn = true;
+            this.AlertID = dishID;
+        },
+
         deleteDish(dishID) {
-            if (window.confirm('Are you sure you want to delete this dish?')) {
-                axios.delete(`/api/delete/${dishID}`)
-                    .then((response) => {
-                        console.log(response);
-                        window.location.href = '/admin/dishes';
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    })
-            }
+            axios.delete(`/api/delete/${dishID}`)
+                .then((response) => {
+                    console.log(response);
+                    window.location.href = '/admin/dishes';
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+            this.isAlertOn = false;
+            this.confirmDelete = false;
+
         }
     }
 }
@@ -137,6 +164,8 @@ export default {
 <script setup>
 import { useAuthStore } from '../../stores/auth';
 const authStore = useAuthStore();
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -157,6 +186,52 @@ const authStore = useAuthStore();
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
+
+    .error-message {
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+        padding: .5rem 1rem;
+        border-radius: 10px;
+        background-color: rgb(255, 249, 249);
+        text-align: center;
+        position: absolute;
+        top: 50;
+        right: 50;
+        transform: translateY(50%);
+        transform: translateX(-.5rem);
+
+
+        img {
+            width: 50%;
+        }
+
+        button {
+            background-color: $secYellow;
+            margin: .5rem;
+        }
+
+        button:hover {
+            background-color: #f4ca4c;
+        }
+
+        button:active {
+            background-color: $secYellow;
+        }
+
+        button.cancel {
+            background-color: white;
+            border: 2px solid $secYellow;
+        }
+
+        button.cancel:hover {
+            background-color: #fff5d5;
+            border: 2px solid $secYellow;
+        }
+
+        button.cancel:active {
+            background-color: $secYellow;
+        }
+
+    }
 
     .my_button {
         background-color: $priGreen;
