@@ -19,8 +19,9 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="ingredients">Categories</label>
-                                        <select name="category" id="category" v-model="formData.category">
-                                            <option v-for="category in categories" :value="category.id">{{ category.name }}
+                                        <select name="category" id="category" @change="formData.category = $event.target.value">
+                                            <option value="" selected hidden>Select a category...</option>
+                                            <option v-for="category in store.categories" :value="category.id">{{ category.name }}
                                             </option>
                                         </select>
                                     </div>
@@ -44,14 +45,16 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="available">Available?</label>
-                                        <select name="available" id="available" v-model="formData.available">
+                                        <select name="available" id="available" @change="formData.available = $event.target.value">
+                                            <option value="" selected hidden>Select</option>
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
                                     </div>
                                     <div class="col-6">
                                         <label for="visible">Visible?</label>
-                                        <select name="visible" id="visible" v-model="formData.visible">
+                                        <select name="visible" id="visible" @change="formData.visible = $event.target.value">
+                                            <option value="" selected hidden>Select</option>
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
@@ -113,42 +116,22 @@
 </template>
 
 <script>
-import axios from 'axios';
 import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
 import { useRoute } from 'vue-router';
 export default {
     name: 'DishCreate',
-    data() {
-        return {
-            categories: [],
-        }
-    },
-    components: { DashboardSidebar, DashboardNavbar },
-    methods: {
-        getCategory() {
-            axios.get('/api/categories')
-                .then((response) => {
-                    this.categories = response.data.data;
-                    console.log(this.categories)
-                })
-                .catch(function (error) {
-                    // handle error
-                    console.log(error);
-                })
-        },
-
-    },
-    mounted() {
-        this.getCategory();
-    }
+    components: { DashboardSidebar, DashboardNavbar }
 }
 </script>
 
 <script setup>
+import axios from 'axios';
+import { onMounted } from 'vue';
 import { useAuthStore } from '../../stores/auth';
+import { store } from '../../store';
 const authStore = useAuthStore();
-const route = useRoute();
+
 const formData = {
     name: '',
     description: '',
@@ -158,8 +141,119 @@ const formData = {
     available: '',
     visible: ''
 };
+
+const formDataValidate = {
+    name: false,
+    description: false,
+    price: false,
+    category: false,
+    available: false,
+    visible: false,
+}
+
+let validate = false;
+
+function getCategory() {
+    axios.get('/api/categories')
+        .then((response) => {
+            store.categories = response.data.data;
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+}
+
+function checkValidation(){
+    /**VALIDATION**/
+    //name
+    if(
+        formData.price !== '' &&
+        typeof(formData.name) === 'string' &&
+        formData.name.length >= 3 && formData.name.length <= 100){
+
+            formDataValidate.name = true
+        }
+        
+        //description
+    if(
+        typeof(formData.description) === 'string' &&
+        formData.description.length <= 65535){
+
+        formDataValidate.description = true
+    }
+    
+    //price
+    if(
+        formData.price !== '' &&
+        parseInt(formData.price) <= 999){
+
+            formDataValidate.price = true
+    }
+    
+    //category id
+    if(
+        formData.category !== '' &&
+    parseInt(formData.category) > 0 && parseInt(formData.category) <= store.categories.length)
+    {
+        
+        formDataValidate.category = true;
+    }
+
+    //available
+    if(
+        formData.available !== '' && typeof(Boolean(formData.available)) === 'boolean')
+    {
+        
+        formDataValidate.available = true;
+    }
+
+    //visible
+    if
+        (formData.visible !== '' && typeof(Boolean(formData.visible)) === 'boolean')
+    {
+        
+        formDataValidate.visible = true;
+    }
+    /**VALIDATION MANAGEMENT**/
+    if(formDataValidate.name && formDataValidate.price && formDataValidate.description && formDataValidate.category){
+        validate = true
+    } else {
+        errorPopUp();
+    }
+};
+
+function errorPopUp(serverErrors){
+    if(!formDataValidate.name){
+        console.log('The Name isn\'t in the right format');
+    }
+    if(!formDataValidate.description){
+        console.log('The description isn\'t in the right format');
+    }
+    if(!formDataValidate.price){
+        console.log('The price isn\'t in the right format');
+    }
+    if(!formDataValidate.category){
+        console.log('Category isn\'t in the right format');
+    }
+    if(!formDataValidate.available){
+        console.log('Available attribute isn\'t in the right format');
+    }
+    if(!formDataValidate.visible){
+        console.log('Visible attribute isn\'t in the right format');
+    }
+    if(serverErrors){
+        Object.values(serverErrors).forEach(e => {
+            console.log(e[0]);
+        });
+    }
+};
+
+let messageErrors;
+
 function storeDish() {
-    axios.post(`/api/store`, {
+    checkValidation();
+    if (validate) {
+        axios.post(`/api/store`, {
         user_id: authStore.user.id,
         name: formData.name,
         description: formData.description,
@@ -174,9 +268,16 @@ function storeDish() {
             window.location.href = '/admin/dishes';
         })
         .catch(function (error) {
-            console.log(error);
+            messageErrors = error.response.data.errors;
+            console.log(messageErrors);
+            errorPopUp(messageErrors);
         })
+    }
 }
+
+onMounted(async () => {
+    getCategory();
+})
 </script>
 
 <style lang="scss" scoped>
