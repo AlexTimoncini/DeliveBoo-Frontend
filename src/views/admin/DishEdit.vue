@@ -27,7 +27,8 @@
                                     </div>
                                     <div class="col-6">
                                         <label for="ingredients">Ingredients</label>
-                                        <select name="ingredients" id="ingredients">
+                                        <select name="ingredients" id="ingredients" disabled>
+                                            <option selected>work in progresss</option>
                                             <option v-for="ingredient in store.editingDish.ingredients"
                                                 :value="ingredient.name">{{ ingredient.name }}</option>
                                         </select>
@@ -40,7 +41,7 @@
                                     </div>
                                     <div class="col-6">
                                         <label for="photo">Photo</label>
-                                        <input class="w-100" type="text" id="photo" name="photo">
+                                        <input class="w-100" type="text" id="photo" name="photo" disabled placeholder="Work in progress">
                                     </div>
                                 </div>
                                 <div class="row">

@@ -26,10 +26,8 @@
                                     </div>
                                     <div class="col-6">
                                         <label for="ingredients">Ingredients</label>
-                                        <select name="ingredients" id="ingredients">
-                                            <option value="Tomato">Tomato</option>
-                                            <option value="Bacon">Cheese</option>
-                                            <option value="Cheese">Bacon</option>
+                                        <select name="ingredients" id="ingredients" disabled>
+                                            <option value="0">Work in progress</option>
                                         </select>
                                     </div>
                                 </div>
