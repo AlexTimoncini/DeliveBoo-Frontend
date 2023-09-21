@@ -27,6 +27,7 @@ export const useAuthStore = defineStore('auth', {
                 password: dataLogin.password
             });
             this.router.push('/admin/myaccount');
+            this.messageErrors = '';
         },
 
         async registerUser(dataRegister) {
@@ -48,10 +49,12 @@ export const useAuthStore = defineStore('auth', {
                 this.router.push('/admin/myaccount');
             }).catch((error) => {
                 this.messageErrors = error.response.data.errors
+                console.log(this.messageErrors);
             });
         },
 
         async logout() {
+            this.messageErrors = '';
             axios.post('/logout');
             this.authUser = null;
             this.router.push('/');
