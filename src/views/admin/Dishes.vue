@@ -69,6 +69,7 @@ const authStore = useAuthStore();
 
                                         </div>
                                     </div>
+
                                     <form>
                                         <div
                                             class="d-flex flex-column flex-xl-row align-items-start justify-content-center justify-content-xl-start">
@@ -138,6 +139,13 @@ export default {
     name: 'Dishes',
 
     components: { DashboardSidebar, DashboardNavbar },
+    data() {
+        return {
+            isAlertOn: false,
+            AlertID: 0,
+            confirmDelete: false,
+        }
+    },
     methods: {
         alertMessage(dishID) {
             this.isAlertOn = true;
@@ -145,16 +153,17 @@ export default {
         },
 
         deleteDish(dishID) {
-            if (window.confirm('Are you sure you want to delete this dish?')) {
-                axios.delete(`/api/delete/${dishID}`)
-                    .then((response) => {
-                        console.log(response);
-                        window.location.href = '/admin/dishes';
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    })
-            }
+            axios.delete(`/api/delete/${dishID}`)
+                .then((response) => {
+                    console.log(response);
+                    window.location.href = '/admin/dishes';
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+            this.isAlertOn = false;
+            this.confirmDelete = false;
+
         }
     }
 }
