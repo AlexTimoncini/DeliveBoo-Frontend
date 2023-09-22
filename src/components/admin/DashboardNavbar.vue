@@ -1,6 +1,6 @@
 <template>
     <div class="my_navbar d-flex align-items-center px-3">
-        <ul class="d-flex justify-content-between align-items-center m-4 p-0 w-100">
+        <ul class="d-flex justify-content-between align-items-center m-1 p-0 w-100">
             <li>
                 <h3 class="fs-6 m-0 d-md-none">{{ $route.name }}</h3>
                 <h3 class="fs-3 m-0 d-none d-md-block">{{ $route.name }}</h3>
