@@ -436,9 +436,19 @@ function uploadFile(file) {
                 </div>
                 <span class="mb-5">or use your account</span>
                 <label for="login-email">Email</label>
-                <input type="email" class="mb-4" name="login-email" id="login-email" v-model="formLogin.email" />
+                <div class="position-relative w-100 mb-3">
+                    <input type="email" class="mb-4" name="login-email" id="login-email" v-model="formLogin.email" />
+                    <div class="info-message">
+                        <span>Enter your email.</span>
+                    </div>
+                </div>
                 <label for="login-password">Password</label>
-                <input type="password" name="login-password" id="login-password" v-model="formLogin.password" />
+                <div class="position-relative w-100">
+                    <input type="password" name="login-password" id="login-password" v-model="formLogin.password" />
+                    <div class="info-message">
+                        <span>Enter your password.</span>
+                    </div>
+                </div>
                 <a href="#" style="color: #faf9f5">Forgot your password?</a>
                 <button>Sign In</button>
             </form>
@@ -543,12 +553,20 @@ function uploadFile(file) {
                     </a>
                 </div>
                 <span class="my-3">or use your account</span>
-                <!-- <label for="login-email">Email</label> -->
-                <input type="email" class="mb-4" name="login-email" id="login-email" v-model="formLogin.email"
-                    placeholder=" Your Email here" />
-                <!-- <label for="login-password">Password</label> -->
-                <input type="password" name="login-password" id="login-password" v-model="formLogin.password"
-                    placeholder=" Your Password here" />
+                
+                <div class="position-relative mb-2">
+                    <input type="email" class="mb-4" name="login-email" id="login-email" v-model="formLogin.email" />
+                    <div class="info-message login-mobile">
+                        <span>Enter your email.</span>
+                    </div>
+                </div>
+                
+                <div class="position-relative">
+                    <input type="password" name="login-password" id="login-password" v-model="formLogin.password" />
+                    <div class="info-message login-mobile">
+                        <span>Enter your password.</span>
+                    </div>
+                </div>
                 <a href="#">Forgot your password?</a>
                 <button>Sign In</button>
             </form>
@@ -640,90 +658,134 @@ function uploadFile(file) {
                         <div class="container-input w-100">
                             <div class="row">
                                 <div class="col-12">
-                                    <label for="name">Restaurant Name</label>
-                                    <input type="text" name="name" id="name" v-model="formRegister.name" :placeholder="authStore.messageErrors.name || ''" @click="authStore.messageErrors ? authStore.messageErrors.name = null : null" />
+                                    <label for="name">Name</label>
+                                    <div class="position-relative">
+                                        <input type="text" name="name" id="name" v-model="formRegister.name" />
+                                        <div class="info-message" v-if="!authStore.messageErrors.name">
+                                            <span>Enter your restaurant's name.</span>
+                                        </div>
+                                        <div class="error-message" v-if="authStore.messageErrors.name">
+                                            <span>{{ authStore.messageErrors.name.join() }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <label for="email">E-mail</label>
-                                    <input type="mail" name="email" id="email" v-model="formRegister.email" :placeholder="authStore.messageErrors.email || ''" @click="authStore.messageErrors ? authStore.messageErrors.email = null : null" />
+                                    <div class="position-relative">
+                                        <input type="mail" name="email" id="email" v-model="formRegister.email" />
+                                        <div class="info-message" v-if="!authStore.messageErrors.email">
+                                            <span>Enter your e-mail.</span>
+                                        </div>
+                                        <div class="error-message" v-if="authStore.messageErrors.email">
+                                            <span>{{ authStore.messageErrors.email.join() }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
                                     <label for=" vat-number">VAT Number</label>
-                                    <input type="text" name="vat-number" id="vat-number"
-                                        v-model="formRegister.vat_number" :placeholder="authStore.messageErrors.vat_number || ''" @click="authStore.messageErrors ? authStore.messageErrors.vat_number = null : null" />
+                                    <div class="position-relative">
+                                        <input type="text" name="vat-number" id="vat-number" v-model="formRegister.vat_number" />
+                                        <div class="info-message" v-if="!authStore.messageErrors.vat_number">
+                                            <span>Enter your VAT number.</span>
+                                        </div>
+                                        <div class="error-message" v-if="authStore.messageErrors.vat_number">
+                                            <span>{{ authStore.messageErrors.vat_number.join() }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <label for="phone-number">Phone Number</label>
-                                    <input type="text" name="phone-number" id="phone-number" v-model="formRegister.phone" :placeholder="authStore.messageErrors.phone || ''" @click="authStore.messageErrors ? authStore.messageErrors.phone = null : null" />
+                                    <div class="position-relative">
+                                        <input type="text" name="phone-number" id="phone-number" v-model="formRegister.phone" />
+                                        <div class="info-message" v-if="!authStore.messageErrors.phone">
+                                            <span>Enter your restaurant's phone number.</span>
+                                        </div>
+                                        <div class="error-message" v-if="authStore.messageErrors.phone">
+                                            <span>{{ authStore.messageErrors.phone.join() }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <label for="address">Address</label>
-                                    <input type="text" name="address" id="address" v-model="formRegister.address" :placeholder="authStore.messageErrors.address || ''" @click="authStore.messageErrors ? authStore.messageErrors.address = null : null" />
+                                    <div class="position-relative">
+                                        <input type="text" name="address" id="address" v-model="formRegister.address" />
+                                        <div class="info-message" v-if="!authStore.messageErrors.address">
+                                            <span>Enter your restaurant's address.</span>
+                                        </div>
+                                        <div class="error-message" v-if="authStore.messageErrors.address">
+                                            <span>{{ authStore.messageErrors.address.join() }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <label class="my_rounded" for="open-time">Opening Time</label>
-                                    <select class="d-block" name="open-time" id="open-time"
-                                        v-model="formRegister.open_time" :style="{ color: authStore.messageErrors.open_time ? 'red' : 'black' }" @click="authStore.messageErrors ? authStore.messageErrors.open_time = null : null">
-                                        <option value="" selected disabled hidden v-if="authStore.messageErrors.open_time">{{ authStore.messageErrors.open_time.join() }}</option>
-                                        <option value="00:00">00:00</option>
-                                        <option value="00:30">00:30</option>
-                                        <option value="01:00">01:00</option>
-                                        <option value="01:30">01:30</option>
-                                        <option value="02:00">02:00</option>
-                                        <option value="02:30">02:30</option>
-                                        <option value="03:00">03:00</option>
-                                        <option value="03:30">03:30</option>
-                                        <option value="04:00">04:00</option>
-                                        <option value="04:30">04:30</option>
-                                        <option value="05:00">05:00</option>
-                                        <option value="05:30">05:30</option>
-                                        <option value="06:00">06:00</option>
-                                        <option value="06:30">06:30</option>
-                                        <option value="07:00">07:00</option>
-                                        <option value="07:30">07:30</option>
-                                        <option value="08:00">08:00</option>
-                                        <option value="08:30">08:30</option>
-                                        <option value="09:00">09:00</option>
-                                        <option value="09:30">09:30</option>
-                                        <option value="10:00">10:00</option>
-                                        <option value="10:30">10:30</option>
-                                        <option value="11:00">11:00</option>
-                                        <option value="11:30">11:30</option>
-                                        <option value="12:00">12:00</option>
-                                        <option value="12:30">12:30</option>
-                                        <option value="13:00">13:00</option>
-                                        <option value="13:30">13:30</option>
-                                        <option value="14:00">14:00</option>
-                                        <option value="14:30">14:30</option>
-                                        <option value="15:00">15:00</option>
-                                        <option value="15:30">15:30</option>
-                                        <option value="16:00">16:00</option>
-                                        <option value="16:30">16:30</option>
-                                        <option value="17:00">17:00</option>
-                                        <option value="17:30">17:30</option>
-                                        <option value="18:00">18:00</option>
-                                        <option value="18:30">18:30</option>
-                                        <option value="19:00">19:00</option>
-                                        <option value="19:30">19:30</option>
-                                        <option value="20:00">20:00</option>
-                                        <option value="20:30">20:30</option>
-                                        <option value="21:00">21:00</option>
-                                        <option value="21:30">21:30</option>
-                                        <option value="22:00">22:00</option>
-                                        <option value="22:30">22:30</option>
-                                        <option value="23:00">23:00</option>
-                                        <option value="23:30">23:30</option>
-                                    </select>
+                                    <label for="open-time">Opening Time</label>
+                                    <div class="position-relative">
+                                        <select class="d-block" name="open-time" id="open-time" v-model="formRegister.open_time">
+                                            <option value="00:00">00:00</option>
+                                            <option value="00:30">00:30</option>
+                                            <option value="01:00">01:00</option>
+                                            <option value="01:30">01:30</option>
+                                            <option value="02:00">02:00</option>
+                                            <option value="02:30">02:30</option>
+                                            <option value="03:00">03:00</option>
+                                            <option value="03:30">03:30</option>
+                                            <option value="04:00">04:00</option>
+                                            <option value="04:30">04:30</option>
+                                            <option value="05:00">05:00</option>
+                                            <option value="05:30">05:30</option>
+                                            <option value="06:00">06:00</option>
+                                            <option value="06:30">06:30</option>
+                                            <option value="07:00">07:00</option>
+                                            <option value="07:30">07:30</option>
+                                            <option value="08:00">08:00</option>
+                                            <option value="08:30">08:30</option>
+                                            <option value="09:00">09:00</option>
+                                            <option value="09:30">09:30</option>
+                                            <option value="10:00">10:00</option>
+                                            <option value="10:30">10:30</option>
+                                            <option value="11:00">11:00</option>
+                                            <option value="11:30">11:30</option>
+                                            <option value="12:00">12:00</option>
+                                            <option value="12:30">12:30</option>
+                                            <option value="13:00">13:00</option>
+                                            <option value="13:30">13:30</option>
+                                            <option value="14:00">14:00</option>
+                                            <option value="14:30">14:30</option>
+                                            <option value="15:00">15:00</option>
+                                            <option value="15:30">15:30</option>
+                                            <option value="16:00">16:00</option>
+                                            <option value="16:30">16:30</option>
+                                            <option value="17:00">17:00</option>
+                                            <option value="17:30">17:30</option>
+                                            <option value="18:00">18:00</option>
+                                            <option value="18:30">18:30</option>
+                                            <option value="19:00">19:00</option>
+                                            <option value="19:30">19:30</option>
+                                            <option value="20:00">20:00</option>
+                                            <option value="20:30">20:30</option>
+                                            <option value="21:00">21:00</option>
+                                            <option value="21:30">21:30</option>
+                                            <option value="22:00">22:00</option>
+                                            <option value="22:30">22:30</option>
+                                            <option value="23:00">23:00</option>
+                                            <option value="23:30">23:30</option>
+                                        </select>
+                                        <div class="info-message select" v-if="!authStore.messageErrors.open_time">
+                                            <span>Enter your restaurant's opening time.</span>
+                                        </div>
+                                        <div class="error-message select" v-if="authStore.messageErrors.open_time">
+                                            <span>{{ authStore.messageErrors.open_time.join() }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-12">
-                                    <label class="my_rounded" for="closer-time">Closing Time</label>
-                                    <select class="d-block" name="closer-time" id="closer-time"
-                                        v-model="formRegister.closer_time" :style="{ color: authStore.messageErrors.closer_time ? 'red' : 'black' }" @click="authStore.messageErrors ? authStore.messageErrors.closer_time = null : null">
-                                        <option value="" selected disabled hidden v-if="authStore.messageErrors.closer_time">{{ authStore.messageErrors.closer_time.join() }}</option>
+                                    <label for="closer-time">Closing Time</label>
+                                    <div class="position-relative">
+                                        <select class="d-block" name="closer-time" id="closer-time" v-model="formRegister.closer_time">
                                         <option value="00:00">00:00</option>
                                         <option value="00:30">00:30</option>
                                         <option value="01:00">01:00</option>
@@ -772,31 +834,57 @@ function uploadFile(file) {
                                         <option value="22:30">22:30</option>
                                         <option value="23:00">23:00</option>
                                         <option value="23:30">23:30</option>
-                                    </select>
+                                        </select>
+                                        <div class="info-message select" v-if="!authStore.messageErrors.closer_time">
+                                            <span>Enter your restaurant's closing time.</span>
+                                        </div>
+                                        <div class="error-message select" v-if="authStore.messageErrors.closer_time">
+                                            <span>{{ authStore.messageErrors.closer_time.join() }}</span>
+                                        </div>
+                                    </div>
                                 </div>
-
                             </div>
                             <div class="row">
                                 <div class="col-12">
                                 </div>
                                 <div class="col-12">
                                     <label for="description">Description</label>
-                                    <textarea name="description" id="description" class="w-100" cols="30" rows="2"
-                                        v-model="formRegister.description" :placeholder="authStore.messageErrors.description || ''" @click="authStore.messageErrors ? authStore.messageErrors.description = null : null" ></textarea>
+                                    <div class="position-relative">
+                                        <textarea name="description" id="description" class="w-100" cols="30" rows="2" v-model="formRegister.description"></textarea>
+                                        <div class="info-message" v-if="!authStore.messageErrors.description">
+                                            <span>Enter your restaurant's description.</span>
+                                        </div>
+                                        <div class="error-message" v-if="authStore.messageErrors.description">
+                                            <span>{{ authStore.messageErrors.description.join() }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
                                     <label for="password">Password</label>
-                                    <input type="password" name="password" id="password" v-model="formRegister.password" :placeholder="authStore.messageErrors.password || ''" @click="authStore.messageErrors ? authStore.messageErrors.password = null : null" />
+                                    <div class="position-relative">
+                                        <input type="password" name="password" id="password" v-model="formRegister.password" />
+                                        <div class="info-message" v-if="!authStore.messageErrors.password">
+                                            <span>Enter your password.</span>
+                                        </div>
+                                        <div class="error-message" v-if="authStore.messageErrors.password">
+                                            <span>{{ authStore.messageErrors.password.join() }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <label for="password-confirm">Confirm Password</label>
-                                    <input type="password" name="password-confirm" id="password-confirm"
+                                    <div class="position-relative">
+                                        <input type="password" name="password-confirm" id="password-confirm"
                                         v-model="formRegister.password_confirm" />
+                                        <div class="info-message">
+                                            <span>Confirm your password.</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <button>Sign Up</button>
+                            <button>Create Account</button>
                         </div>
                     </div>
                 </div>
@@ -914,7 +1002,7 @@ textarea {
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
     border: none;
-    padding: .3rem 1rem;
+    padding: 0 1rem;
     text-align: center;
 
 
@@ -944,6 +1032,10 @@ div.error-message {
 
 div.info-message {
     background-color: $secYellow;
+
+    &.login-mobile {
+        background-color: $priGreen;
+    }
 }
 
 div.error-message {
