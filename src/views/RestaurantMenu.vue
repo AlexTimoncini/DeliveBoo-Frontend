@@ -138,6 +138,11 @@ export default {
 }
 </script>
 
+<script setup>
+import { useAuthStore } from '../stores/auth';
+const authStore = useAuthStore();
+</script>
+
 <template>
     <div class="d-flex container-fluid flex-column flex-md-row p-0 position-relative">
         <div class="cart-container  d-none d-md-block col-md-3">
@@ -216,10 +221,17 @@ export default {
 
                 <!-- Restaurant Photo & Logo -->
                 <div class="image-container col-12">
-                    <img class="image img-fluid" :src="restaurant.image" :alt="restaurant.name + ' image'"
-                        draggable="false">
-                    <img class="logo img-fluid" :src="`http://127.0.0.1:8000${this.restaurant_logo}`"
-                        :alt="restaurant.name + ' image'" draggable="false" @click="console.log(restaurant.logo)">
+                    <img class="image img-fluid" v-if="restaurant.image" :src="restaurant.image"
+                        :alt="restaurant.name + ' image'" draggable="false">
+                    <img class="image img-fluid" v-else src="../assets/mascotte/pattern.jpg"
+                        :alt="restaurant.name + ' image'" draggable="false">
+                    <div v-if="authStore.user">
+                        <img class="logo img-fluid" v-if="authStore.user.logo"
+                            :src="`http://127.0.0.1:8000${this.restaurant_logo}`" :alt="restaurant.name + ' image'"
+                            draggable="false">
+                        <img class="logo img-fluid" v-else src="../assets/logos/green_ghost.png"
+                            :alt="restaurant.name + ' image'" draggable="false">
+                    </div>
                 </div>
             </div>
             <div class="row">

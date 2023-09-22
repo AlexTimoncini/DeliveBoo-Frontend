@@ -100,10 +100,10 @@ export default {
         this.getTypes();
         this.getBestRestaurants();
         this.getCategories();
-        if(this.$route.params.searchType === 'restaurant'){
+        if (this.$route.params.searchType === 'restaurant') {
             this.search = this.$route.params.searchInput;
             this.searchRestaurant();
-        } else if (this.$route.params.searchType === 'type'){
+        } else if (this.$route.params.searchType === 'type') {
             let type_id = this.$route.params.searchInput;
             this.params.type_ids.push(parseInt(type_id));
             this.searchRestaurant();
@@ -142,7 +142,8 @@ export default {
                 <a href="#" v-for="type in visibleTypesXl" class="d-none d-xl-block"
                     @click="sidebarCheckboxHandler('type', type.id); searchRestaurant()">
 
-                    <div class="type_pill d-flex align-items-center" :class="params.type_ids.includes(type.id) ? 'seleceted' : ''">
+                    <div class="type_pill d-flex align-items-center"
+                        :class="params.type_ids.includes(type.id) ? 'seleceted' : ''">
                         <img class="type-icon" :src="type.logo" alt="">
                         <p class="m-0">{{ type.name }}</p>
                     </div>
@@ -150,7 +151,8 @@ export default {
                 <a href="#" v-for="type in visibleTypesLarge" class="d-none d-lg-block d-xl-none"
                     @click="sidebarCheckboxHandler('type', type.id); searchRestaurant()">
 
-                    <div class="type_pill d-flex align-items-center" :class="params.type_ids.includes(type.id) ? 'seleceted' : ''">
+                    <div class="type_pill d-flex align-items-center"
+                        :class="params.type_ids.includes(type.id) ? 'seleceted' : ''">
                         <img class="type-icon" :src="type.logo" alt="">
                         <p class="m-0">{{ type.name }}</p>
                     </div>
@@ -158,7 +160,8 @@ export default {
                 <a href="#" v-for="type in visibleTypesSmall" class="d-none d-md-block d-lg-none"
                     @click="sidebarCheckboxHandler('type', type.id); searchRestaurant()">
 
-                    <div class="type_pill d-flex align-items-center" :class="params.type_ids.includes(type.id) ? 'seleceted' : ''">
+                    <div class="type_pill d-flex align-items-center"
+                        :class="params.type_ids.includes(type.id) ? 'seleceted' : ''">
                         <img class="type-icon" :src="type.logo" alt="">
                         <p class="m-0">{{ type.name }}</p>
                     </div>
@@ -169,7 +172,8 @@ export default {
         <!-- Category filter  -->
         <div class="select-category d-none d-md-block">
             <div class="container d-flex justify-content-center p-2">
-                <a href="#" class="category-pills" v-for="category in visibleCategories" :class="params.category_ids.includes(category.id) ? 'seleceted' : ''"
+                <a href="#" class="category-pills" v-for="category in visibleCategories"
+                    :class="params.category_ids.includes(category.id) ? 'seleceted' : ''"
                     @click="sidebarCheckboxHandler('category', category.id), searchRestaurant();">
                     <p class="m-0">{{ category.name }}</p>
                 </a>
@@ -192,7 +196,8 @@ export default {
                             </path>
                         </svg>
                     </label>
-                    <input type="text" id="home-searchbar" placeholder="Search here" v-model="search" @keyup="searchRestaurant()">
+                    <input type="text" id="home-searchbar" placeholder="Search here" v-model="search"
+                        @keyup="searchRestaurant()">
                 </div>
 
                 <!-- Types and Categories-->
@@ -211,7 +216,8 @@ export default {
                                 <div class="my_select" v-for="type in allTypes">
 
                                     <input class="my_checkbox" type="checkbox" :id="type.name" name="type" :value="type.id"
-                                        @click="sidebarCheckboxHandler('type', type.id), searchRestaurant()" :checked="params.type_ids.includes(type.id)" >
+                                        @click="sidebarCheckboxHandler('type', type.id), searchRestaurant()"
+                                        :checked="params.type_ids.includes(type.id)">
                                     <label :for="type.name">{{ type.name }}</label>
                                 </div>
 
@@ -322,7 +328,9 @@ export default {
                                     <div class="col-sm-12 col-md-6 col-lg-4 mb-4" v-for="restaurant in filteredRestaurants"
                                         @click="this.$router.push({ name: 'RestaurantMenu', params: { id: restaurant.id } })">
                                         <div class=" my_card d-flex justify-content-center align-items-center">
-                                            <img class="img-fluid" :src="restaurant.image" alt="">
+                                            <img v-if="restaurant.image" class="img-fluid" :src="restaurant.image" alt="">
+                                            <img v-else="restaurant.image" class="img-fluid"
+                                                src="../assets/mascotte/pattern.jpg" alt="">
                                             <h3>{{ restaurant.name }}</h3>
                                         </div>
                                         <div class="my-card-label">
@@ -430,13 +438,13 @@ export default {
             transform: scale(1.1);
         }
 
-        .type_pill.seleceted{
-        background-color: $priGreen;
-        color: $fontWhite;
-        border: 1px solid $fontWhite;
+        .type_pill.seleceted {
+            background-color: $priGreen;
+            color: $fontWhite;
+            border: 1px solid $fontWhite;
         }
 
-        .type_pill.seleceted:hover{
+        .type_pill.seleceted:hover {
             color: $fontWhite;
             transform: scale(1.05);
         }
@@ -457,13 +465,13 @@ export default {
         color: $priGreen;
     }
 
-    .category-pills.seleceted{
+    .category-pills.seleceted {
         background-color: $priGreen;
         color: $fontWhite;
         border: 1px solid $fontWhite;
     }
 
-    .category-pills.seleceted:hover{
+    .category-pills.seleceted:hover {
         color: $fontWhite;
         transform: scale(1.05);
     }

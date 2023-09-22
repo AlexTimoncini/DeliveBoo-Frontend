@@ -65,8 +65,8 @@ onMounted(async () => {
                 </div>
                 <div class="d-lg-flex align-items-center" v-else>
                     <div class="btn-class">
-                        <img :src="authStore.user.logo ? 'http://127.0.0.1:8000/storage/' + authStore.user.logo : '../assets/logos/green_ghost.png'"
-                            alt="">
+                        <img v-if="authStore.user.logo" :src="'http://127.0.0.1:8000/storage/' + authStore.user.log" alt="">
+                        <img v-else src="../assets/logos/green_ghost.png" alt="">
                     </div>
                     <div class="menu-profile">
                         <button @click="openCloseMenu" class="d-none d-lg-block">
