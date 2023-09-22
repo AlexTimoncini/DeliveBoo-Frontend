@@ -3,7 +3,8 @@ import axios from 'axios';
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         authUser: null,
-        messageErrors: ''
+        messageErrors: '',
+        loginMessageErrors: ''
     }),
     getters: {
         user: (state) => state.authUser
@@ -26,9 +27,12 @@ export const useAuthStore = defineStore('auth', {
             await axios.post('/login', {
                 email: dataLogin.email,
                 password: dataLogin.password
+            }).then((response) => {
+                this.router.push('/admin/myaccount');
+            }).catch((error) => {
+                this.loginMessageErrors = error.response.data.errors
+                console.log(this.loginMessageErrors);
             });
-            this.router.push('/admin/myaccount');
-            this.messageErrors = '';
         },
 
         async registerUser(dataRegister) {

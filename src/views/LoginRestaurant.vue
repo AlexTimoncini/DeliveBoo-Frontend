@@ -438,15 +438,22 @@ function uploadFile(file) {
                 <label for="login-email">Email</label>
                 <div class="position-relative w-100 mb-3">
                     <input type="email" class="mb-4" name="login-email" id="login-email" v-model="formLogin.email" />
-                    <div class="info-message">
+                    <div class="info-message" v-if="!authStore.loginMessageErrors.email">
                         <span>Enter your email.</span>
                     </div>
+                    <div class="error-message" v-if="authStore.loginMessageErrors.email">
+                        <span>{{ authStore.loginMessageErrors.email.join() }}</span>
+                    </div>
                 </div>
+                
                 <label for="login-password">Password</label>
                 <div class="position-relative w-100">
                     <input type="password" name="login-password" id="login-password" v-model="formLogin.password" />
-                    <div class="info-message">
+                    <div class="info-message" v-if="!authStore.loginMessageErrors.password">
                         <span>Enter your password.</span>
+                    </div>
+                    <div class="error-message" v-if="authStore.loginMessageErrors.password">
+                        <span>{{ authStore.loginMessageErrors.password.join() }}</span>
                     </div>
                 </div>
                 <a href="#" style="color: #faf9f5">Forgot your password?</a>
@@ -554,17 +561,23 @@ function uploadFile(file) {
                 </div>
                 <span class="my-3">or use your account</span>
                 
-                <div class="position-relative mb-2">
+                <div class="position-relative mb-4">
                     <input type="email" class="mb-4" name="login-email" id="login-email" v-model="formLogin.email" />
-                    <div class="info-message login-mobile">
+                    <div class="info-message login-mobile" v-if="!authStore.loginMessageErrors.email">
                         <span>Enter your email.</span>
+                    </div>
+                    <div class="error-message" v-if="authStore.loginMessageErrors.email">
+                        <span>{{ authStore.loginMessageErrors.email.join() }}</span>
                     </div>
                 </div>
                 
                 <div class="position-relative">
                     <input type="password" name="login-password" id="login-password" v-model="formLogin.password" />
-                    <div class="info-message login-mobile">
+                    <div class="info-message login-mobile" v-if="!authStore.loginMessageErrors.password">
                         <span>Enter your password.</span>
+                    </div>
+                    <div class="error-message" v-if="authStore.loginMessageErrors.password">
+                        <span>{{ authStore.loginMessageErrors.password.join() }}</span>
                     </div>
                 </div>
                 <a href="#">Forgot your password?</a>
