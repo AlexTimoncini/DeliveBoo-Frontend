@@ -2,11 +2,13 @@
     <div class="my_navbar d-flex align-items-center px-3">
         <ul class="d-flex justify-content-between align-items-center m-4 p-0 w-100">
             <li>
-                <h3>{{ $route.name }}</h3>
+                <h3 class="fs-6 m-0 d-md-none">{{ $route.name }}</h3>
+                <h3 class="fs-3 m-0 d-none d-md-block">{{ $route.name }}</h3>
             </li>
             <li>
                 <div class="d-flex align-items-center">
-                    <span class="me-3">{{ authStore.user ? authStore.user.name : 'Restaurant Name' }}</span>
+                    <span class="fs-6 me-3 d-md-none">{{ authStore.user ? authStore.user.name : 'Restaurant Name' }}</span>    
+                    <span class="fs-4 me-3 d-none d-md-block">{{ authStore.user ? authStore.user.name : 'Restaurant Name' }}</span>
                     <div class="logo d-inline-block">
                         <img class="logo-img"
                             :src="authStore.user ? 'http://127.0.0.1:8000/storage/' + authStore.user.logo : ''" alt=""
