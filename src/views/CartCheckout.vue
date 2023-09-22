@@ -40,8 +40,8 @@ export default {
                 this.totalPrice += parseFloat(dish.price) * parseInt(dish.quantity);
             });
         },
-        setCartId(){
-            if(store.cart_list.length === 0){
+        setCartId() {
+            if (store.cart_list.length === 0) {
                 store.cartRestaurantID = null
             } else {
                 store.cartRestaurantID = store.cart_list[0].user_id;
@@ -79,7 +79,8 @@ export default {
             <!-- Cart  -->
             <div class="cart col-12 col-lg-6 row m-0 px-0 px-sm-3 mb-4">
                 <ul>
-                    <li v-for="(dish, index) in store.cart_list" class="cart_item d-flex justify-content-between col-12">
+                    <li v-for="(dish, index) in store.cart_list"
+                        class="cart_item d-flex justify-content-between col-12 mb-3">
                         <div class="d-flex col-8 align-items-center align-items-md-start">
                             <div class="dish_img"><img class="img-fluid" :src="dish.photo" :alt="dish.name + 'image'"
                                     draggable="false"></div>
