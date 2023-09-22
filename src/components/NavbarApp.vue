@@ -354,7 +354,7 @@ nav {
                 button {
                     font-size: 2rem;
                     background-color: white;
-                    border: 3px solid $secYellow;
+                    border: 5px solid $secYellow;
                     color: $priGreen;
                     text-transform: uppercase;
                     margin: 0;
