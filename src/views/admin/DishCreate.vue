@@ -315,6 +315,11 @@ div.dish-edit {
         border: none;
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
+        svg#save,
+        svg#reset {
+            margin: 0;
+        }
+
         &:hover {
             background-color: #00c073;
 
@@ -325,13 +330,13 @@ div.dish-edit {
 
         span {
             font-weight: 600;
+            margin-left: .5rem;
         }
 
         svg {
             width: 30px;
             aspect-ratio: 1;
             transition: all .3s ease;
-            margin-right: 1rem;
         }
     }
 
