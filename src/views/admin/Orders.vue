@@ -11,29 +11,29 @@
                         <div class="d-block d-md-flex justify-content-between my-table-header">
                             <h2 class="mb-3 mb-md-0 ">Your Orders</h2>
                             <form action="">
-                                <select class="form-select d-none" aria-label="Default select example">
-                                    <option selected>This Week</option>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option value="0">This Week</option>
                                     <option value="1">This Month</option>
                                     <option value="2">This Year</option>
-                                    <option value="3">Ever</option>
+                                    <option value="3" selected>Ever</option>
                                 </select>
                             </form>
                         </div>
                         <table class="table table-striped table-hover text-center">
                             <thead>
                                 <tr>
-                                    <th scope="row">ID</th>
-                                    <td class="d-none d-md-table-cell">First Name</td>
-                                    <td class="d-none d-md-table-cell">Last Name</td>
-                                    <td>Total Price</td>
+                                    <th scope="row">Date</th>
+                                    <th class="d-none d-md-table-cell">Name</th>
+                                    <th class="d-none d-md-table-cell">Adress</th>
+                                    <th>Total Price</th>
                                     <td></td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="order in authStore.user.orders" :order="order">
-                                    <th scope="row">{{ order.id }}</th>
-                                    <td class="d-none d-md-table-cell">{{ order.first_name }}</td>
-                                    <td class="d-none d-md-table-cell">{{ order.last_name }}</td>
+                                <tr v-for="order in authStore.user.orders" :order="order" @click="console.log(order)">
+                                    <th scope="row">{{ (order.created_at).slice(0,10) }}</th>
+                                    <td class="d-none d-md-table-cell">{{ order.first_name }} {{ order.last_name }}</td>
+                                    <td class="d-none d-md-table-cell">{{ order.customer_address }}</td>
                                     <td><span>€ </span><span>{{ order.total_price }}</span></td>
                                     <td><button class="btn my_btn m-0" @click=" this.$router.push({
                                         name: 'OrderShow',
@@ -58,10 +58,10 @@ export default {
     name: 'Orders',
     data() {
     },
-    components: { DashboardSidebar, DashboardNavbar },
-
+    components: { DashboardSidebar, DashboardNavbar }
 } 
 </script >
+
 <script setup>
 import { onMounted } from 'vue';
 import { useAuthStore } from '../../stores/auth';
