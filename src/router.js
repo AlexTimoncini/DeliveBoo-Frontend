@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import axios from "axios";
 import Homepage from './views/HomePage.vue';
 import WorkInProgress from './views/WorkInProgress.vue';
 import AdvanceSearch from './views/AdvanceSearch.vue';
@@ -66,7 +67,8 @@ const router = createRouter({
         {
             path: '/admin/myaccount',
             name: 'MyAccount',
-            component: MyAccount
+            component: MyAccount,
+            meta: { requiresAuth: true },
         },
         {
             path: '/admin/dishes',
@@ -100,4 +102,30 @@ const router = createRouter({
         },
     ],
 });
+
+router.beforeEach(async (to, from, next) => {
+    if (to.meta.requiresAuth && !(await isLoggedIn())) {
+        next('/login');
+    } else {
+        next();
+    }
+});
+function isLoggedIn() {
+    return axios.get('/api/user')
+        .then(response => {
+            if (response.status === 204) {
+                console.log('non autenticato', response.status === 204);
+                return false;
+            } else {
+                if (response.status === 200) {
+                    console.log('autenticato', response.status === 200);
+                    return true;
+                }
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            return false; // Gestisci eventuali errori di rete o API come non autenticato
+        });
+}
 export { router };
