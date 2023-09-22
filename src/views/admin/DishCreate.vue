@@ -32,13 +32,14 @@
 
                                     <label :class="errorMessages.name.visibility ? ' border-error' : 'border-none'"
                                         for="name">Name</label>
-                                    <input class="w-100" type="text" id="name" name="name" v-model="formData.name">
+                                    <input placeholder="Dish Name" class="w-100" type="text" id="name" name="name"
+                                        v-model="formData.name">
 
                                 </div>
                                 <div class="form-section">
                                     <label for="description">Description</label>
-                                    <textarea class="w-100" name="description" id="description" cols="30"
-                                        rows="3"></textarea>
+                                    <textarea placeholder="Dish Decription here" class="w-100" name="description"
+                                        id="description" cols="30" rows="3"></textarea>
 
                                 </div>
                                 <div class="row mb-2">
@@ -84,7 +85,8 @@
                                     <div class="col-12 col-md-6  form-section">
                                         <label :class="errorMessages.category.visibility ? ' border-error' : 'border-none'"
                                             for="price">Price</label>
-                                        <input class="w-100" type="text" id="price" name="price" v-model="formData.price">
+                                        <input placeholder="Ex. 13.00" class="w-100" type="text" id="price" name="price"
+                                            v-model="formData.price">
 
                                         <!-- Error message -->
                                         <div v-if="errorMessages.price.alert" class="talkbubble-container ">
@@ -105,7 +107,8 @@
                                     <div class="col-12 col-md-6  form-section">
                                         <label :class="errorMessages.category.visibility ? ' border-error' : 'border-none'"
                                             for="photo">Photo</label>
-                                        <input class="w-100" type="text" id="photo" name="photo" v-model="formData.photo">
+                                        <input placeholder="Dish photo url here" class="w-100" type="text" id="photo"
+                                            name="photo" v-model="formData.photo">
 
                                         <!-- Error message -->
                                         <div v-if="errorMessages.photo.alert" class="talkbubble-container ">
@@ -248,8 +251,43 @@ export default {
     name: 'DishCreate',
     components: { DashboardSidebar, DashboardNavbar },
     data() {
+        return {
+            // errorMessages: {
+            //     name: {
+            //         alert: '',
+            //         visibility: false,
+            //     },
+            //     description: {
+            //         alert: '',
+            //         visibility: false,
+            //     },
+            //     price: {
+            //         alert: '',
+            //         visibility: false,
+            //     },
+            //     category: {
+            //         alert: '',
+            //         visibility: false,
+            //     },
+            //     photo: {
+            //         alert: '',
+            //         visibility: false,
+            //     },
+            //     available: {
+            //         alert: '',
+            //         visibility: false,
+            //     },
+            //     visible: {
+            //         alert: '',
+            //         visibility: false,
+            //     },
+            // }
+        }
+    },
 
-    }
+    methods: {
+
+    },
 }
 </script>
 
@@ -570,6 +608,7 @@ div.dish-create {
             .border-error {
                 background-color: rgb(204, 36, 36);
                 box-shadow: inset 0 0 0 2px rgb(204, 36, 36);
+
             }
 
             .talkbubble-container {
@@ -583,7 +622,11 @@ div.dish-create {
                 z-index: 1;
                 border-radius: 5px;
                 background-color: #f6cdcd;
-                opacity: .8;
+                opacity: 0;
+
+                animation-name: alert;
+                animation-duration: 4s;
+                animation-iteration-count: 1;
 
                 svg {
                     height: .8rem;
@@ -596,6 +639,20 @@ div.dish-create {
                     line-height: .7rem;
                 }
 
+            }
+
+            @keyframes alert {
+                0% {
+                    opacity: .8;
+                }
+
+                80% {
+                    opacity: .8;
+                }
+
+                100% {
+                    opacity: 0;
+                }
             }
         }
 
