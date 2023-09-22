@@ -36,7 +36,25 @@
                                 <span class="d-none d-md-inline" v-if="isDisabled"> Edit</span>
                                 <span class="d-none d-md-inline" v-if="!isDisabled">Back</span>
                             </button>
-
+                            <button class="bg-danger" @click="alertMessage">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M 10 2 L 9 3 L 4 3 L 4 5 L 5 5 L 5 20 C 5 20.522222 5.1913289 21.05461 5.5683594 21.431641 C 5.9453899 21.808671 6.4777778 22 7 22 L 17 22 C 17.522222 22 18.05461 21.808671 18.431641 21.431641 C 18.808671 21.05461 19 20.522222 19 20 L 19 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 7 5 L 17 5 L 17 20 L 7 20 L 7 5 z M 9 7 L 9 18 L 11 18 L 11 7 L 9 7 z M 13 7 L 13 18 L 15 18 L 15 7 L 13 7 z">
+                                    </path>
+                                </svg>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="error-message d-flex flex-column justify-content-center align-items-center"
+                        :class="isAlertOn ? '' : 'd-none'">
+                        <img class="my-3" src="../../assets/mascotte/Boo_eraser.png"
+                            alt="Boo ghost with an eraser in his hands">
+                        <p><strong>Are you sure</strong> you want to <strong>delete</strong> your <strong>Account</strong>?
+                        </p>
+                        <div class="buttons-container d-flex justify-content-center">
+                            <button class="btn cancel" @click="isAlertOn = false">Cancel</button>
+                            <button class="btn" @click="deleteAccount">Confirm</button>
                         </div>
                     </div>
 
@@ -130,7 +148,6 @@
                                 <span class="d-none d-md-inline">Save</span>
                             </button>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -145,14 +162,19 @@ export default {
     name: 'MyAccount',
     data() {
         return {
-            isDisabled: true
+            isDisabled: true,
+            isAlertOn: false,
+            confirmDelete: false,
         }
     },
     methods: {
         toggle() {
             this.isDisabled = !this.isDisabled;
         },
-
+        alertMessage() {
+            this.isAlertOn = true;
+            console.log(this.isAlertOn)
+        },
     },
     components: { DashboardSidebar, DashboardNavbar }
 }
@@ -174,6 +196,14 @@ const formData = ref({
     image: null,
     logo: null,
 })
+
+function deleteAccount() {
+    axios.delete(`/api/delete/restaurant/${authStore.user.id}`)
+        .then((response) => {
+            console.log(response.data);
+        })
+    authStore.logout();
+}
 function uploadFileImage(file) {
     const config = { headers: { 'Content-Type': 'multipart/form-data' } };
     axios.post(`api/upload/restaurants/image/File/${authStore.user.id}`, file, config).then(function (response) {
@@ -227,6 +257,51 @@ onMounted(async () => {
 <style lang="scss" scoped>
 @use '../../styles/partials/variables' as *;
 @use '../../styles/partials/mixins' as *;
+
+.error-message {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    padding: .5rem 1rem;
+    border-radius: 10px;
+    background-color: rgb(255, 249, 249);
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 62.8%;
+    transform: translate(-50%, -50%);
+
+
+    img {
+        width: 50%;
+    }
+
+    button {
+        background-color: $secYellow;
+        margin: .5rem;
+    }
+
+    button:hover {
+        background-color: #f4ca4c;
+    }
+
+    button:active {
+        background-color: $secYellow;
+    }
+
+    button.cancel {
+        background-color: white;
+        border: 2px solid $secYellow;
+    }
+
+    button.cancel:hover {
+        background-color: #fff5d5;
+        border: 2px solid $secYellow;
+    }
+
+    button.cancel:active {
+        background-color: $secYellow;
+    }
+
+}
 
 div.my-account::-webkit-scrollbar {
     display: none;
