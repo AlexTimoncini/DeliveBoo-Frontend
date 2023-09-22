@@ -13,44 +13,9 @@
 
                             <form @submit.prevent="storeDish()">
                                 <div class="form-section">
-                                    <label for="name">Name</label>
-                                    <input class="w-100" type="text" id="name" name="name" v-model="formData.name"
-                                        :placeholder="[[errorMessages.name.alert]]"
-                                        :class="errorMessages.name.visibility === true ? ' border-error' : 'border-none'">
-
-                                </div>
-                                <div class="form-section">
-                                    <label for="description">Description</label>
-                                    <textarea class="w-100" name="description" id="description" cols="30" rows="3"
-                                        v-model="formData.description"
-                                        :placeholder="[[errorMessages.description.alert]]"></textarea>
-
-                                </div>
-                                <div class="row form-section mb-2">
-                                    <div class="col-6 ">
-                                        <label for="ingredients">Categories</label>
-                                        <select name="category" id="category"
-                                            @change="formData.category = $event.target.value"
-                                            :class="errorMessages.category.visibility === true ? ' border-error' : 'border-none'">
-                                            <option value="" selected hidden>{{ errorMessages.available.visibility === true
-                                                ?
-                                                'Wrong input' : 'Select a category...' }}</option>
-                                            <option v-for="category in store.categories" :value="category.id">{{
-                                                category.name }}
-                                            </option>
-                                        </select>
-
-                                    </div>
-                                    <div class="col-6 ">
-                                        <label for="ingredients">Ingredients</label>
-                                        <select name="ingredients" id="ingredients" disabled>
-                                            <option value="0">Work in progress</option>
-                                        </select>
-                                    </div>
 
                                     <!-- Error message -->
-                                    <div v-if="errorMessages.category.visibility == true"
-                                        class="talkbubble-container d-none">
+                                    <div v-if="errorMessages.name.alert" class="talkbubble-container ">
                                         <div class="talkbubble d-flex align-items-center justify-content-between">
                                             <div class="d-flex align-items-center">
                                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -60,25 +25,69 @@
                                                     <line x1="12" y1="8" x2="12" y2="12"></line>
                                                     <line x1="12" y1="16" x2="12.01" y2="16"></line>
                                                 </svg>
-                                                <p class="me-3">{{ errorMessages.category.alert }}</p>
+                                                <p class="me-3">{{ errorMessages.name.alert }}</p>
                                             </div>
-                                            <a href="#" @click="errorMessages.category.visibility = false"><svg
-                                                    fill="currentColor" class="m-0 p-0" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                </svg></a>
                                         </div>
                                     </div>
+
+                                    <label :class="errorMessages.name.visibility ? ' border-error' : 'border-none'"
+                                        for="name">Name</label>
+                                    <input class="w-100" type="text" id="name" name="name" v-model="formData.name">
+
                                 </div>
-                                <div class="row">
-                                    <div class="col-6 form-section">
-                                        <label for="price">Price</label>
-                                        <input class="w-100" type="text" id="price" name="price" v-model="formData.price"
-                                            :class="errorMessages.price.visibility === true ? ' border-error' : ''"
-                                            :placeholder="[[errorMessages.price.alert]]">
+                                <div class="form-section">
+                                    <label for="description">Description</label>
+                                    <textarea class="w-100" name="description" id="description" cols="30"
+                                        rows="3"></textarea>
+
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-12 col-md-6 form-section">
+                                        <label :class="errorMessages.category.visibility ? ' border-error' : 'border-none'"
+                                            for="ingredients">Categories</label>
+                                        <select name="category" id="category"
+                                            @change="formData.category = $event.target.value">
+                                            <option value="" selected hidden>{{ errorMessages.available.visibility === true
+                                                ?
+                                                'Wrong input' : 'Select a category...' }}</option>
+                                            <option v-for="category in store.categories" :value="category.id">{{
+                                                category.name }}
+                                            </option>
+                                        </select>
 
                                         <!-- Error message -->
-                                        <div class="talkbubble-container d-none">
+                                        <div v-if="errorMessages.category.alert" class="talkbubble-container ">
+                                            <div class="talkbubble d-flex align-items-center justify-content-between">
+                                                <div class="d-flex align-items-center">
+                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-alert-circle" id="IconChangeColor">
+                                                        <circle cx="12" cy="12" r="10"></circle>
+                                                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                                    </svg>
+                                                    <p class="me-3">{{ errorMessages.category.alert }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-section">
+                                        <label for="ingredients">Ingredients</label>
+                                        <select name="ingredients" id="ingredients" disabled>
+                                            <option value="0">Work in progress</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12 col-md-6  form-section">
+                                        <label :class="errorMessages.category.visibility ? ' border-error' : 'border-none'"
+                                            for="price">Price</label>
+                                        <input class="w-100" type="text" id="price" name="price" v-model="formData.price">
+
+                                        <!-- Error message -->
+                                        <div v-if="errorMessages.price.alert" class="talkbubble-container ">
                                             <div class="talkbubble d-flex align-items-center justify-content-between">
                                                 <div class="d-flex align-items-center">
                                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -90,47 +99,92 @@
                                                     </svg>
                                                     <p class="me-3">{{ errorMessages.price.alert }}</p>
                                                 </div>
-                                                <a href="#" @click="errorMessages.price.visibility = false"><svg
-                                                        fill="currentColor" class="m-0 p-0" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                    </svg></a>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 form-section">
-                                        <label for="photo">Photo</label>
-                                        <input class="w-100" type="text" id="photo" name="photo" v-model="formData.photo"
-                                            :class="errorMessages.photo.visibility === true ? ' border-error' : ''"
-                                            :placeholder="[[errorMessages.photo.alert]]">
+                                    <div class="col-12 col-md-6  form-section">
+                                        <label :class="errorMessages.category.visibility ? ' border-error' : 'border-none'"
+                                            for="photo">Photo</label>
+                                        <input class="w-100" type="text" id="photo" name="photo" v-model="formData.photo">
 
+                                        <!-- Error message -->
+                                        <div v-if="errorMessages.photo.alert" class="talkbubble-container ">
+                                            <div class="talkbubble d-flex align-items-center justify-content-between">
+                                                <div class="d-flex align-items-center">
+                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-alert-circle" id="IconChangeColor">
+                                                        <circle cx="12" cy="12" r="10"></circle>
+                                                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                                    </svg>
+                                                    <p class="me-3">{{ errorMessages.photo.alert }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6 form-section">
-                                        <label for="available">Available?</label>
+                                    <div class="col-12 col-md-6  form-section">
+                                        <label :class="errorMessages.category.visibility ? ' border-error' : 'border-none'"
+                                            for="available">Available?</label>
                                         <select name="available" id="available"
-                                            @change="formData.available = $event.target.value"
-                                            :class="errorMessages.available.visibility === true ? ' border-error' : 'border-none'">
+                                            @change="formData.available = $event.target.value">
                                             <option value="" selected hidden>{{ errorMessages.available.visibility === true
                                                 ?
                                                 'Wrong input' : 'Select' }}</option>
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
+
+                                        <!-- Error message -->
+                                        <div v-if="errorMessages.available.alert" class="talkbubble-container ">
+                                            <div class="talkbubble d-flex align-items-center justify-content-between">
+                                                <div class="d-flex align-items-center">
+                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-alert-circle" id="IconChangeColor">
+                                                        <circle cx="12" cy="12" r="10"></circle>
+                                                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                                    </svg>
+                                                    <p class="me-3">{{ errorMessages.available.alert }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-6 form-section">
-                                        <label for="visible">Visible?</label>
-                                        <select name="visible" id="visible" @change="formData.visible = $event.target.value"
-                                            :class="errorMessages.visible.visibility === true ? ' border-error' : 'border-none'">
+
+                                    <div class="col-12 col-md-6 form-section">
+                                        <label :class="errorMessages.category.visibility ? ' border-error' : 'border-none'"
+                                            for="visible">Visible?</label>
+                                        <select name="visible" id="visible"
+                                            @change="formData.visible = $event.target.value">
                                             <option value="" selected hidden>{{ errorMessages.available.visibility === true
                                                 ?
                                                 'Wrong input' : 'Select' }}</option>
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
+
+                                        <!-- Error message -->
+                                        <div v-if="errorMessages.visible.alert" class="talkbubble-container">
+                                            <div class="talkbubble d-flex align-items-center justify-content-between">
+                                                <div class="d-flex align-items-center">
+                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-alert-circle" id="IconChangeColor">
+                                                        <circle cx="12" cy="12" r="10"></circle>
+                                                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                                    </svg>
+                                                    <p class="me-3">{{ errorMessages.visible.alert }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- Buttons -->
                                 <button type="reset" class="mb-3" @click="resetErrors()">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="reset">
                                         <path
@@ -511,19 +565,20 @@ div.dish-create {
 
         .form-section {
             position: relative;
-            // margin-bottom: 1rem;
+            margin-top: 1rem;
 
             .border-error {
-                box-shadow: inset 0 0 0 2px rgb(244, 118, 118);
+                background-color: rgb(204, 36, 36);
+                box-shadow: inset 0 0 0 2px rgb(204, 36, 36);
             }
 
             .talkbubble-container {
                 margin-left: 1rem;
-                width: 95%;
+                width: 90%;
                 position: absolute;
-                bottom: 0;
+                top: 0;
                 left: 0;
-                transform: translateY(6px);
+                transform: translateY(-25px);
                 transform-origin: center;
                 z-index: 1;
                 border-radius: 5px;
