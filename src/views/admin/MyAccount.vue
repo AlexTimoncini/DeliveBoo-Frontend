@@ -11,9 +11,10 @@
                     <!-- Upper section with restaurant image & buttons -->
                     <div class="row">
                         <div class="col-10 p-0">
-                            <img v-if="authStore.user"
+                            <img v-if="authStore.user.image"
                                 :src="authStore.user.image.startsWith('/restaurants') ? (`http://127.0.0.1:8000/storage${authStore.user.image}`) : authStore.user.image"
                                 alt="Restaurant Image">
+                            <img v-else src="../../assets/mascotte/pattern.jpg" alt="Restaurant Image">
                         </div>
                         <div class="col-2 buttons p-0">
                             <button @click="toggle">

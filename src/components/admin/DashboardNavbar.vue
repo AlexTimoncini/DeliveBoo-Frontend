@@ -7,12 +7,13 @@
             </li>
             <li>
                 <div class="d-flex align-items-center">
-                    <span class="fs-6 me-3 d-md-none">{{ authStore.user ? authStore.user.name : 'Restaurant Name' }}</span>    
-                    <span class="fs-4 me-3 d-none d-md-block">{{ authStore.user ? authStore.user.name : 'Restaurant Name' }}</span>
+                    <span class="fs-6 me-3 d-md-none">{{ authStore.user ? authStore.user.name : 'Restaurant Name' }}</span>
+                    <span class="fs-4 me-3 d-none d-md-block">{{ authStore.user ? authStore.user.name : 'Restaurant Name'
+                    }}</span>
                     <div class="logo d-inline-block">
                         <img class="logo-img"
-                            :src="authStore.user ? 'http://127.0.0.1:8000/storage/' + authStore.user.logo : ''" alt=""
-                            draggable="false">
+                            :src="authStore.user.logo ? 'http://127.0.0.1:8000/storage/' + authStore.user.logo : '../../assets/logos/green_ghost.png'"
+                            alt="" draggable="false">
                     </div>
                 </div>
             </li>

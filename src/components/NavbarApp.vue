@@ -55,7 +55,8 @@ onMounted(async () => {
                 <ul class="nav-links d-flex flex-column flex-lg-row">
                     <li @click="triggerMenu = false"><router-link :to="{ name: 'Homepage' }">Home</router-link></li>
                     <li @click="triggerMenu = false"><router-link :to="{ name: 'WorkInProgress' }">About</router-link></li>
-                    <li @click="triggerMenu = false"><router-link :to="{ name: 'WorkInProgress' }">Contact</router-link></li>
+                    <li @click="triggerMenu = false"><router-link :to="{ name: 'WorkInProgress' }">Contact</router-link>
+                    </li>
                 </ul>
                 <div class="are-you-a-restaurant-btn" v-if="!authStore.user">
                     <router-link :to="{ name: 'LoginRestaurant' }">
@@ -64,7 +65,8 @@ onMounted(async () => {
                 </div>
                 <div class="d-lg-flex align-items-center" v-else>
                     <div class="btn-class">
-                        <img :src="authStore.user ? 'http://127.0.0.1:8000/storage/' + authStore.user.logo : ''" alt="">
+                        <img :src="authStore.user.logo ? 'http://127.0.0.1:8000/storage/' + authStore.user.logo : '../assets/logos/green_ghost.png'"
+                            alt="">
                     </div>
                     <div class="menu-profile">
                         <button @click="openCloseMenu" class="d-none d-lg-block">
@@ -231,7 +233,7 @@ nav {
                     &:hover .menu {
                         width: 120px;
                     }
-                    
+
                     .menu {
                         top: 2.4rem;
                     }
@@ -350,7 +352,7 @@ nav {
             }
 
             .are-you-a-restaurant-btn {
-                
+
                 button {
                     font-size: 2rem;
                     background-color: white;
@@ -441,7 +443,7 @@ nav {
                             }
                         }
                     }
-                } 
+                }
             }
 
             .cart-btn {
