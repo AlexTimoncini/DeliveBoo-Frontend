@@ -12,60 +12,126 @@
                         <div class="dish-info col-12 col-md-6">
 
                             <form @submit.prevent="storeDish()">
-                                <label for="name">Name</label>
-                                <input class="w-100" type="text" id="name" name="name" v-model="formData.name">
-                                <label for="description">Description</label>
-                                <textarea class="w-100" name="description" id="description" cols="30" rows="3"
-                                    v-model="formData.description"></textarea>
-                                <div class="row">
-                                    <div class="col-6">
+                                <div class="form-section">
+                                    <label for="name">Name</label>
+                                    <input class="w-100" type="text" id="name" name="name" v-model="formData.name"
+                                        :placeholder="[[errorMessages.name.alert]]"
+                                        :class="errorMessages.name.visibility === true ? ' border-error' : 'border-none'">
+
+                                </div>
+                                <div class="form-section">
+                                    <label for="description">Description</label>
+                                    <textarea class="w-100" name="description" id="description" cols="30" rows="3"
+                                        v-model="formData.description"
+                                        :placeholder="[[errorMessages.description.alert]]"></textarea>
+
+                                </div>
+                                <div class="row form-section mb-2">
+                                    <div class="col-6 ">
                                         <label for="ingredients">Categories</label>
                                         <select name="category" id="category"
-                                            @change="formData.category = $event.target.value">
-                                            <option value="" selected hidden>Select a category...</option>
+                                            @change="formData.category = $event.target.value"
+                                            :class="errorMessages.category.visibility === true ? ' border-error' : 'border-none'">
+                                            <option value="" selected hidden>{{ errorMessages.available.visibility === true
+                                                ?
+                                                'Wrong input' : 'Select a category...' }}</option>
                                             <option v-for="category in store.categories" :value="category.id">{{
                                                 category.name }}
                                             </option>
                                         </select>
+
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-6 ">
                                         <label for="ingredients">Ingredients</label>
                                         <select name="ingredients" id="ingredients" disabled>
                                             <option value="0">Work in progress</option>
                                         </select>
                                     </div>
+
+                                    <!-- Error message -->
+                                    <div v-if="errorMessages.category.visibility == true"
+                                        class="talkbubble-container d-none">
+                                        <div class="talkbubble d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="feather feather-alert-circle" id="IconChangeColor">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                                </svg>
+                                                <p class="me-3">{{ errorMessages.category.alert }}</p>
+                                            </div>
+                                            <a href="#" @click="errorMessages.category.visibility = false"><svg
+                                                    fill="currentColor" class="m-0 p-0" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                </svg></a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-6 form-section">
                                         <label for="price">Price</label>
-                                        <input class="w-100" type="text" id="price" name="price" v-model="formData.price">
+                                        <input class="w-100" type="text" id="price" name="price" v-model="formData.price"
+                                            :class="errorMessages.price.visibility === true ? ' border-error' : ''"
+                                            :placeholder="[[errorMessages.price.alert]]">
+
+                                        <!-- Error message -->
+                                        <div class="talkbubble-container d-none">
+                                            <div class="talkbubble d-flex align-items-center justify-content-between">
+                                                <div class="d-flex align-items-center">
+                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-alert-circle" id="IconChangeColor">
+                                                        <circle cx="12" cy="12" r="10"></circle>
+                                                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                                    </svg>
+                                                    <p class="me-3">{{ errorMessages.price.alert }}</p>
+                                                </div>
+                                                <a href="#" @click="errorMessages.price.visibility = false"><svg
+                                                        fill="currentColor" class="m-0 p-0" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                    </svg></a>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-6 form-section">
                                         <label for="photo">Photo</label>
-                                        <input class="w-100" type="text" id="photo" name="photo" v-model="formData.photo">
+                                        <input class="w-100" type="text" id="photo" name="photo" v-model="formData.photo"
+                                            :class="errorMessages.photo.visibility === true ? ' border-error' : ''"
+                                            :placeholder="[[errorMessages.photo.alert]]">
+
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-6 form-section">
                                         <label for="available">Available?</label>
                                         <select name="available" id="available"
-                                            @change="formData.available = $event.target.value">
-                                            <option value="" selected hidden>Select</option>
+                                            @change="formData.available = $event.target.value"
+                                            :class="errorMessages.available.visibility === true ? ' border-error' : 'border-none'">
+                                            <option value="" selected hidden>{{ errorMessages.available.visibility === true
+                                                ?
+                                                'Wrong input' : 'Select' }}</option>
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-6 form-section">
                                         <label for="visible">Visible?</label>
-                                        <select name="visible" id="visible"
-                                            @change="formData.visible = $event.target.value">
-                                            <option value="" selected hidden>Select</option>
+                                        <select name="visible" id="visible" @change="formData.visible = $event.target.value"
+                                            :class="errorMessages.visible.visibility === true ? ' border-error' : 'border-none'">
+                                            <option value="" selected hidden>{{ errorMessages.available.visibility === true
+                                                ?
+                                                'Wrong input' : 'Select' }}</option>
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
                                     </div>
                                 </div>
-                                <button type="reset" class="mb-3">
+                                <button type="reset" class="mb-3" @click="resetErrors()">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="reset">
                                         <path
                                             d="M9.5 1.293a6.47 6.47 0 0 0-6.462 6.46v3.002l-1.5-1.5-1.5 1.5 3.991 3.951 4.009-3.951-1.5-1.5-1.5 1.5v-3c0-2.46 2.001-4.462 4.462-4.462s4.462 2.001 4.462 4.462a4.468 4.468 0 0 1-1.458 3.298l1.348 1.479a6.476 6.476 0 0 0 2.11-4.777A6.47 6.47 0 0 0 9.5 1.293z">
@@ -126,7 +192,10 @@ import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
 import { useRoute } from 'vue-router';
 export default {
     name: 'DishCreate',
-    components: { DashboardSidebar, DashboardNavbar }
+    components: { DashboardSidebar, DashboardNavbar },
+    data() {
+
+    }
 }
 </script>
 
@@ -154,6 +223,37 @@ const formDataValidate = {
     category: false,
     available: false,
     visible: false,
+}
+
+let errorMessages = {
+    name: {
+        alert: '',
+        visibility: false,
+    },
+    description: {
+        alert: '',
+        visibility: false,
+    },
+    price: {
+        alert: '',
+        visibility: false,
+    },
+    category: {
+        alert: '',
+        visibility: false,
+    },
+    photo: {
+        alert: '',
+        visibility: false,
+    },
+    available: {
+        alert: '',
+        visibility: false,
+    },
+    visible: {
+        alert: '',
+        visibility: false,
+    },
 }
 
 let validate = false;
@@ -224,30 +324,85 @@ function checkValidation() {
     }
 };
 
+function resetErrors() {
+    errorMessages = {
+        name: {
+            alert: '',
+            visibility: false,
+        },
+        description: {
+            alert: '',
+            visibility: false,
+        },
+        price: {
+            alert: '',
+            visibility: false,
+        },
+        category: {
+            alert: '',
+            visibility: false,
+        },
+        photo: {
+            alert: '',
+            visibility: false,
+        },
+        available: {
+            alert: '',
+            visibility: false,
+        },
+        visible: {
+            alert: '',
+            visibility: false,
+        },
+    }
+};
+
 function errorPopUp(serverErrors) {
+    resetErrors();
+
     if (!formDataValidate.name) {
         console.log('The Name isn\'t in the right format');
+        errorMessages.name.alert = 'The Name isn\'t in the right format';
+        errorMessages.name.visibility = true;
     }
     if (!formDataValidate.description) {
         console.log('The description isn\'t in the right format');
+        errorMessages.name.alert = 'The Name isn\'t in the right format';
+        errorMessages.description.visibility = true;
     }
     if (!formDataValidate.price) {
         console.log('The price isn\'t in the right format');
+        errorMessages.price.alert = 'The price isn\'t in the right format';
+        errorMessages.price.visibility = true;
     }
     if (!formDataValidate.category) {
         console.log('Category isn\'t in the right format');
+        errorMessages.category.alert = 'Category isn\'t in the right format';
+        errorMessages.category.visibility = true;
     }
     if (!formDataValidate.available) {
         console.log('Available attribute isn\'t in the right format');
+        errorMessages.available.alert = 'Available attribute isn\'t in the right format';
+        errorMessages.available.visibility = true;
     }
     if (!formDataValidate.visible) {
         console.log('Visible attribute isn\'t in the right format');
+        errorMessages.visible.alert = 'Visible attribute isn\'t in the right format';
+        errorMessages.visible.visibility = true;
     }
+    if (!formDataValidate.photo) {
+        console.log('Photo isn\'t in the right format');
+        errorMessages.photo.alert = 'Photo isn\'t in the right format';
+        errorMessages.photo.visibility = true;
+    }
+
     if (serverErrors) {
         Object.values(serverErrors).forEach(e => {
             console.log(e[0]);
         });
     }
+
+    console.log(errorMessages);
 };
 
 let messageErrors;
@@ -289,7 +444,6 @@ onMounted(async () => {
 .dish-create::-webkit-scrollbar {
     display: none;
 }
-
 
 div.dish-create {
     padding: .5rem 1rem;
@@ -347,11 +501,48 @@ div.dish-create {
         }
     }
 
+    // Form 
+
     div.dish-info {
         background-color: $secYellow;
         padding: 1rem;
         border-radius: 25px;
         margin-bottom: 1rem;
+
+        .form-section {
+            position: relative;
+            // margin-bottom: 1rem;
+
+            .border-error {
+                box-shadow: inset 0 0 0 2px rgb(244, 118, 118);
+            }
+
+            .talkbubble-container {
+                margin-left: 1rem;
+                width: 95%;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                transform: translateY(6px);
+                transform-origin: center;
+                z-index: 1;
+                border-radius: 5px;
+                background-color: #f6cdcd;
+                opacity: .8;
+
+                svg {
+                    height: .8rem;
+                    margin-right: .5rem;
+                }
+
+                p {
+                    margin: 0;
+                    font-size: .7rem;
+                    line-height: .7rem;
+                }
+
+            }
+        }
 
         h4 {
             background-color: white;
