@@ -208,6 +208,7 @@ function updateRestaurant() {
         open_time: formData.value.open_time,
         closer_time: formData.value.closer_time,
         description: formData.value.description,
+        phone: formData.value.phone,
     })
         .then((response) => {
             console.log(response);
