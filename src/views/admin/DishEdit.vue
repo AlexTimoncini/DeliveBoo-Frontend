@@ -231,17 +231,17 @@ async function checkValidation() {
     }
 
     //photo
-    if (typeof(formData.photo) === 'object' || formData.photo === null) {
+    if (typeof (formData.photo) === 'object' || formData.photo === null) {
         formDataValidate.photo = true;
     }
 
     /**VALIDATION MANAGEMENT**/
-    if (formDataValidate.name && 
-        formDataValidate.price && 
-        formDataValidate.description && 
-        formDataValidate.category_id && 
-        formDataValidate.available && 
-        formDataValidate.visible && 
+    if (formDataValidate.name &&
+        formDataValidate.price &&
+        formDataValidate.description &&
+        formDataValidate.category_id &&
+        formDataValidate.available &&
+        formDataValidate.visible &&
         formDataValidate.photo) {
         validate = true
     } else {
@@ -325,6 +325,12 @@ onMounted(async () => {
 
 .my_app::-webkit-scrollbar {
     display: none;
+}
+
+.dish-edit::-webkit-scrollbar {
+    /* WebKit - Chrome */
+    width: 0;
+    height: 0;
 }
 
 div.dish-edit {
