@@ -6,7 +6,7 @@
             </div>
             <div class="col-md-9 col-10 p-0">
                 <DashboardNavbar />
-                <div class="dish-edit">
+                <div class="dish-create">
                     <h2>Add New Dish</h2>
                     <div class="row align-items-center">
                         <div class="dish-info col-12 col-md-6">
@@ -288,14 +288,18 @@ onMounted(async () => {
     display: none;
 }
 
-div.dish-edit {
-    padding: 5rem 2rem;
+div.dish-create {
+    padding: .5rem 1rem;
     overflow-y: scroll;
     height: calc(100vh - 95px - 80px);
     -ms-overflow-style: none;
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
+
+    @media (min-width: 992px) {
+        padding: 2rem;
+    }
 
     h2 {
         background-color: $priGreen;
@@ -385,9 +389,9 @@ div.dish-edit {
             border-bottom-left-radius: 15px;
             border-bottom-right-radius: 15px;
             border: none;
-            padding: 1rem;
             margin-bottom: 1rem;
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            padding: .8rem 1rem;
         }
 
         select {
