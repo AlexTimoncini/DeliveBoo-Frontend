@@ -30,7 +30,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="order in authStore.user.orders">
+                                <tr v-for="order in authStore.user.orders" :class="order.successful == 1 ? 'table-success' : 'table-danger'">
                                     <th scope="row">{{ (order.created_at).slice(0,10) }}</th>
                                     <td class="d-none d-md-table-cell">{{ order.first_name }} {{ order.last_name }}</td>
                                     <td class="d-none d-md-table-cell">{{ order.customer_address }}</td>
@@ -40,7 +40,6 @@
                                         params: { id: order.id }
                                     })">View</button></td>
                                 </tr>
-
                             </tbody>
                         </table>
                     </div>
