@@ -697,16 +697,6 @@ function uploadFile(file) {
 
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <label for="image">Image URL</label>
-                                    <input type="text" name="image" id="image" v-model="formRegister.image" />
-                                </div>
-                                <div class="col-6">
-                                    <label for="image">Logo URL</label>
-                                    <input type="text" name="logo" id="logo" v-model="formRegister.logo" />
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-12">
                                 </div>
                                 <div class="col-12">
