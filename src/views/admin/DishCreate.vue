@@ -15,13 +15,16 @@
                                 <label for="name">Name</label>
                                 <input class="w-100" type="text" id="name" name="name" v-model="formData.name">
                                 <label for="description">Description</label>
-                                <textarea class="w-100" name="description" id="description" cols="30" rows="3" v-model="formData.description"></textarea>
+                                <textarea class="w-100" name="description" id="description" cols="30" rows="3"
+                                    v-model="formData.description"></textarea>
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="ingredients">Categories</label>
-                                        <select name="category" id="category" @change="formData.category = $event.target.value">
+                                        <select name="category" id="category"
+                                            @change="formData.category = $event.target.value">
                                             <option value="" selected hidden>Select a category...</option>
-                                            <option v-for="category in store.categories" :value="category.id">{{ category.name }}
+                                            <option v-for="category in store.categories" :value="category.id">{{
+                                                category.name }}
                                             </option>
                                         </select>
                                     </div>
@@ -45,7 +48,8 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="available">Available?</label>
-                                        <select name="available" id="available" @change="formData.available = $event.target.value">
+                                        <select name="available" id="available"
+                                            @change="formData.available = $event.target.value">
                                             <option value="" selected hidden>Select</option>
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
@@ -53,7 +57,8 @@
                                     </div>
                                     <div class="col-6">
                                         <label for="visible">Visible?</label>
-                                        <select name="visible" id="visible" @change="formData.visible = $event.target.value">
+                                        <select name="visible" id="visible"
+                                            @change="formData.visible = $event.target.value">
                                             <option value="" selected hidden>Select</option>
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
@@ -163,85 +168,82 @@ function getCategory() {
         })
 }
 
-function checkValidation(){
+function checkValidation() {
     /**VALIDATION**/
     //name
-    if(
+    if (
         formData.price !== '' &&
-        typeof(formData.name) === 'string' &&
-        formData.name.length >= 3 && formData.name.length <= 100){
+        typeof (formData.name) === 'string' &&
+        formData.name.length >= 3 && formData.name.length <= 100) {
 
-            formDataValidate.name = true
-        }
-        
-        //description
-    if(
-        typeof(formData.description) === 'string' &&
-        formData.description.length <= 65535){
+        formDataValidate.name = true
+    }
+
+    //description
+    if (
+        typeof (formData.description) === 'string' &&
+        formData.description.length <= 65535) {
 
         formDataValidate.description = true
     }
-    
-    //price
-    if(
-        formData.price !== '' &&
-        parseInt(formData.price) <= 999){
 
-            formDataValidate.price = true
+    //price
+    if (
+        formData.price !== '' &&
+        parseInt(formData.price) <= 999) {
+
+        formDataValidate.price = true
     }
-    
+
     //category id
-    if(
+    if (
         formData.category !== '' &&
-    parseInt(formData.category) > 0 && parseInt(formData.category) <= store.categories.length)
-    {
-        
+        parseInt(formData.category) > 0 && parseInt(formData.category) <= store.categories.length) {
+
         formDataValidate.category = true;
     }
 
     //available
-    if(
-        formData.available !== '' && typeof(Boolean(formData.available)) === 'boolean')
-    {
-        
+    if (
+        formData.available !== '' && typeof (Boolean(formData.available)) === 'boolean') {
+
         formDataValidate.available = true;
     }
 
     //visible
     if
-        (formData.visible !== '' && typeof(Boolean(formData.visible)) === 'boolean')
-    {
-        
+        (formData.visible !== '' && typeof (Boolean(formData.visible)) === 'boolean') {
+
         formDataValidate.visible = true;
     }
     /**VALIDATION MANAGEMENT**/
-    if(formDataValidate.name && formDataValidate.price && formDataValidate.description && formDataValidate.category){
+    if (formDataValidate.name && formDataValidate.price && formDataValidate.description && formDataValidate.category) {
         validate = true
     } else {
         errorPopUp();
     }
 };
 
-function errorPopUp(serverErrors){
-    if(!formDataValidate.name){
+function errorPopUp(serverErrors) {
+    if (!formDataValidate.name) {
         console.log('The Name isn\'t in the right format');
     }
-    if(!formDataValidate.description){
+    if (!formDataValidate.description) {
         console.log('The description isn\'t in the right format');
     }
-    if(!formDataValidate.price){
+    if (!formDataValidate.price) {
         console.log('The price isn\'t in the right format');
     }
-    if(!formDataValidate.category){
+    if (!formDataValidate.category) {
         console.log('Category isn\'t in the right format');
     }
-    if(!formDataValidate.available){
+    if (!formDataValidate.available) {
         console.log('Available attribute isn\'t in the right format');
     }
-    if(!formDataValidate.visible){
+    if (!formDataValidate.visible) {
         console.log('Visible attribute isn\'t in the right format');
     }
-    if(serverErrors){
+    if (serverErrors) {
         Object.values(serverErrors).forEach(e => {
             console.log(e[0]);
         });
@@ -254,24 +256,24 @@ function storeDish() {
     checkValidation();
     if (validate) {
         axios.post(`/api/store`, {
-        user_id: authStore.user.id,
-        name: formData.name,
-        description: formData.description,
-        price: formData.price,
-        category_id: formData.category,
-        photo: formData.photo,
-        available: formData.available,
-        visible: formData.visible,
-    })
-        .then((response) => {
-            console.log(response);
-            window.location.href = '/admin/dishes';
+            user_id: authStore.user.id,
+            name: formData.name,
+            description: formData.description,
+            price: formData.price,
+            category_id: formData.category,
+            photo: formData.photo,
+            available: formData.available,
+            visible: formData.visible,
         })
-        .catch(function (error) {
-            messageErrors = error.response.data.errors;
-            console.log(messageErrors);
-            errorPopUp(messageErrors);
-        })
+            .then((response) => {
+                console.log(response);
+                window.location.href = '/admin/dishes';
+            })
+            .catch(function (error) {
+                messageErrors = error.response.data.errors;
+                console.log(messageErrors);
+                errorPopUp(messageErrors);
+            })
     }
 }
 
@@ -284,9 +286,10 @@ onMounted(async () => {
 @use '../../styles/partials/variables' as *;
 @use '../../styles/partials/mixins' as *;
 
-.my_app::-webkit-scrollbar {
+.dish-create::-webkit-scrollbar {
     display: none;
 }
+
 
 div.dish-create {
     padding: .5rem 1rem;
