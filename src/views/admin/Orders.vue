@@ -30,7 +30,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="order in authStore.user.orders" :order="order" @click="console.log(order)">
+                                <tr v-for="order in authStore.user.orders">
                                     <th scope="row">{{ (order.created_at).slice(0,10) }}</th>
                                     <td class="d-none d-md-table-cell">{{ order.first_name }} {{ order.last_name }}</td>
                                     <td class="d-none d-md-table-cell">{{ order.customer_address }}</td>

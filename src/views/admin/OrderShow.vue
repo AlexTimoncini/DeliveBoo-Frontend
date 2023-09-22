@@ -21,25 +21,25 @@
                                 <span class="d-none d-md-inline">Back</span>
                             </button>
                         </div>
-                        <div class="row d-flex align-items-center justify-content-center">
+                        <div class="row d-flex align-items-center justify-content-center" v-if="authStore.user">
 
-                            <ul class="order_preview col-12 col-lg-6 m-0">
+                            <ul  class="order_preview col-12 col-lg-6 m-0" >
                                 <li>
-                                    <h4 class="title mt-3">Order n° <span>{{ orders.data.id }}</span></h4>
+                                    <h4 class="title mt-3">Order n° <span>{{ order.id }}</span></h4>
                                 </li>
-                                <li v-for="dish in orders.data.dishes" class="order_item d-flex justify-content-between">
+                                <li v-for="dish in order.dishes" class="order_item d-flex justify-content-between">
                                     <div class="dish_name m-0">
-                                        <h6>{{ dish.name }} <strong>x1</strong></h6>
+                                        <h6 @click="console.log(dish)">{{ dish.name }} <strong>x{{ dish.pivot.quantity }}</strong></h6>
                                     </div>
                                     <div class="dish_price m-0">
-                                        <p class="m-0">{{ dish.price }}</p>
+                                        <p class="m-0">{{ dish.price * dish.pivot.quantity }}</p>
                                     </div>
                                 </li>
                                 <li class="order_item d-flex justify-content-between total_price">
                                     <div class="dish_name m-0">
                                         <h6>Total Invoice</h6>
                                     </div>
-                                    <p class="m-0">{{ totalPrice }}€</p>
+                                    <p class="m-0">{{ order.total_price }}€</p>
                                 </li>
                             </ul>
                             <div class="col-lg-5 d-none d-lg-block">
@@ -65,33 +65,36 @@ export default {
     data() {
         return {
             apiUrl: 'http://127.0.0.1:8000/api/orders',
-            orders: {},
+            order: {},
             totalPrice: 0,
+            orderId: null
         }
     },
     components: { DashboardSidebar, DashboardNavbar },
 
     methods: {
         getOrder() {
-            axios.get(`${this.apiUrl}/` + this.$route.params.id).then(response => {
-                console.log(response.data);
-                this.orders = response.data;
-                console.log(this.orders.data.dishes);
-                this.orders.data.dishes.forEach((dish) => {
-                    this.totalPrice += dish.price;
-                });
+            axios.get(`${this.apiUrl}/${this.orderId}`).then(response => {
+                this.order = response.data.data;
             })
                 .catch(error => console.error(error))
         }
     },
-
-    created() {
-        this.getOrder();
-    },
     mounted() {
+        this.orderId = this.$route.params.id;
+        this.getOrder();
     }
 }
 
+</script>
+
+<script setup>
+import { onMounted } from 'vue';
+import { useAuthStore } from '../../stores/auth';
+const authStore = useAuthStore();
+onMounted(async () => {
+    await authStore.getUser();
+})
 </script>
 
 <style lang="scss" scoped>
