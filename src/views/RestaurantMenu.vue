@@ -23,16 +23,29 @@ export default {
 
             // alert 
             alert: false,
+            alertId: '',
         }
     },
     methods: {
+
+        alertMessage(dishID) {
+            this.alert = true;
+            this.alertId = dishID;
+        },
+
+        turnOffAlert() {
+            this.alert = false;
+            this.alertId = '';
+        },
+
+
         addDishToCart(dishObj) {
             if ((store.cart_list.length == 0) && (store.cartRestaurantID == null) || (store.cartRestaurantID == dishObj.user_id)) {
                 console.log(dishObj.user_id);
                 store.cartRestaurantID = dishObj.user_id;
             }
             if (store.cartRestaurantID !== dishObj.user_id) {
-                this.alert = true;
+                this.alertMessage(dishObj.id);
                 // alert("You can't add this dish to your cart, you already have others from a different restaurant.");
             } else {
                 let cart = store.cart_list;
@@ -108,8 +121,8 @@ export default {
                 this.totalPrice += parseFloat(dish.price) * parseInt(dish.quantity);
             });
         },
-        setCartId(){
-            if(store.cart_list.length === 0){
+        setCartId() {
+            if (store.cart_list.length === 0) {
                 store.cartRestaurantID = null
             } else {
                 store.cartRestaurantID = store.cart_list[0].user_id;
@@ -126,7 +139,7 @@ export default {
 </script>
 
 <template>
-    <div class="d-flex container-fluid flex-column flex-md-row p-0">
+    <div class="d-flex container-fluid flex-column flex-md-row p-0 position-relative">
         <div class="cart-container  d-none d-md-block col-md-3">
             <div class="cart-sidebar px-3 py-4">
                 <h2 class="mb-4 px-3">Shopping Cart</h2>
@@ -245,15 +258,18 @@ export default {
                 <!-- Restaurant Popular Dishes List -->
                 <div class="popular-dishes col-12 mb-5">
                     <h2>Boo-tifully Popular and Delicious</h2>
-                    <div class="row position-relative d-flex">
+                    <div class="row d-flex">
                         <Card v-for="    dish     in     bestDishes    " :dish="dish" @add="addDishToCart(dish)" />
-                        <div class="my_alert alert alert-warning alert-dismissible  col-lg-5 col-md-6 col-10 p-4"
-                            :class="!alert ? 'd-none' : 'd-block'">
+                        <div v-for="    dish     in     bestDishes    "
+                            class="my_alert alert alert-warning alert-dismissible col-lg-3 col-md-6 col-10 p-4 d-flex flex-column align-items-center"
+                            :class="!alert || alertId === dish.id ? 'd-none' : 'd-block'">
+                            <img class="" src="../assets/mascotte/angry-boo.png" alt="angry ghost">
                             <h4 class="alert-heading">Boo are you doing?!</h4>
-                            <p>You can't add this dish to your cart, you already have others from a different restaurant.
+                            <p class="text-center">You can't add this dish to your cart, you already have others from a
+                                different restaurant.
                             </p>
                             <div class="d-flex justify-content-end"><button class="btn btn btn-danger"
-                                    @click="alert = false">Ok</button></div>
+                                    @click="turnOffAlert()">Ok</button></div>
                         </div>
                     </div>
                 </div>
@@ -261,16 +277,9 @@ export default {
                 <!-- Menu -->
                 <div class="menu col-12">
                     <h2>{{ restaurant.name }} Menu</h2>
-                    <div class="row position-relative">
+                    <div class="row ">
                         <Card v-for="    dish     in     restaurant.dishes    " :dish="dish" @add="addDishToCart(dish)" />
-                        <div class="my_alert alert alert-warning alert-dismissible  col-lg-5 col-md-6 col-10 p-4"
-                            :class="!alert ? 'd-none' : 'd-block'">
-                            <h4 class="alert-heading">Boo are you doing?!</h4>
-                            <p>You can't add this dish to your cart, you already have others from a different restaurant.
-                            </p>
-                            <div class="d-flex justify-content-end"><button class="btn btn btn-danger"
-                                    @click="alert = false">Ok</button></div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -417,6 +426,12 @@ div.container-fluid {
         }
     }
 
+    .main-app::-webkit-scrollbar {
+        /* WebKit - Chrome */
+        width: 0;
+        height: 0;
+    }
+
     div.main-app {
         padding: 2rem;
         height: calc(100vh - 90px);
@@ -426,18 +441,34 @@ div.container-fluid {
         scrollbar-width: none;
         /* Firefox */
 
+
         div.my_alert {
-            background-color: rgb(255, 183, 157);
+            background-color: rgb(253, 255, 232);
             border-radius: 10px;
             position: absolute;
-            top: 50%;
+            top: 20%;
             left: 50%;
             transform: translateX(-50%);
+
             z-index: 2;
-            // opacity: .9;
             box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
             color: black;
 
+
+            img {
+                width: 50%;
+            }
+
+            button {
+                background-color: $secYellow;
+                border: none;
+                color: black;
+            }
+
+            .alert-heading {
+                color: rgb(196, 18, 18);
+                font-weight: 700;
+            }
 
         }
 
