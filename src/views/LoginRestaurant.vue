@@ -1,3 +1,9 @@
+<script>
+export default {
+    name: 'LoginRestaurant'
+}
+</script>
+
 <script setup>
 import { ref } from 'vue';
 import { useAuthStore } from '../stores/auth';
@@ -827,7 +833,7 @@ select {
 
     &::placeholder {
         color: red;
-        font-weight: 600;
+        opacity: 1;
     }
 
     &:focus {
@@ -843,7 +849,7 @@ textarea {
 
     &::placeholder {
         color: red;
-        font-weight: 600;
+        opacity: 1;
     }
 
     &:focus {
