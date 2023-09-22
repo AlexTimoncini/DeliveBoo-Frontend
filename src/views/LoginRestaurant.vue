@@ -123,27 +123,27 @@ function uploadFile(file) {
                     <div class="row">
                         <div class="col-6">
                             <label for="name">Restaurant Name</label>
-                            <input type="text" name="name" id="name" v-model="formRegister.name" :placeholder="authStore.messageErrors.name || ''" @click="authStore.messageErrors.name = ''" />
+                            <input type="text" name="name" id="name" v-model="formRegister.name" :placeholder="authStore.messageErrors.name || ''" @click="authStore.messageErrors ? authStore.messageErrors.name = null : null" />
                         </div>
                         <div class="col-6">
                             <label for="email">E-mail</label>
-                            <input type="mail" name="email" id="email" v-model="formRegister.email" :placeholder="authStore.messageErrors.email || ''" @click="authStore.messageErrors.email = ''" />
+                            <input type="mail" name="email" id="email" v-model="formRegister.email" :placeholder="authStore.messageErrors.email || ''" @click="authStore.messageErrors ? authStore.messageErrors.email = null : null" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6">
                             <label for="vat-number">VAT Number</label>
-                            <input type="text" name="vat-number" id="vat-number" v-model="formRegister.vat_number" :placeholder="authStore.messageErrors.vat_number || ''" @click="authStore.messageErrors.vat_number = ''" />
+                            <input type="text" name="vat-number" id="vat-number" v-model="formRegister.vat_number" :placeholder="authStore.messageErrors.vat_number || ''" @click="authStore.messageErrors ? authStore.messageErrors.vat_number = null : null" />
                         </div>
                         <div class="col-6">
                             <label for="address">Address</label>
-                            <input type="text" name="address" id="address" v-model="formRegister.address" :placeholder="authStore.messageErrors.address || ''" @click="authStore.messageErrors.address = ''" />
+                            <input type="text" name="address" id="address" v-model="formRegister.address" :placeholder="authStore.messageErrors.address || ''" @click="authStore.messageErrors ? authStore.messageErrors.address = null : null" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6">
                             <label for="open-time">Opening Time</label>
-                            <select class="d-block" name="open-time" id="open-time" v-model="formRegister.open_time" :style="{ color: authStore.messageErrors.open_time ? 'red' : 'black' }" @click="authStore.messageErrors.open_time = ''">
+                            <select class="d-block" name="open-time" id="open-time" v-model="formRegister.open_time" :style="{ color: authStore.messageErrors.open_time ? 'red' : 'black' }" @click="authStore.messageErrors ? authStore.messageErrors.open_time = null : null">
                                 <option value="" selected disabled hidden v-if="authStore.messageErrors.open_time">{{ authStore.messageErrors.open_time.join() }}</option>
                                 <option value="00:00">00:00</option>
                                 <option value="00:30">00:30</option>
@@ -197,7 +197,7 @@ function uploadFile(file) {
                         </div>
                         <div class="col-6">
                             <label for="closer-time">Closing Time</label>
-                            <select class="d-block" name="closer-time" id="closer-time" v-model="formRegister.closer_time" :style="{ color: authStore.messageErrors.closer_time ? 'red' : 'black' }" @click="authStore.messageErrors.closer_time = ''">
+                            <select class="d-block" name="closer-time" id="closer-time" v-model="formRegister.closer_time" :style="{ color: authStore.messageErrors.closer_time ? 'red' : 'black' }" @click="authStore.messageErrors ? authStore.messageErrors.closer_time = null : null">
                                 <option value="" selected disabled hidden v-if="authStore.messageErrors.closer_time">{{ authStore.messageErrors.closer_time.join() }}</option>
                                 <option value="00:00">00:00</option>
                                 <option value="00:30">00:30</option>
@@ -253,7 +253,7 @@ function uploadFile(file) {
                     <div class="row">
                             <div class="col-12">
                                 <label for="phone-number">Phone Number</label>
-                                <input type="text" name="phone-number" id="phone-number" v-model="formRegister.phone" :placeholder="authStore.messageErrors.phone|| ''" @click="authStore.messageErrors.phone = ''" />
+                                <input type="text" name="phone-number" id="phone-number" v-model="formRegister.phone" :placeholder="authStore.messageErrors.phone|| ''" @click="authStore.messageErrors ? authStore.messageErrors.phone = null : null" />
                             </div>
                         </div>
                     <div class="row">
@@ -262,13 +262,13 @@ function uploadFile(file) {
                         <div class="col-12">
                             <label for="description">Description</label>
                             <textarea name="description" id="description" class="w-100" cols="30" rows="2" :placeholder="authStore.messageErrors.description || ''"
-                                v-model="formRegister.description" @click="authStore.messageErrors.description = ''"></textarea>
+                                v-model="formRegister.description" @click="authStore.messageErrors ? authStore.messageErrors.description = null : null"></textarea>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6">
                             <label for="password">Password</label>
-                            <input type="password" name="password" id="password" v-model="formRegister.password" :placeholder="authStore.messageErrors.password || ''" @click="authStore.messageErrors.password = ''" />
+                            <input type="password" name="password" id="password" v-model="formRegister.password" :placeholder="authStore.messageErrors.password || ''" @click="authStore.messageErrors ? authStore.messageErrors.password = null : null" />
                         </div>
                         <div class="col-6">
                             <label for="password-confirm">Confirm Password</label>
@@ -561,33 +561,33 @@ function uploadFile(file) {
                             <div class="row">
                                 <div class="col-12">
                                     <label for="name">Restaurant Name</label>
-                                    <input type="text" name="name" id="name" v-model="formRegister.name" :placeholder="authStore.messageErrors.name || ''" @click="authStore.messageErrors.name = ''" />
+                                    <input type="text" name="name" id="name" v-model="formRegister.name" :placeholder="authStore.messageErrors.name || ''" @click="authStore.messageErrors ? authStore.messageErrors.name = null : null" />
                                 </div>
                                 <div class="col-12">
                                     <label for="email">E-mail</label>
-                                    <input type="mail" name="email" id="email" v-model="formRegister.email" :placeholder="authStore.messageErrors.email || ''" @click="authStore.messageErrors.email = ''" />
+                                    <input type="mail" name="email" id="email" v-model="formRegister.email" :placeholder="authStore.messageErrors.email || ''" @click="authStore.messageErrors ? authStore.messageErrors.email = null : null" />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
                                     <label for=" vat-number">VAT Number</label>
                                     <input type="text" name="vat-number" id="vat-number"
-                                        v-model="formRegister.vat_number" :placeholder="authStore.messageErrors.vat_number || ''" @click="authStore.messageErrors.vat_number = ''" />
+                                        v-model="formRegister.vat_number" :placeholder="authStore.messageErrors.vat_number || ''" @click="authStore.messageErrors ? authStore.messageErrors.vat_number = null : null" />
                                 </div>
                                 <div class="col-12">
                                     <label for="phone-number">Phone Number</label>
-                                    <input type="text" name="phone-number" id="phone-number" v-model="formRegister.phone" :placeholder="authStore.messageErrors.phone || ''" @click="authStore.messageErrors.phone = ''" />
+                                    <input type="text" name="phone-number" id="phone-number" v-model="formRegister.phone" :placeholder="authStore.messageErrors.phone || ''" @click="authStore.messageErrors ? authStore.messageErrors.phone = null : null" />
                                 </div>
                                 <div class="col-12">
                                     <label for="address">Address</label>
-                                    <input type="text" name="address" id="address" v-model="formRegister.address" :placeholder="authStore.messageErrors.address || ''" @click="authStore.messageErrors.address = ''" />
+                                    <input type="text" name="address" id="address" v-model="formRegister.address" :placeholder="authStore.messageErrors.address || ''" @click="authStore.messageErrors ? authStore.messageErrors.address = null : null" />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
                                     <label class="my_rounded" for="open-time">Opening Time</label>
                                     <select class="d-block" name="open-time" id="open-time"
-                                        v-model="formRegister.open_time" :style="{ color: authStore.messageErrors.open_time ? 'red' : 'black' }" @click="authStore.messageErrors.open_time = ''">
+                                        v-model="formRegister.open_time" :style="{ color: authStore.messageErrors.open_time ? 'red' : 'black' }" @click="authStore.messageErrors ? authStore.messageErrors.open_time = null : null">
                                         <option value="" selected disabled hidden v-if="authStore.messageErrors.open_time">{{ authStore.messageErrors.open_time.join() }}</option>
                                         <option value="00:00">00:00</option>
                                         <option value="00:30">00:30</option>
@@ -642,7 +642,7 @@ function uploadFile(file) {
                                 <div class="col-12">
                                     <label class="my_rounded" for="closer-time">Closing Time</label>
                                     <select class="d-block" name="closer-time" id="closer-time"
-                                        v-model="formRegister.closer_time" :style="{ color: authStore.messageErrors.closer_time ? 'red' : 'black' }" @click="authStore.messageErrors.closer_time = ''">
+                                        v-model="formRegister.closer_time" :style="{ color: authStore.messageErrors.closer_time ? 'red' : 'black' }" @click="authStore.messageErrors ? authStore.messageErrors.closer_time = null : null">
                                         <option value="" selected disabled hidden v-if="authStore.messageErrors.closer_time">{{ authStore.messageErrors.closer_time.join() }}</option>
                                         <option value="00:00">00:00</option>
                                         <option value="00:30">00:30</option>
@@ -702,13 +702,13 @@ function uploadFile(file) {
                                 <div class="col-12">
                                     <label for="description">Description</label>
                                     <textarea name="description" id="description" class="w-100" cols="30" rows="2"
-                                        v-model="formRegister.description" :placeholder="authStore.messageErrors.description || ''" @click="authStore.messageErrors.description = ''" ></textarea>
+                                        v-model="formRegister.description" :placeholder="authStore.messageErrors.description || ''" @click="authStore.messageErrors ? authStore.messageErrors.description = null : null" ></textarea>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
                                     <label for="password">Password</label>
-                                    <input type="password" name="password" id="password" v-model="formRegister.password" :placeholder="authStore.messageErrors.password || ''" @click="authStore.messageErrors.password = ''" />
+                                    <input type="password" name="password" id="password" v-model="formRegister.password" :placeholder="authStore.messageErrors.password || ''" @click="authStore.messageErrors ? authStore.messageErrors.password = null : null" />
                                 </div>
                                 <div class="col-12">
                                     <label for="password-confirm">Confirm Password</label>
