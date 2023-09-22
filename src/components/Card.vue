@@ -79,7 +79,6 @@ export default {
         z-index: 1;
 
         .card__info-title {
-            height: 250px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -87,10 +86,14 @@ export default {
             h3 {
                 font-size: 1.5rem;
                 font-weight: bold;
+                max-height: 60px;
+                overflow-y: hidden;
             }
 
             p {
                 font-weight: 600;
+                max-height: 75px;
+                overflow-y: hidden;
             }
 
             span {
@@ -159,6 +162,7 @@ export default {
 
     .disabled {
         filter: saturate(.15);
+        pointer-events: none;
     }
 
     p.more-info-txt {
