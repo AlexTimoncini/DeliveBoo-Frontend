@@ -73,32 +73,38 @@ const router = createRouter({
         {
             path: '/admin/dishes',
             name: 'Dishes',
-            component: Dishes
+            component: Dishes,
+            meta: { requiresAuth: true },
         },
         {
             path: '/admin/orders',
             name: 'Orders',
-            component: Orders
+            component: Orders,
+            meta: { requiresAuth: true },
         },
         {
             path: '/admin/analytics',
             name: 'Analytics',
-            component: Analytics
+            component: Analytics,
+            meta: { requiresAuth: true },
         },
         {
             path: '/admin/edit/dish/:id',
             name: 'DishEdit',
-            component: DishEdit
+            component: DishEdit,
+            meta: { requiresAuth: true },
         },
         {
             path: '/admin/create/dish',
             name: 'DishCreate',
-            component: DishCreate
+            component: DishCreate,
+            meta: { requiresAuth: true },
         },
         {
             path: '/admin/order/show/:id',
             name: 'OrderShow',
-            component: OrderShow
+            component: OrderShow,
+            meta: { requiresAuth: true },
         },
     ],
 });
