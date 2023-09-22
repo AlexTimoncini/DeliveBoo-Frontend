@@ -11,7 +11,9 @@
                     <!-- Upper section with restaurant image & buttons -->
                     <div class="row">
                         <div class="col-10 p-0">
-                            <img :src="authStore.user ? authStore.user.image : ''" alt="Restaurant Image">
+                            <img v-if="authStore.user"
+                                :src="authStore.user.image.startsWith('/restaurants') ? (`http://127.0.0.1:8000/storage${authStore.user.image}`) : authStore.user.image"
+                                alt="Restaurant Image">
                         </div>
                         <div class="col-2 buttons p-0">
                             <button @click="toggle">
@@ -34,7 +36,80 @@
                                 <span class="d-none d-md-inline" v-if="isDisabled"> Edit</span>
                                 <span class="d-none d-md-inline" v-if="!isDisabled">Back</span>
                             </button>
-                            <button v-bind:class="{ disabled: isDisabled }">
+
+                        </div>
+                    </div>
+
+                    <!-- Middle section with "My profile" informations -->
+                    <form @submit.prevent="updateRestaurant()" id="form">
+                        <div class="row">
+                            <div class="my-profile col-12">
+                                <h4>Main Profile Info</h4>
+                                <label for="name">Restaurant Name</label>
+                                <input class="w-100" type="text" id="name" name="name" v-model="formData.name"
+                                    v-bind:disabled="isDisabled">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="mail">E-mail</label>
+                                        <input class="w-100" type="mail" id="mail" name="mail" v-model="formData.email"
+                                            v-bind:disabled="isDisabled">
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="phone">Phone Number</label>
+                                        <input class="w-100" type="text" id="phone" name="phone" v-model="formData.phone"
+                                            v-bind:disabled="isDisabled">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom section with "My Restaurant" & "Media" informations -->
+                        <div class="row flex-row">
+                            <div class="my-restaurant col-12 col-md-6">
+                                <h4>Restaurant</h4>
+                                <label for="vat-number">VAT Number</label>
+                                <input class="w-100" type="text" id="vat-number" name="vat-number"
+                                    :value="authStore.user ? authStore.user.vat_number : ''" v-bind:disabled="isDisabled">
+                                <label for="address">Address</label>
+                                <input class="w-100" type="text" id="address" name="address" v-model="formData.address"
+                                    v-bind:disabled="isDisabled">
+                                <label for="free-delivery-from">Free Delivery From</label>
+                                <input class="w-100" type="text" id="free-delivery-from" name="free-delivery-from"
+                                    :value="authStore.user ? '' : ''" v-bind:disabled="isDisabled">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="opening-time">Opening Time</label>
+                                        <input class="w-100" type="time" id="opening-time" name="opening-time"
+                                            v-model="formData.open_time" v-bind:disabled="isDisabled">
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="closing-time">Closing Time</label>
+                                        <input class="w-100" type="time" id="closing-time" name="closing-time"
+                                            v-model="formData.closer_time" v-bind:disabled="isDisabled">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="my-media col-12 col-md-6">
+                                <h4>Media</h4>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="image">Image</label>
+                                        <input class="w-100" type="file" id="image" name="image"
+                                            v-bind:disabled="isDisabled" @change="formData.image = $event.target.files">
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="logo">Logo</label>
+                                        <input class="w-100" type="file" id="logo" name="logo" v-bind:disabled="isDisabled"
+                                            @change="formData.logo = $event.target.files">
+                                    </div>
+                                </div>
+                                <label for="description">Description</label>
+                                <textarea class="w-100" name="description" id="description" cols="30" rows="6"
+                                    v-bind:disabled="isDisabled" v-model="formData.description"></textarea>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <button v-bind:class="{ disabled: isDisabled }" type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" id="save">
                                     <switch>
                                         <g>
@@ -55,79 +130,7 @@
                                 <span class="d-none d-md-inline">Save</span>
                             </button>
                         </div>
-                    </div>
 
-                    <!-- Middle section with "My profile" informations -->
-                    <form @submit.prevent="updateRestaurant()">
-                        <div class="row">
-                            <div class="my-profile col-12">
-                                <h4>Main Profile Info</h4>
-                                <label for="name">Restaurant Name</label>
-                                <input class="w-100" type="text" id="name" name="name"
-                                    :value="authStore.user ? authStore.user.name : ''" v-bind:disabled="isDisabled">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="mail">E-mail</label>
-                                        <input class="w-100" type="mail" id="mail" name="mail"
-                                            :value="authStore.user ? authStore.user.email : ''"
-                                            v-bind:disabled="isDisabled">
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="phone">Phone Number</label>
-                                        <input class="w-100" type="text" id="phone" name="phone"
-                                            :value="authStore.user ? authStore.user.phone : ''"
-                                            v-bind:disabled="isDisabled">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bottom section with "My Restaurant" & "Media" informations -->
-                        <div class="row flex-row">
-                            <div class="my-restaurant col-12 col-md-6">
-                                <h4>Restaurant</h4>
-                                <label for="vat-number">VAT Number</label>
-                                <input class="w-100" type="text" id="vat-number" name="vat-number"
-                                    :value="authStore.user ? authStore.user.vat_number : ''" v-bind:disabled="isDisabled">
-                                <label for="address">Address</label>
-                                <input class="w-100" type="text" id="address" name="address"
-                                    :value="authStore.user ? authStore.user.address : ''" v-bind:disabled="isDisabled">
-                                <label for="free-delivery-from">Free Delivery From</label>
-                                <input class="w-100" type="text" id="free-delivery-from" name="free-delivery-from"
-                                    :value="authStore.user ? '' : ''" v-bind:disabled="isDisabled">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="opening-time">Opening Time</label>
-                                        <input class="w-100" type="time" id="opening-time" name="opening-time"
-                                            :value="authStore.user ? authStore.user.open_time : ''"
-                                            v-bind:disabled="isDisabled">
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="closing-time">Closing Time</label>
-                                        <input class="w-100" type="time" id="closing-time" name="closing-time"
-                                            :value="authStore.user ? authStore.user.closer_time : ''"
-                                            v-bind:disabled="isDisabled">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="my-media col-12 col-md-6">
-                                <h4>Media</h4>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="image">Image</label>
-                                        <input class="w-100" type="file" id="image" name="image"
-                                            v-bind:disabled="isDisabled">
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="logo">Logo</label>
-                                        <input class="w-100" type="file" id="logo" name="logo" v-bind:disabled="isDisabled">
-                                    </div>
-                                </div>
-                                <label for="description">Description</label>
-                                <textarea class="w-100" name="description" id="description" cols="30" rows="6"
-                                    v-bind:disabled="isDisabled">{{ authStore.user ? authStore.user.description : '' }}</textarea>
-                            </div>
-                        </div>
                     </form>
                 </div>
             </div>
@@ -149,40 +152,74 @@ export default {
         toggle() {
             this.isDisabled = !this.isDisabled;
         },
-        updateRestaurant() {
-            axios.put(`/api/update/${formData.id}`, {
-                name: formData.name,
-                email: formData.email,
-                phone: formData.phone,
-                vat_number: formData.vat_number,
-                address: formData.address,
-                free_delivery_from: formData.free_delivery_from,
-                opening: formData.phone,
-                vat_number: formData.opening,
-                closing: formData.closing,
-                photo: 'Foto profilo',
-                logo: 'Logo ristorante',
-                description: formData.description,
-            })
-                .then((response) => {
-                    console.log(response);
-                    window.location.href = '/admin/dishes';
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-        },
+
     },
     components: { DashboardSidebar, DashboardNavbar }
 }
 </script>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useAuthStore } from '../../stores/auth';
+import axios from 'axios';
 const authStore = useAuthStore();
+const formData = ref({
+    name: null,
+    description: null,
+    email: null,
+    phone: null,
+    address: null,
+    open_time: null,
+    closer_time: null,
+    image: null,
+    logo: null,
+})
+function uploadFileImage(file) {
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    axios.post(`api/upload/restaurants/image/File/${authStore.user.id}`, file, config).then(function (response) {
+        console.log(response.data);
+    });
+}
+
+function uploadFileLogo(file) {
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    axios.post(`api/upload/restaurants/logo/File/${authStore.user.id}`, file, config).then(function (response) {
+        console.log(response.data);
+    });
+}
+
+function changeData() {
+    formData.value.name = authStore.user.name
+    formData.value.email = authStore.user.email
+    formData.value.address = authStore.user.address
+    formData.value.phone = authStore.user.phone
+    formData.value.open_time = authStore.user.open_time
+    formData.value.closer_time = authStore.user.closer_time
+    formData.value.description = authStore.user.description
+}
+
+function updateRestaurant() {
+    uploadFileImage(formData.value.image)
+    uploadFileLogo(formData.value.logo)
+    axios.put(`/api/update/restaurant/${authStore.user.id}`, {
+        name: formData.value.name,
+        email: formData.value.email,
+        address: formData.value.address,
+        open_time: formData.value.open_time,
+        closer_time: formData.value.closer_time,
+        description: formData.value.description,
+    })
+        .then((response) => {
+            console.log(response);
+            window.location.href = '/admin/myaccount';
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+}
 onMounted(async () => {
     await authStore.getUser();
+    changeData();
 })
 </script>
 
