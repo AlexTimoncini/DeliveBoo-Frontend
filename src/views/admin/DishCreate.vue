@@ -11,11 +11,11 @@
                     <div class="row align-items-center">
                         <div class="dish-info col-12 col-md-6">
 
-                            <form @submit.prevent="storeDish()">
+                            <form @submit.prevent="storeDish(this.authStore)">
                                 <div class="form-section">
 
-                                    <!-- Error message -->
-                                    <div v-if="errorMessages.name.alert" class="talkbubble-container ">
+                                    <!-- Name Error message -->
+                                    <div v-if="this.errorMessages.name.alert" class="talkbubble-container ">
                                         <div class="talkbubble d-flex align-items-center justify-content-between">
                                             <div class="d-flex align-items-center">
                                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -25,30 +25,49 @@
                                                     <line x1="12" y1="8" x2="12" y2="12"></line>
                                                     <line x1="12" y1="16" x2="12.01" y2="16"></line>
                                                 </svg>
-                                                <p class="me-3">{{ errorMessages.name.alert }}</p>
+                                                <p class="me-3">{{ this.errorMessages.name.alert }}</p>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <label :class="errorMessages.name.visibility ? ' border-error' : 'border-none'"
+                                    <label :class="this.errorMessages.name.visibility ? ' border-error' : 'border-none'"
                                         for="name">Name</label>
-                                    <input placeholder="Dish Name" class="w-100" type="text" id="name" name="name"
-                                        v-model="formData.name">
+                                    <input placeholder="Insert the dish name" class="w-100" type="text" id="name" name="name"
+                                        v-model="this.formData.name">
 
                                 </div>
+
                                 <div class="form-section">
-                                    <label for="description">Description</label>
-                                    <textarea placeholder="Dish Decription here" class="w-100" name="description"
-                                        id="description" cols="30" rows="3"></textarea>
+
+                                    <!-- Description Error message -->
+                                    <div v-if="this.errorMessages.description.alert" class="talkbubble-container ">
+                                        <div class="talkbubble d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="feather feather-alert-circle" id="IconChangeColor">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                                </svg>
+                                                <p class="me-3">{{ this.errorMessages.description.alert }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <label :class="this.errorMessages.description.visibility ? ' border-error' : 'border-none'"
+                                        for="description">Description</label>
+                                    <textarea placeholder="Insert the dish description" class="w-100" name="description"
+                                        id="description" cols="30" rows="3" v-model="this.formData.description"></textarea>
 
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-12 col-md-6 form-section">
-                                        <label :class="errorMessages.category.visibility ? ' border-error' : 'border-none'"
+                                        <label :class="this.errorMessages.category.visibility ? ' border-error' : 'border-none'"
                                             for="ingredients">Categories</label>
                                         <select name="category" id="category"
-                                            @change="formData.category = $event.target.value">
-                                            <option value="" selected hidden>{{ errorMessages.available.visibility === true
+                                            @change="this.formData.category = $event.target.value">
+                                            <option value="" selected hidden>{{ this.errorMessages.available.visibility === true
                                                 ?
                                                 'Wrong input' : 'Select a category...' }}</option>
                                             <option v-for="category in store.categories" :value="category.id">{{
@@ -56,8 +75,8 @@
                                             </option>
                                         </select>
 
-                                        <!-- Error message -->
-                                        <div v-if="errorMessages.category.alert" class="talkbubble-container ">
+                                        <!-- Category Error message -->
+                                        <div v-if="this.errorMessages.category.alert" class="talkbubble-container ">
                                             <div class="talkbubble d-flex align-items-center justify-content-between">
                                                 <div class="d-flex align-items-center">
                                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -67,7 +86,7 @@
                                                         <line x1="12" y1="8" x2="12" y2="12"></line>
                                                         <line x1="12" y1="16" x2="12.01" y2="16"></line>
                                                     </svg>
-                                                    <p class="me-3">{{ errorMessages.category.alert }}</p>
+                                                    <p class="me-3">{{ this.errorMessages.category.alert }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -83,13 +102,13 @@
 
                                 <div class="row">
                                     <div class="col-12 col-md-6  form-section">
-                                        <label :class="errorMessages.category.visibility ? ' border-error' : 'border-none'"
+                                        <label :class="this.errorMessages.price.visibility ? ' border-error' : 'border-none'"
                                             for="price">Price</label>
-                                        <input placeholder="Ex. 13.00" class="w-100" type="text" id="price" name="price"
-                                            v-model="formData.price">
+                                        <input placeholder="Example: 13.00" class="w-100" type="text" id="price" name="price"
+                                            v-model="this.formData.price">
 
-                                        <!-- Error message -->
-                                        <div v-if="errorMessages.price.alert" class="talkbubble-container ">
+                                        <!-- Price Error message -->
+                                        <div v-if="this.errorMessages.price.alert" class="talkbubble-container ">
                                             <div class="talkbubble d-flex align-items-center justify-content-between">
                                                 <div class="d-flex align-items-center">
                                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -99,19 +118,19 @@
                                                         <line x1="12" y1="8" x2="12" y2="12"></line>
                                                         <line x1="12" y1="16" x2="12.01" y2="16"></line>
                                                     </svg>
-                                                    <p class="me-3">{{ errorMessages.price.alert }}</p>
+                                                    <p class="me-3">{{ this.errorMessages.price.alert }}</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6  form-section">
-                                        <label :class="errorMessages.category.visibility ? ' border-error' : 'border-none'"
+                                        <label :class="this.errorMessages.photo.visibility ? ' border-error' : 'border-none'"
                                             for="photo">Photo</label>
-                                        <input placeholder="Dish photo url here" class="w-100" type="text" id="photo"
-                                            name="photo" v-model="formData.photo">
+                                        <input placeholder="Insert your dish photo URL" class="w-100" type="text" id="photo"
+                                            name="photo" v-model="this.formData.photo">
 
-                                        <!-- Error message -->
-                                        <div v-if="errorMessages.photo.alert" class="talkbubble-container ">
+                                        <!-- Photo Error message -->
+                                        <div v-if="this.errorMessages.photo.alert" class="talkbubble-container ">
                                             <div class="talkbubble d-flex align-items-center justify-content-between">
                                                 <div class="d-flex align-items-center">
                                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -121,7 +140,7 @@
                                                         <line x1="12" y1="8" x2="12" y2="12"></line>
                                                         <line x1="12" y1="16" x2="12.01" y2="16"></line>
                                                     </svg>
-                                                    <p class="me-3">{{ errorMessages.photo.alert }}</p>
+                                                    <p class="me-3">{{ this.errorMessages.photo.alert }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -129,19 +148,19 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 col-md-6  form-section">
-                                        <label :class="errorMessages.category.visibility ? ' border-error' : 'border-none'"
+                                        <label :class="this.errorMessages.available.visibility ? ' border-error' : 'border-none'"
                                             for="available">Available?</label>
                                         <select name="available" id="available"
-                                            @change="formData.available = $event.target.value">
-                                            <option value="" selected hidden>{{ errorMessages.available.visibility === true
+                                            @change="this.formData.available = $event.target.value">
+                                            <option value="" selected hidden>{{ this.errorMessages.available.visibility === true
                                                 ?
                                                 'Wrong input' : 'Select' }}</option>
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
 
-                                        <!-- Error message -->
-                                        <div v-if="errorMessages.available.alert" class="talkbubble-container ">
+                                        <!-- Available Error message -->
+                                        <div v-if="this.errorMessages.available.alert" class="talkbubble-container ">
                                             <div class="talkbubble d-flex align-items-center justify-content-between">
                                                 <div class="d-flex align-items-center">
                                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -151,26 +170,26 @@
                                                         <line x1="12" y1="8" x2="12" y2="12"></line>
                                                         <line x1="12" y1="16" x2="12.01" y2="16"></line>
                                                     </svg>
-                                                    <p class="me-3">{{ errorMessages.available.alert }}</p>
+                                                    <p class="me-3">{{ this.errorMessages.available.alert }}</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-12 col-md-6 form-section">
-                                        <label :class="errorMessages.category.visibility ? ' border-error' : 'border-none'"
+                                        <label :class="this.errorMessages.visible.visibility ? ' border-error' : 'border-none'"
                                             for="visible">Visible?</label>
                                         <select name="visible" id="visible"
-                                            @change="formData.visible = $event.target.value">
-                                            <option value="" selected hidden>{{ errorMessages.available.visibility === true
+                                            @change="this.formData.visible = $event.target.value">
+                                            <option value="" selected hidden>{{ this.errorMessages.available.visibility === true
                                                 ?
                                                 'Wrong input' : 'Select' }}</option>
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
 
-                                        <!-- Error message -->
-                                        <div v-if="errorMessages.visible.alert" class="talkbubble-container">
+                                        <!-- Visible Error message -->
+                                        <div v-if="this.errorMessages.visible.alert" class="talkbubble-container">
                                             <div class="talkbubble d-flex align-items-center justify-content-between">
                                                 <div class="d-flex align-items-center">
                                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -180,7 +199,7 @@
                                                         <line x1="12" y1="8" x2="12" y2="12"></line>
                                                         <line x1="12" y1="16" x2="12.01" y2="16"></line>
                                                     </svg>
-                                                    <p class="me-3">{{ errorMessages.visible.alert }}</p>
+                                                    <p class="me-3">{{ this.errorMessages.visible.alert }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -247,286 +266,260 @@
 import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
 import { useRoute } from 'vue-router';
-export default {
-    name: 'DishCreate',
-    components: { DashboardSidebar, DashboardNavbar },
-    data() {
-        return {
-            // errorMessages: {
-            //     name: {
-            //         alert: '',
-            //         visibility: false,
-            //     },
-            //     description: {
-            //         alert: '',
-            //         visibility: false,
-            //     },
-            //     price: {
-            //         alert: '',
-            //         visibility: false,
-            //     },
-            //     category: {
-            //         alert: '',
-            //         visibility: false,
-            //     },
-            //     photo: {
-            //         alert: '',
-            //         visibility: false,
-            //     },
-            //     available: {
-            //         alert: '',
-            //         visibility: false,
-            //     },
-            //     visible: {
-            //         alert: '',
-            //         visibility: false,
-            //     },
-            // }
-        }
-    },
-
-    methods: {
-
-    },
-}
-</script>
-
-<script setup>
 import axios from 'axios';
 import { onMounted } from 'vue';
 import { useAuthStore } from '../../stores/auth';
 import { store } from '../../store';
-const authStore = useAuthStore();
+export default {
+    name: 'DishCreate',
+    components: { DashboardSidebar, DashboardNavbar },
 
-const formData = {
-    name: '',
-    description: '',
-    price: '',
-    category: '',
-    photo: '',
-    available: '',
-    visible: ''
-};
+    data() {
+        return {
+            formData: {
+                name: '',
+                description: '',
+                price: '',
+                category: '',
+                photo: '',
+                available: '',
+                visible: ''
+            },
 
-const formDataValidate = {
-    name: false,
-    description: false,
-    price: false,
-    category: false,
-    available: false,
-    visible: false,
-}
+            formDataValidate: {
+                name: false,
+                description: false,
+                price: false,
+                category: false,
+                available: false,
+                visible: false,
+            },
 
-let errorMessages = {
-    name: {
-        alert: '',
-        visibility: false,
+            errorMessages: {
+                name: {
+                    alert: '',
+                    visibility: false,
+                },
+                description: {
+                    alert: '',
+                    visibility: false,
+                },
+                price: {
+                    alert: '',
+                    visibility: false,
+                },
+                category: {
+                    alert: '',
+                    visibility: false,
+                },
+                photo: {
+                    alert: '',
+                    visibility: false,
+                },
+                available: {
+                    alert: '',
+                    visibility: false,
+                },
+                visible: {
+                    alert: '',
+                    visibility: false,
+                },
+            },
+            store
+        }
     },
-    description: {
-        alert: '',
-        visibility: false,
+
+    methods: {
+        checkValidation() {
+            /**VALIDATION**/
+            //name
+            if (
+                typeof (this.formData.name) === 'string' &&
+                this.formData.name.length >= 3 && this.formData.name.length <= 100) {
+                this.formDataValidate.name = true;
+
+            } else {
+                this.formDataValidate.name = false;
+            }
+
+            //description
+            if (
+                typeof (this.formData.description) === 'string' && this.formData.description.length >= 3 && this.formData.description.length <= 65535) {
+                this.formDataValidate.description = true;
+                
+            } else {
+                this.formDataValidate.description = false;
+            }
+
+            //price
+            if (
+                this.formData.price !== '' &&
+                parseInt(this.formData.price) <= 999) {
+                this.formDataValidate.price = true;
+
+            } else {
+                this.formDataValidate.price = false;
+            }
+
+            //category id
+            if (
+                this.formData.category !== '' &&
+                parseInt(this.formData.category) > 0 && parseInt(this.formData.category) <= store.categories.length) {
+                this.formDataValidate.category = true;
+
+            } else {
+                this.formDataValidate.category = false;
+            }
+
+            //available
+            if (
+                this.formData.available !== '' && typeof (Boolean(this.formData.available)) === 'boolean') {
+                this.formDataValidate.available = true;
+
+            } else {
+                this.formDataValidate.available = false;
+            }
+
+            //visible
+            if
+                (this.formData.visible !== '' && typeof (Boolean(this.formData.visible)) === 'boolean') {
+                this.formDataValidate.visible = true;
+            } else {
+                this.formDataValidate.visible = false;
+            }
+
+            /**VALIDATION MANAGEMENT**/
+            if (this.formDataValidate.name && this.formDataValidate.description && this.formDataValidate.category && this.formDataValidate.price && this.formDataValidate.available && this.formDataValidate.visible) {
+                let validate = true;
+                return validate;
+
+            } else {
+                this.resetErrors();
+                this.errorPopUp();
+            }
+        },
+
+        resetErrors() {
+            this.errorMessages = {
+                name: {
+                    alert: '',
+                    visibility: false,
+                },
+                description: {
+                    alert: '',
+                    visibility: false,
+                },
+                price: {
+                    alert: '',
+                    visibility: false,
+                },
+                category: {
+                    alert: '',
+                    visibility: false,
+                },
+                photo: {
+                    alert: '',
+                    visibility: false,
+                },
+                available: {
+                    alert: '',
+                    visibility: false,
+                },
+                visible: {
+                    alert: '',
+                    visibility: false,
+                },
+            }
+        },
+
+        errorPopUp() {
+            if (!this.formDataValidate.name) {
+                console.log('The name isn\'t in the right format.');
+                this.errorMessages.name.alert = 'The name isn\'t in the right format.';
+                this.errorMessages.name.visibility = true;
+            }
+            if (!this.formDataValidate.description) {
+                console.log('The description isn\'t in the right format.');
+                this.errorMessages.description.alert = 'The description isn\'t in the right format.';
+                this.errorMessages.description.visibility = true;
+            }
+            if (!this.formDataValidate.price) {
+                console.log('The price isn\'t in the right format.');
+                this.errorMessages.price.alert = 'The price isn\'t in the right format.';
+                this.errorMessages.price.visibility = true;
+            }
+            if (!this.formDataValidate.category) {
+                console.log('The category isn\'t in the right format.');
+                this.errorMessages.category.alert = 'The category isn\'t in the right format.';
+                this.errorMessages.category.visibility = true;
+            }
+            if (!this.formDataValidate.available) {
+                console.log('The available attribute isn\'t in the right format.');
+                this.errorMessages.available.alert = 'The available attribute isn\'t in the right format.';
+                this.errorMessages.available.visibility = true;
+            }
+            if (!this.formDataValidate.visible) {
+                console.log('The visible attribute isn\'t in the right format.');
+                this.errorMessages.visible.alert = 'The visible attribute isn\'t in the right format.';
+                this.errorMessages.visible.visibility = true;
+            }
+            if (!this.formDataValidate.photo) {
+                console.log('The photo isn\'t in the right format.');
+                this.errorMessages.photo.alert = 'The photo isn\'t in the right format.';
+                this.errorMessages.photo.visibility = true;
+            }
+
+            console.log(this.errorMessages);
+        },
+
+        storeDish(authStore) {
+            let validate = false;
+            this.checkValidation();
+            if (this.checkValidation()) {
+                axios.post(`/api/store`, {
+                    user_id: authStore.user.id,
+                    name: this.formData.name,
+                    description: this.formData.description,
+                    price: this.formData.price,
+                    category_id: this.formData.category,
+                    photo: this.formData.photo,
+                    available: this.formData.available,
+                    visible: this.formData.visible,
+                })
+                    .then((response) => {
+                        console.log(response);
+                        window.location.href = '/admin/dishes';
+                    })
+                    .catch(function (error) {
+                        messageErrors = error.response.data.errors;
+                        console.log(messageErrors);
+                    })
+            }
+        }
     },
-    price: {
-        alert: '',
-        visibility: false,
-    },
-    category: {
-        alert: '',
-        visibility: false,
-    },
-    photo: {
-        alert: '',
-        visibility: false,
-    },
-    available: {
-        alert: '',
-        visibility: false,
-    },
-    visible: {
-        alert: '',
-        visibility: false,
-    },
-}
 
-let validate = false;
+    setup() {
+        const authStore = useAuthStore();
 
-function getCategory() {
-    axios.get('/api/categories')
-        .then((response) => {
-            store.categories = response.data.data;
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-}
+        const getCategory = () => {
+            axios.get('/api/categories')
+                .then((response) => {
+                    store.categories = response.data.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        };
 
-function checkValidation() {
-    /**VALIDATION**/
-    //name
-    if (
-        formData.price !== '' &&
-        typeof (formData.name) === 'string' &&
-        formData.name.length >= 3 && formData.name.length <= 100) {
-
-        formDataValidate.name = true
-    }
-
-    //description
-    if (
-        typeof (formData.description) === 'string' &&
-        formData.description.length <= 65535) {
-
-        formDataValidate.description = true
-    }
-
-    //price
-    if (
-        formData.price !== '' &&
-        parseInt(formData.price) <= 999) {
-
-        formDataValidate.price = true
-    }
-
-    //category id
-    if (
-        formData.category !== '' &&
-        parseInt(formData.category) > 0 && parseInt(formData.category) <= store.categories.length) {
-
-        formDataValidate.category = true;
-    }
-
-    //available
-    if (
-        formData.available !== '' && typeof (Boolean(formData.available)) === 'boolean') {
-
-        formDataValidate.available = true;
-    }
-
-    //visible
-    if
-        (formData.visible !== '' && typeof (Boolean(formData.visible)) === 'boolean') {
-
-        formDataValidate.visible = true;
-    }
-    /**VALIDATION MANAGEMENT**/
-    if (formDataValidate.name && formDataValidate.price && formDataValidate.description && formDataValidate.category) {
-        validate = true
-    } else {
-        errorPopUp();
-    }
-};
-
-function resetErrors() {
-    errorMessages = {
-        name: {
-            alert: '',
-            visibility: false,
-        },
-        description: {
-            alert: '',
-            visibility: false,
-        },
-        price: {
-            alert: '',
-            visibility: false,
-        },
-        category: {
-            alert: '',
-            visibility: false,
-        },
-        photo: {
-            alert: '',
-            visibility: false,
-        },
-        available: {
-            alert: '',
-            visibility: false,
-        },
-        visible: {
-            alert: '',
-            visibility: false,
-        },
-    }
-};
-
-function errorPopUp(serverErrors) {
-    resetErrors();
-
-    if (!formDataValidate.name) {
-        console.log('The Name isn\'t in the right format');
-        errorMessages.name.alert = 'The Name isn\'t in the right format';
-        errorMessages.name.visibility = true;
-    }
-    if (!formDataValidate.description) {
-        console.log('The description isn\'t in the right format');
-        errorMessages.name.alert = 'The Name isn\'t in the right format';
-        errorMessages.description.visibility = true;
-    }
-    if (!formDataValidate.price) {
-        console.log('The price isn\'t in the right format');
-        errorMessages.price.alert = 'The price isn\'t in the right format';
-        errorMessages.price.visibility = true;
-    }
-    if (!formDataValidate.category) {
-        console.log('Category isn\'t in the right format');
-        errorMessages.category.alert = 'Category isn\'t in the right format';
-        errorMessages.category.visibility = true;
-    }
-    if (!formDataValidate.available) {
-        console.log('Available attribute isn\'t in the right format');
-        errorMessages.available.alert = 'Available attribute isn\'t in the right format';
-        errorMessages.available.visibility = true;
-    }
-    if (!formDataValidate.visible) {
-        console.log('Visible attribute isn\'t in the right format');
-        errorMessages.visible.alert = 'Visible attribute isn\'t in the right format';
-        errorMessages.visible.visibility = true;
-    }
-    if (!formDataValidate.photo) {
-        console.log('Photo isn\'t in the right format');
-        errorMessages.photo.alert = 'Photo isn\'t in the right format';
-        errorMessages.photo.visibility = true;
-    }
-
-    if (serverErrors) {
-        Object.values(serverErrors).forEach(e => {
-            console.log(e[0]);
+        onMounted(() => {
+            getCategory();
         });
-    }
 
-    console.log(errorMessages);
-};
-
-let messageErrors;
-
-function storeDish() {
-    checkValidation();
-    if (validate) {
-        axios.post(`/api/store`, {
-            user_id: authStore.user.id,
-            name: formData.name,
-            description: formData.description,
-            price: formData.price,
-            category_id: formData.category,
-            photo: formData.photo,
-            available: formData.available,
-            visible: formData.visible,
-        })
-            .then((response) => {
-                console.log(response);
-                window.location.href = '/admin/dishes';
-            })
-            .catch(function (error) {
-                messageErrors = error.response.data.errors;
-                console.log(messageErrors);
-                errorPopUp(messageErrors);
-            })
+        return {
+            authStore
+        };
     }
 }
-
-onMounted(async () => {
-    getCategory();
-})
 </script>
 
 <style lang="scss" scoped>
