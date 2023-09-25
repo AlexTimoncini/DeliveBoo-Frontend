@@ -1,27 +1,49 @@
 <template>
-    <div class="container pb-4">
+    <div class="container">
         <div class="row section-payment">
-            <!-- riepilogo carrello  -->
+
+            <!-- Order Review  -->
             <div class="col-12 col-md-6 mb-4">
-                <div class="card">
-                    <h4 class="card-header titleOrder">Riepilogo dell'ordine</h4>
-                    <ul class="card-body mb-0 list-unstyled">
-                        <li class="card-text" v-for="dish in store.cart_list">
-                            {{ dish.name }} x {{ dish.quantity }} - {{ dish.price }}€
+                <div class="boo-img">
+                    <img class="image-fluid" src="../assets/mascotte/boo-payment.png" alt="little ghost with a credit card">
+                </div>
+                <div>
+                    <ul class="order_review pt-3 pe-4">
+                        <li>
+                            <h4 class="title mt-3">Order Rreview</h4>
+                        </li>
+                        <li v-for="dish in store.cart_list" class="order_item d-flex justify-content-between">
+                            <div class="dish_name m-0">
+                                <h6>{{ dish.name }} <strong>x{{ dish.quantity }}</strong></h6>
+                            </div>
+                            <div class="dish_price m-0">
+                                <p class="m-0">{{ (dish.price * dish.quantity).toFixed(2) }}€</p>
+                            </div>
+                        </li>
+                        <div class="my-3">
+                            <router-link :to="{ name: 'CartCheckout' }">
+                                <button class=" btn btn-warning text-start" type="button" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Go
+                                    back
+                                    to
+                                    cart</button>
+                            </router-link>
+                        </div>
+                        <li class="order_item d-flex justify-content-between total_price">
+                            <div class="dish_name m-0">
+                                <h6>Total Price</h6>
+                            </div>
+                            <p class="m-0">{{ totalPrice.toFixed(2) }}€</p>
                         </li>
                     </ul>
-                    <div class="px-2">
-                        <button class="btn btn-warning text-start" type="button" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Apri
-                            carrello</button>
-                    </div>
-                    <span class="ps-3 my-3">Totale: {{ totalPrice.toFixed(2) }}€</span>
                 </div>
             </div>
-            <!-- informazioni consegna ordine -->
+
+
+            <!-- Delivery Informations-->
             <div class="col-12 col-md-6 container-cc-info m-0">
                 <div class="card color-sal">
-                    <h4 class="card-header titlepayment">Informazioni di consegna</h4>
+                    <h4 class="card-header titlepayment">Delivery Informations</h4>
                     <div class="card-body">
                         <!-- <div class="alert alert-success" v-if="nonce">
                             Successfully generated nonce.
@@ -64,27 +86,27 @@
                                     </div> -->
                                 </div>
                             </div>
-                            <!-- form in cui inserisci dati pagamento  -->
+                            <!-- Payment form  -->
                             <hr />
-                            <h4 class="titlepayment">Informazioni di pagamento</h4>
+                            <h4 class="titlepayment">Payment Informations</h4>
                             <hr />
                             <div class="form-group">
                                 <label>Numero della carta</label>
-                                <div id="creditCardNumber" class="form-control input-pay my-1"></div>
+                                <div id="creditCardNumber" class="form-control input-pay mb-3"></div>
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-6">
                                         <label>Data di scadenza</label>
-                                        <div id="expireDate" class="form-control input-pay my-1"></div>
+                                        <div id="expireDate" class="form-control input-pay mb-3"></div>
                                     </div>
                                     <div class="col-6">
                                         <label>CVV</label>
-                                        <div id="cvv" class="form-control input-pay my-1 mb-3"></div>
+                                        <div id="cvv" class="form-control input-pay  mb-3"></div>
                                     </div>
                                 </div>
                             </div>
-                            <button class="border-0 btn-paga btn-block">Paga</button>
+                            <button class="border-0 btn-paga btn-block">Pay</button>
                         </form>
                     </div>
                 </div>
@@ -218,25 +240,32 @@ export default {
 @use '../styles/partials/variables' as *;
 
 .section-payment {
-    margin-top: 100px;
+    margin-top: 2rem;
 
     .card {
+        margin-bottom: 3rem;
+
         .card-header {
             border-radius: 10px 10px 0 0;
         }
 
         border-radius: 10px;
+        border: none;
+        box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px,
+        rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
     }
 
     .card-header {
         background-color: $priGreen;
-        color: $secYellow;
+        color: white;
+        padding: 1rem 2rem;
     }
 
     input,
     .input-pay {
         border: 1px solid rgb(189, 189, 189);
         box-shadow: none !important;
+        border-radius: 0 10px 10px 10px;
     }
 
     .input-pay {
@@ -244,15 +273,78 @@ export default {
     }
 }
 
+.order_review {
+    position: relative;
+    background-color: #F5F5F5FF;
+    border-radius: 0 0 10px 10px;
+
+    strong {
+        color: $priGreen;
+        font-weight: 600;
+    }
+
+    .title {
+        color: $priGreen;
+        font-weight: 600;
+        margin-bottom: 2rem;
+    }
+
+    .order_item {
+        padding: 0.3rem 0;
+    }
+
+    .total_price {
+        border-top: 2px solid $secYellow;
+        padding: 1rem 0;
+    }
+
+}
+
+label {
+    background-color: $secYellow;
+    margin-bottom: 0;
+    border-radius: 10px 10px 0 0;
+    padding: .1rem .5rem;
+}
+
+.order_review::after {
+    background-image: linear-gradient(135deg, transparent 46%, #E4E4E4FF 50%, #F5F5F5FF 54%), linear-gradient(225deg, #FFFFFFFF 46%, #E4E4E4FF 50%, #F5F5F5FF);
+    background-position: 0 0, 0 0;
+    background-repeat: repeat-x;
+    background-size: 12px 12px;
+    content: "";
+    height: 6px;
+    left: 0;
+    position: absolute;
+    top: -6px;
+    width: 100%;
+}
+
 .btn-paga {
     background-color: $priGreen;
-    color: $secYellow;
+    color: White;
     padding: 10px 0;
+    transition: all .3s ease;
+    border-radius: 10px;
 }
 
 .btn-paga:hover {
-    background-color: $priGreen;
-    color: $secYellow;
+    background-color: rgb(67, 156, 111);
     font-weight: bold;
+}
+
+.btn-paga:active {
+    background-color: $priGreen;
+    color: White;
+}
+
+.boo-img {
+    display: flex;
+    justify-content: center;
+
+    img {
+        width: 50%;
+        margin-bottom: 1rem;
+    }
 }
 </style>
