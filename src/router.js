@@ -15,6 +15,7 @@ import DishEdit from './views/admin/DishEdit.vue';
 import DishCreate from './views/admin/DishCreate.vue';
 import OrderShow from './views/admin/OrderShow.vue';
 import NotFound from './views/NotFound.vue';
+import CheckOut from './views/CheckOut.vue'
 
 
 
@@ -105,6 +106,11 @@ const router = createRouter({
             name: 'OrderShow',
             component: OrderShow,
             meta: { requiresAuth: true },
+        },
+        {
+            path: '/payment',
+            name: 'CheckOut',
+            component: CheckOut,
         },
     ],
 });

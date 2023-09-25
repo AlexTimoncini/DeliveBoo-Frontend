@@ -114,10 +114,12 @@ export default {
                         </div>
                     </li>
                 </ul>
-                <div><button class="btn order-btn order mb-4" @click=" this.$router.push({
-                    name: 'CartCheckout'
-                })">Order Now</button>
-                    <button class="btn btn-danger  ms-sm-3 mb-4" @click="removeAllDishesFromCart()">Empty Cart</button>
+                <div>
+                    <router-link :to="{ name: 'CheckOut' }">
+                        <button class="btn order-btn order mb-4">Order
+                            Now</button>
+                        <button class="btn btn-danger  ms-sm-3 mb-4" @click="removeAllDishesFromCart()">Empty Cart</button>
+                    </router-link>
                 </div>
             </div>
 
