@@ -2,13 +2,16 @@
 import Slider from '../components/Slider.vue';
 import { store } from '../store';
 import axios from 'axios';
+import Loader from '../components/Loader.vue'
 export default {
     name: 'AdvanceSearch',
     components: {
-        Slider
+        Slider,
+        Loader
     },
     data() {
         return {
+            loader: true,
             rangeNumber: null,
             search: '',
             store,
@@ -70,6 +73,7 @@ export default {
                 .then((response) => {
                     this.filteredRestaurants = response.data.data;
                     console.log(this.filteredRestaurants);
+                    this.loader = false;
                 })
                 .catch((error) => {
                     console.log(error);
@@ -96,6 +100,9 @@ export default {
             console.log(this.params);
         }
     },
+    created() {
+        this.loader = true;
+    },
     mounted() {
         this.getTypes();
         this.getBestRestaurants();
@@ -113,82 +120,20 @@ export default {
 </script>
 
 <template>
-    <!-- Top filters  -->
+    <!-- Loader  -->
+    <Loader v-if="loader === true" />
 
-    <div class="top-filters ">
-
-        <!-- Searchbar  -->
-        <div
-            class="select-search d-block d-lg-none d-flex justify-content-center align-items-center flex-column container py-3  ">
-            <h1 class="me-3 mb-0 my_search_title">
-                What do you boona eat?
-            </h1>
-            <div class="search-bar">
-                <label for="home-searchbar">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 101 101" id="search">
-                        <path
-                            d="M63.3 59.9c3.8-4.6 6.2-10.5 6.2-17 0-14.6-11.9-26.5-26.5-26.5S16.5 28.3 16.5 42.9 28.4 69.4 43 69.4c6.4 0 12.4-2.3 17-6.2l20.6 20.6c.5.5 1.1.7 1.7.7.6 0 1.2-.2 1.7-.7.9-.9.9-2.5 0-3.4L63.3 59.9zm-20.4 4.7c-12 0-21.7-9.7-21.7-21.7s9.7-21.7 21.7-21.7 21.7 9.7 21.7 21.7-9.7 21.7-21.7 21.7z">
-                        </path>
-                    </svg>
-                </label>
-                <input type="text" id="home-searchbar" placeholder="Search here" v-model="search"
-                    @keyup.enter="searchRestaurant()">
-            </div>
-        </div>
-
-        <!-- Type filter  -->
-        <div class="select-type d-none d-md-block">
-            <div class="container d-flex justify-content-center pill-container">
-                <a href="#" v-for="type in visibleTypesXl" class="d-none d-xl-block"
-                    @click="sidebarCheckboxHandler('type', type.id); searchRestaurant()">
-
-                    <div class="type_pill d-flex align-items-center"
-                        :class="params.type_ids.includes(type.id) ? 'seleceted' : ''">
-                        <img class="type-icon" :src="type.logo" alt="">
-                        <p class="m-0">{{ type.name }}</p>
-                    </div>
-                </a>
-                <a href="#" v-for="type in visibleTypesLarge" class="d-none d-lg-block d-xl-none"
-                    @click="sidebarCheckboxHandler('type', type.id); searchRestaurant()">
-
-                    <div class="type_pill d-flex align-items-center"
-                        :class="params.type_ids.includes(type.id) ? 'seleceted' : ''">
-                        <img class="type-icon" :src="type.logo" alt="">
-                        <p class="m-0">{{ type.name }}</p>
-                    </div>
-                </a>
-                <a href="#" v-for="type in visibleTypesSmall" class="d-none d-md-block d-lg-none"
-                    @click="sidebarCheckboxHandler('type', type.id); searchRestaurant()">
-
-                    <div class="type_pill d-flex align-items-center"
-                        :class="params.type_ids.includes(type.id) ? 'seleceted' : ''">
-                        <img class="type-icon" :src="type.logo" alt="">
-                        <p class="m-0">{{ type.name }}</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <!-- Category filter  -->
-        <div class="select-category d-none d-md-block">
-            <div class="container d-flex justify-content-center p-2">
-                <a href="#" class="category-pills" v-for="category in visibleCategories"
-                    :class="params.category_ids.includes(category.id) ? 'seleceted' : ''"
-                    @click="sidebarCheckboxHandler('category', category.id), searchRestaurant();">
-                    <p class="m-0">{{ category.name }}</p>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main app  -->
-    <div class=" container-fluid ">
-        <div class=" row d-flex search-page-container">
-            <!-- Sidebar -->
-            <form class="my_sidebar col-3 d-none d-md-block">
-                <!-- <h1>Cerca il tuo ristorante</h1> -->
-                <!-- Searchbar  -->
-                <div class="search-bar mb-4 d-md-none d-lg-flex">
+    <!-- App  -->
+    <div v-else>
+        <!-- Top filters  -->
+        <div class="top-filters ">
+            <!-- Searchbar  -->
+            <div
+                class="select-search d-block d-lg-none d-flex justify-content-center align-items-center flex-column container py-3  ">
+                <h1 class="me-3 mb-0 my_search_title">
+                    What do you boona eat?
+                </h1>
+                <div class="search-bar">
                     <label for="home-searchbar">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 101 101" id="search">
                             <path
@@ -197,164 +142,236 @@ export default {
                         </svg>
                     </label>
                     <input type="text" id="home-searchbar" placeholder="Search here" v-model="search"
-                        @keyup="searchRestaurant()">
-                </div>
-
-                <!-- Types and Categories-->
-
-                <div class="accordion accordion-flush " id="">
-                    <div class="accordion-item mb-3 accordion-flush">
-                        <h2 class="accordion-header my_accordion " id="flush-headingOne">
-                            <button class="accordion-button collapsed ps-0" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                <h5 class="my_title m-0">Types</h5>
-                            </button>
-                        </h2>
-                        <div id="flush-collapseOne" class="accordion-collapse" aria-labelledby="flush-headingOne">
-                            <div class="accordion-body px-0">
-
-                                <div class="my_select" v-for="type in allTypes">
-
-                                    <input class="my_checkbox" type="checkbox" :id="type.name" name="type" :value="type.id"
-                                        @click="sidebarCheckboxHandler('type', type.id), searchRestaurant()"
-                                        :checked="params.type_ids.includes(type.id)">
-                                    <label :for="type.name">{{ type.name }}</label>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- Categories  -->
-
-                    <div class="accordion-item mb-5">
-                        <h2 class="accordion-header" id="flush-headingTwo">
-                            <button class="accordion-button collapsed ps-0" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                <h5 class="my_title m-0">Categories</h5>
-                            </button>
-                        </h2>
-                        <div id="flush-collapseTwo" class="accordion-collapse " aria-labelledby="flush-headingTwo">
-                            <div class="my_select" v-for="category in allCategories">
-                                <input class="my_checkbox" type="checkbox" :id="category.name + 'c'" name="type"
-                                    :value="category.id"
-                                    @click="sidebarCheckboxHandler('category', category.id), searchRestaurant()"
-                                    :checked="params.category_ids.includes(category.id)">
-                                <label :for="category.name + 'c'">{{ category.name }}</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Select -  range -->
-
-                <div class="range-selector mb-5">
-                    <div class="d-flex justify-content-between">
-                        <h5 class="my_title mb-4">
-                            Price
-                        </h5>
-                        <p>{{ rangeNumber == null ? 1 : rangeNumber }}</p>
-                    </div>
-
-                    <div class="input-container d-flex ">
-
-                        <input class="input-range" type="range" min="1" max="100" v-model="rangeNumber" />
-                    </div>
-
-                </div>
-
-
-            </form>
-
-            <!-- Main -->
-
-            <div class="my_main col-12 col-md-9 mt-4">
-                <div class="container">
-                    <div v-if="filteredRestaurants.length === 0" class="row">
-                        <!-- Best sellers  -->
-                        <div class="col-12 mb-4">
-                            <h3 class="cards_title">Our Best Sellers!</h3>
-                            <Slider :slides="store.bestSellers" :autoplay="0" :pagination="false" :title="true"
-                                :navigation="true" />
-                        </div>
-                        <!-- New in town -->
-                        <div class="col-12 mb-4">
-                            <h3 class="cards_title">New in Town</h3>
-                            <Slider :slides="store.bestSellers" :autoplay="0" :pagination="false" :title="true"
-                                :navigation="true" />
-                        </div>
-                        <!-- Free delivery -->
-                        <div class="col-12 mb-4">
-                            <h3 class="cards_title">Free delivery under 10 bucks</h3>
-                            <Slider :slides="store.bestSellers" :autoplay="0" :pagination="false" :title="true"
-                                :navigation="true" />
-                        </div>
-                        <!-- Discover more -->
-                        <div class="col-12 mb-4">
-                            <h3 class="cards_title">Discover more</h3>
-                            <div class="my_restaurant_card_container container-fluid">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-6 col-lg-4 mb-4" v-for="restaurant in store.bestSellers"
-                                        @click="this.$router.push({ name: 'RestaurantMenu', params: { id: '0' } })">
-                                        <div class=" my_card d-flex justify-content-center align-items-center">
-                                            <img class="img-fluid" :src="restaurant.image" alt="">
-                                            <h3>{{ restaurant.name }}</h3>
-                                        </div>
-                                        <div class="my-card-label">
-                                            <svg fill="#000000" width="800px" height="800px" viewBox="0 0 100 100"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M49,18.92A23.74,23.74,0,0,0,25.27,42.77c0,16.48,17,31.59,22.23,35.59a2.45,2.45,0,0,0,3.12,0c5.24-4.12,22.1-19.11,22.1-35.59A23.74,23.74,0,0,0,49,18.92Zm0,33.71a10,10,0,1,1,10-10A10,10,0,0,1,49,52.63Z" />
-                                            </svg>
-                                            <h5>
-                                                {{ restaurant.address }}
-                                            </h5>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 mt-3 text-end">
-                                        <a class="see-more" href="" @click="">See More</a>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div v-else class="row">
-                        <div class="col-12 mb-4">
-                            <h3 class="cards_title">{{ filteredRestaurants.length }} results</h3>
-                            <div class="my_restaurant_card_container container-fluid">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-6 col-lg-4 mb-4" v-for="restaurant in filteredRestaurants"
-                                        @click="this.$router.push({ name: 'RestaurantMenu', params: { id: restaurant.id } })">
-                                        <div class=" my_card d-flex justify-content-center align-items-center">
-                                            <img v-if="restaurant.image" class="img-fluid" :src="restaurant.image" alt="">
-                                            <img v-else="restaurant.image" class="img-fluid"
-                                                src="../assets/mascotte/pattern.jpg" alt="">
-                                            <h3>{{ restaurant.name }}</h3>
-                                        </div>
-                                        <div class="my-card-label">
-                                            <svg fill="#000000" width="800px" height="800px" viewBox="0 0 100 100"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M49,18.92A23.74,23.74,0,0,0,25.27,42.77c0,16.48,17,31.59,22.23,35.59a2.45,2.45,0,0,0,3.12,0c5.24-4.12,22.1-19.11,22.1-35.59A23.74,23.74,0,0,0,49,18.92Zm0,33.71a10,10,0,1,1,10-10A10,10,0,0,1,49,52.63Z" />
-                                            </svg>
-                                            <h5>
-                                                {{ restaurant.address }}
-                                            </h5>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 mt-3 text-end">
-                                        <a class="see-more" href="" @click="">See More</a>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+                        @keyup.enter="searchRestaurant()">
                 </div>
             </div>
 
+            <!-- Type filter  -->
+            <div class="select-type d-none d-md-block">
+                <div class="container d-flex justify-content-center pill-container">
+                    <a href="#" v-for="type in visibleTypesXl" class="d-none d-xl-block"
+                        @click="sidebarCheckboxHandler('type', type.id); searchRestaurant()">
+
+                        <div class="type_pill d-flex align-items-center"
+                            :class="params.type_ids.includes(type.id) ? 'seleceted' : ''">
+                            <img class="type-icon" :src="type.logo" alt="">
+                            <p class="m-0">{{ type.name }}</p>
+                        </div>
+                    </a>
+                    <a href="#" v-for="type in visibleTypesLarge" class="d-none d-lg-block d-xl-none"
+                        @click="sidebarCheckboxHandler('type', type.id); searchRestaurant()">
+
+                        <div class="type_pill d-flex align-items-center"
+                            :class="params.type_ids.includes(type.id) ? 'seleceted' : ''">
+                            <img class="type-icon" :src="type.logo" alt="">
+                            <p class="m-0">{{ type.name }}</p>
+                        </div>
+                    </a>
+                    <a href="#" v-for="type in visibleTypesSmall" class="d-none d-md-block d-lg-none"
+                        @click="sidebarCheckboxHandler('type', type.id); searchRestaurant()">
+
+                        <div class="type_pill d-flex align-items-center"
+                            :class="params.type_ids.includes(type.id) ? 'seleceted' : ''">
+                            <img class="type-icon" :src="type.logo" alt="">
+                            <p class="m-0">{{ type.name }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Category filter  -->
+            <div class="select-category d-none d-md-block">
+                <div class="container d-flex justify-content-center p-2">
+                    <a href="#" class="category-pills" v-for="category in visibleCategories"
+                        :class="params.category_ids.includes(category.id) ? 'seleceted' : ''"
+                        @click="sidebarCheckboxHandler('category', category.id), searchRestaurant();">
+                        <p class="m-0">{{ category.name }}</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main app  -->
+        <div class=" container-fluid ">
+            <div class=" row d-flex search-page-container">
+                <!-- Sidebar -->
+                <form class="my_sidebar col-3 d-none d-md-block">
+                    <!-- <h1>Cerca il tuo ristorante</h1> -->
+                    <!-- Searchbar  -->
+                    <div class="search-bar mb-4 d-md-none d-lg-flex">
+                        <label for="home-searchbar">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 101 101" id="search">
+                                <path
+                                    d="M63.3 59.9c3.8-4.6 6.2-10.5 6.2-17 0-14.6-11.9-26.5-26.5-26.5S16.5 28.3 16.5 42.9 28.4 69.4 43 69.4c6.4 0 12.4-2.3 17-6.2l20.6 20.6c.5.5 1.1.7 1.7.7.6 0 1.2-.2 1.7-.7.9-.9.9-2.5 0-3.4L63.3 59.9zm-20.4 4.7c-12 0-21.7-9.7-21.7-21.7s9.7-21.7 21.7-21.7 21.7 9.7 21.7 21.7-9.7 21.7-21.7 21.7z">
+                                </path>
+                            </svg>
+                        </label>
+                        <input type="text" id="home-searchbar" placeholder="Search here" v-model="search"
+                            @keyup="searchRestaurant()">
+                    </div>
+
+                    <!-- Types and Categories-->
+
+                    <div class="accordion accordion-flush " id="">
+                        <div class="accordion-item mb-3 accordion-flush">
+                            <h2 class="accordion-header my_accordion " id="flush-headingOne">
+                                <button class="accordion-button collapsed ps-0" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                    aria-controls="flush-collapseOne">
+                                    <h5 class="my_title m-0">Types</h5>
+                                </button>
+                            </h2>
+                            <div id="flush-collapseOne" class="accordion-collapse" aria-labelledby="flush-headingOne">
+                                <div class="accordion-body px-0">
+
+                                    <div class="my_select" v-for="type in allTypes">
+
+                                        <input class="my_checkbox" type="checkbox" :id="type.name" name="type"
+                                            :value="type.id"
+                                            @click="sidebarCheckboxHandler('type', type.id), searchRestaurant()"
+                                            :checked="params.type_ids.includes(type.id)">
+                                        <label :for="type.name">{{ type.name }}</label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Categories  -->
+
+                        <div class="accordion-item mb-5">
+                            <h2 class="accordion-header" id="flush-headingTwo">
+                                <button class="accordion-button collapsed ps-0" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                    aria-controls="flush-collapseTwo">
+                                    <h5 class="my_title m-0">Categories</h5>
+                                </button>
+                            </h2>
+                            <div id="flush-collapseTwo" class="accordion-collapse " aria-labelledby="flush-headingTwo">
+                                <div class="my_select" v-for="category in allCategories">
+                                    <input class="my_checkbox" type="checkbox" :id="category.name + 'c'" name="type"
+                                        :value="category.id"
+                                        @click="sidebarCheckboxHandler('category', category.id), searchRestaurant()"
+                                        :checked="params.category_ids.includes(category.id)">
+                                    <label :for="category.name + 'c'">{{ category.name }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Select -  range -->
+
+                    <div class="range-selector mb-5">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="my_title mb-4">
+                                Price
+                            </h5>
+                            <p>{{ rangeNumber == null ? 1 : rangeNumber }}</p>
+                        </div>
+
+                        <div class="input-container d-flex ">
+
+                            <input class="input-range" type="range" min="1" max="100" v-model="rangeNumber" />
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+                <!-- Main -->
+
+                <div class="my_main col-12 col-md-9 mt-4">
+                    <div class="container">
+                        <div v-if="filteredRestaurants.length === 0" class="row">
+                            <!-- Best sellers  -->
+                            <div class="col-12 mb-4">
+                                <h3 class="cards_title">Our Best Sellers!</h3>
+                                <Slider :slides="store.bestSellers" :autoplay="0" :pagination="false" :title="true"
+                                    :navigation="true" />
+                            </div>
+                            <!-- New in town -->
+                            <div class="col-12 mb-4">
+                                <h3 class="cards_title">New in Town</h3>
+                                <Slider :slides="store.bestSellers" :autoplay="0" :pagination="false" :title="true"
+                                    :navigation="true" />
+                            </div>
+                            <!-- Free delivery -->
+                            <div class="col-12 mb-4">
+                                <h3 class="cards_title">Free delivery under 10 bucks</h3>
+                                <Slider :slides="store.bestSellers" :autoplay="0" :pagination="false" :title="true"
+                                    :navigation="true" />
+                            </div>
+                            <!-- Discover more -->
+                            <div class="col-12 mb-4">
+                                <h3 class="cards_title">Discover more</h3>
+                                <div class="my_restaurant_card_container container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6 col-lg-4 mb-4"
+                                            v-for="restaurant in store.bestSellers"
+                                            @click="this.$router.push({ name: 'RestaurantMenu', params: { id: '0' } })">
+                                            <div class=" my_card d-flex justify-content-center align-items-center">
+                                                <img class="img-fluid" :src="restaurant.image" alt="">
+                                                <h3>{{ restaurant.name }}</h3>
+                                            </div>
+                                            <div class="my-card-label">
+                                                <svg fill="#000000" width="800px" height="800px" viewBox="0 0 100 100"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M49,18.92A23.74,23.74,0,0,0,25.27,42.77c0,16.48,17,31.59,22.23,35.59a2.45,2.45,0,0,0,3.12,0c5.24-4.12,22.1-19.11,22.1-35.59A23.74,23.74,0,0,0,49,18.92Zm0,33.71a10,10,0,1,1,10-10A10,10,0,0,1,49,52.63Z" />
+                                                </svg>
+                                                <h5>
+                                                    {{ restaurant.address }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-3 text-end">
+                                            <a class="see-more" href="" @click="">See More</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div v-else class="row">
+                            <div class="col-12 mb-4">
+                                <h3 class="cards_title">{{ filteredRestaurants.length }} results</h3>
+                                <div class="my_restaurant_card_container container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6 col-lg-4 mb-4"
+                                            v-for="restaurant in filteredRestaurants"
+                                            @click="this.$router.push({ name: 'RestaurantMenu', params: { id: restaurant.id } })">
+                                            <div class=" my_card d-flex justify-content-center align-items-center">
+                                                <img v-if="restaurant.image" class="img-fluid" :src="restaurant.image"
+                                                    alt="">
+                                                <img v-else="restaurant.image" class="img-fluid"
+                                                    src="../assets/mascotte/pattern.jpg" alt="">
+                                                <h3>{{ restaurant.name }}</h3>
+                                            </div>
+                                            <div class="my-card-label">
+                                                <svg fill="#000000" width="800px" height="800px" viewBox="0 0 100 100"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M49,18.92A23.74,23.74,0,0,0,25.27,42.77c0,16.48,17,31.59,22.23,35.59a2.45,2.45,0,0,0,3.12,0c5.24-4.12,22.1-19.11,22.1-35.59A23.74,23.74,0,0,0,49,18.92Zm0,33.71a10,10,0,1,1,10-10A10,10,0,0,1,49,52.63Z" />
+                                                </svg>
+                                                <h5>
+                                                    {{ restaurant.address }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-3 text-end">
+                                            <a class="see-more" href="" @click="">See More</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </template>
