@@ -60,10 +60,12 @@
                                     <div class="position-relative">
                                         <input class="form-control" type="text" name="name" id="name" v-model="name"
                                             placeholder="Es. Marco" />
+
                                         <!-- Error message label  -->
                                         <div class="info-message">
                                             <span v-if="!errorForm.name" class="error-message">Enter your name.</span>
-                                            <span v-else>{{ errorForm.name.join() }}</span>
+                                            <span v-if="errorForm.name" class="error-message">{{ errorForm.name.join()
+                                            }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -71,12 +73,11 @@
                                 <!-- Last name  -->
                                 <div class="form-group col-6 ps-1">
                                     <label>Last name</label>
-                                    <input type="text" v-model="surname" class="form-control" placeholder="Es. Rossi"
-                                        required>
+                                    <input type="text" v-model="surname" class="form-control" placeholder="Es. Rossi">
                                     <!-- Error message label  -->
                                     <div class="info-message">
-                                        <span v-if="!errorForm.name" class="error-message">Enter your Last name.</span>
-                                        <span v-else>{{ errorForm.name.join() }}</span>
+                                        <span v-if="!errorForm.surname" class="error-message">Enter your Last name.</span>
+                                        <span v-else>{{ errorForm.surname.join() }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -85,11 +86,12 @@
                             <div class="form-group my-2">
                                 <label>Delivery Address</label>
                                 <input type="text" v-model="address" class="form-control"
-                                    placeholder="Es.101 Rue Adolphe Fischer, Luxembourg, Lussemburgo " required>
+                                    placeholder="Es.101 Rue Adolphe Fischer, Luxembourg, Lussemburgo ">
                                 <!-- Error message label  -->
                                 <div class="info-message">
-                                    <span v-if="!errorForm.name" class="error-message">Enter your Delivery Address.</span>
-                                    <span v-else>{{ errorForm.name.join() }}</span>
+                                    <span v-if="!errorForm.address" class="error-message">Enter your Delivery
+                                        Address.</span>
+                                    <span v-else>{{ errorForm.address.join() }}</span>
                                 </div>
                             </div>
 
@@ -97,26 +99,26 @@
                             <div class="form-group my-2">
                                 <label>email</label>
                                 <input type="email" v-model="email" class="form-control"
-                                    placeholder="Es. marco.rossi@gmail.lu" required>
+                                    placeholder="Es. marco.rossi@gmail.lu">
                                 <!-- Error message label  -->
                                 <div class="info-message">
-                                    <span v-if="!errorForm.name" class="error-message">Enter your email.</span>
-                                    <span v-else>{{ errorForm.name.join() }}</span>
+                                    <span v-if="!errorForm.email" class="error-message">Enter your email.</span>
+                                    <span v-else>{{ errorForm.email.join() }}</span>
                                 </div>
                             </div>
 
                             <!-- Phone number -->
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-6 mt-2">
+                                    <div class="col-12 mt-2">
                                         <label>Phone number</label>
                                         <input type="text" v-model="phone_number" class="form-control"
                                             placeholder="Es. 3393847581">
                                         <!-- Error message label  -->
                                         <div class="info-message">
-                                            <span v-if="!errorForm.name" class="error-message">Enter your Phone
+                                            <span v-if="!errorForm.telephone" class="error-message">Enter your Phone
                                                 number.</span>
-                                            <span v-else>{{ errorForm.name.join() }}</span>
+                                            <span v-else>{{ errorForm.telephone.join() }}</span>
                                         </div>
                                     </div>
                                     <!-- <div class="col-6 d-flex flex-column justify-content-between d-none">
@@ -137,12 +139,7 @@
                                 <div id="creditCardNumber" class="form-control input-pay">
 
                                 </div>
-                                <!-- Error message label  -->
-                                <div class="info-message">
-                                    <span v-if="!errorForm.name" class="error-message">Enter your Card
-                                        number.</span>
-                                    <span v-else>{{ errorForm.name.join() }}</span>
-                                </div>
+
 
                             </div>
 
@@ -152,24 +149,15 @@
                                     <div class="col-6">
                                         <label>Data di scadenza</label>
                                         <div id="expireDate" class="form-control input-pay"></div>
-                                        <!-- Error message label  -->
-                                        <div class="info-message">
-                                            <span v-if="!errorForm.name" class="error-message">Enter expiration
-                                                date
-                                                number.</span>
-                                            <span v-else>{{ errorForm.name.join() }}</span>
-                                        </div>
+
                                     </div>
 
                                     <!-- Cvv -->
                                     <div class="col-6">
                                         <label>CVV</label>
                                         <div id="cvv" class="form-control input-pay"></div>
-                                        <!-- Error message label  -->
-                                        <div class="info-message">
-                                            <span v-if="!errorForm.name" class="error-message">Enter cvv</span>
-                                            <span v-else>{{ errorForm.name.join() }}</span>
-                                        </div>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -210,7 +198,7 @@ export default {
             isFieldInstance: false,
 
             // variabile per errori del form
-            errorForm: {},
+            errorForm: [],
         };
     },
 
@@ -283,6 +271,7 @@ export default {
                 })
                     .catch(err => {
                         this.error = err.message;
+                        console.log(this.error)
                     })
                     .then(() => {
                         this.paymentResponse()
@@ -318,12 +307,12 @@ export default {
                     }
                 }).catch((error) => {
                     this.errorForm = error.response.data.errors;
+                    // console.log(error.response.data.errors)
                     console.log(this.errorForm)
                 })
                 .catch((err) => {
                     swal("Pagamento rifiutato", "Il tuo ordine non è stato effetuato");
                 })
-            console.log(error.response.data)
 
         }
     },
