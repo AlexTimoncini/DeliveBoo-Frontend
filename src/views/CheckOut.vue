@@ -52,10 +52,15 @@
                             {{ error }}
                         </div> -->
                         <form @submit.prevent="payWithCreditCard" class="d-flex flex-column">
-                            <div class="form-group my-2">
-                                <label>Nome</label>
-                                <input type="text" v-model="name" class="form-control" placeholder="Inserisci Nome"
-                                    required>
+                            <label for="name">Name</label>
+                            <div class="position-relative">
+                                <input type="text" name="name" id="name" v-model="name" />
+                                <div class="info-message" v-if="!errorForm.name">
+                                    <span>Enter your name.</span>
+                                </div>
+                                <div class="error-message" v-if="errorForm.name">
+                                    <span>{{ errorForm.name.join() }}</span>
+                                </div>
                             </div>
                             <div class="form-group my-2">
                                 <label>Cognome</label>
@@ -129,12 +134,19 @@ export default {
             phone_number: '',
             name: '',
             address: '',
+
+            // variabile per errori carta di credito
             error: '',
+
+
             surname: '',
             email: '',
             totalPrice: 0,
             tokenApi: '',
-            isFieldInstance: false
+            isFieldInstance: false,
+
+            // variabile per errori del form
+            errorForm: {},
         };
     },
 
@@ -237,9 +249,12 @@ export default {
                         this.resetHostedFields();
                         this.$router.push({ name: 'Homepage' });
                     }
+                }).catch((error) => {
+                    this.errorForm = error.response.data.errors;
+                    console.log(this.errorForm)
                 })
-                .catch(err => {
-                    swal("Pagamento rifiutato", "Il tuo ordine non è stato effetuato", err);
+                .catch((err) => {
+                    swal("Pagamento rifiutato", "Il tuo ordine non è stato effetuato");
                 })
         }
     },
@@ -281,6 +296,14 @@ export default {
     .input-pay {
         height: 40px;
     }
+}
+
+div.info-message {
+    background-color: $secYellow;
+}
+
+div.error-message {
+    background-color: #f86f6f;
 }
 
 .order_review {
