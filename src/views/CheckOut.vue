@@ -134,7 +134,7 @@
                             <h4 class="titlepayment">Payment Informations</h4>
 
                             <!-- Card Number -->
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label>Numero della carta</label>
                                 <div id="creditCardNumber" class="form-control input-pay">
 
@@ -144,11 +144,11 @@
                             </div>
 
                             <!-- Expiration Date -->
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <div class="row">
                                     <div class="col-6">
                                         <label>Data di scadenza</label>
-                                        <div id="expireDate" class="form-control input-pay"></div>
+                                        <div id="expireDate" class="form-control input-pay "></div>
 
                                     </div>
 
@@ -160,6 +160,13 @@
 
                                     </div>
                                 </div>
+                            </div>
+
+                            <!-- Error message label  -->
+                            <div class="info-message rounded">
+                                <span v-if="!error" class="error-message">Please check your datas before
+                                    payment</span>
+                                <span v-else>{{ error }}</span>
                             </div>
 
                             <!-- Payment button  -->
@@ -352,7 +359,7 @@ export default {
     .input-pay {
         border: 1px solid rgb(189, 189, 189);
         box-shadow: none !important;
-        border-radius: 0 10px 0 0;
+        border-radius: 0 10px 10px 10px;
     }
 
     .input-pay {
@@ -414,8 +421,6 @@ label {
     top: -6px;
     width: 100%;
 }
-
-
 
 .btn-pay {
     background-color: $priGreen;
