@@ -126,8 +126,8 @@
                                     <div class="col-12 col-md-6  form-section">
                                         <label :class="this.errorMessages.photo.visibility ? ' border-error' : 'border-none'"
                                             for="photo">Photo</label>
-                                        <input placeholder="Insert your dish photo URL" class="w-100" type="text" id="photo"
-                                            name="photo" v-model="this.formData.photo">
+                                        <input placeholder="Insert your dish photo URL" class="w-100" type="file" id="photo"
+                                            name="photo" @change="formData.photo = $event.target.files; console.log(formData.photo)">
 
                                         <!-- Photo Error message -->
                                         <div v-if="this.errorMessages.photo.alert" class="talkbubble-container ">
@@ -281,9 +281,11 @@ export default {
                 description: '',
                 price: '',
                 category: '',
-                photo: '',
+                photo: null,
                 available: '',
-                visible: ''
+                visible: '',
+                messageErrors: [],
+                dishIdCreated: null
             },
 
             formDataValidate: {
@@ -293,6 +295,7 @@ export default {
                 category: false,
                 available: false,
                 visible: false,
+                photo: false
             },
 
             errorMessages: {
@@ -325,7 +328,8 @@ export default {
                     visibility: false,
                 },
             },
-            store
+            store,
+            validate: false
         }
     },
 
@@ -388,11 +392,14 @@ export default {
                 this.formDataValidate.visible = false;
             }
 
-            /**VALIDATION MANAGEMENT**/
-            if (this.formDataValidate.name && this.formDataValidate.description && this.formDataValidate.category && this.formDataValidate.price && this.formDataValidate.available && this.formDataValidate.visible) {
-                let validate = true;
-                return validate;
+            //image
+            if (typeof (this.formData.photo) === 'object' || this.formData.photo === null) {
+                this.formDataValidate.photo = true;
+            }
 
+            /**VALIDATION MANAGEMENT**/
+            if (this.formDataValidate.name && this.formDataValidate.description && this.formDataValidate.category && this.formDataValidate.price && this.formDataValidate.available && this.formDataValidate.visible && this.formDataValidate.photo) {
+                this.validate = true;
             } else {
                 this.resetErrors();
                 this.errorPopUp();
@@ -472,31 +479,39 @@ export default {
             console.log(this.errorMessages);
         },
 
+        uploadFile(file) {
+            const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+            axios.post(`api/upload/File/${this.dishIdCreated}`, file, config).then(function (response) {
+                console.log(response.data);
+                window.location.href = '/admin/dishes';
+            });
+        },
         storeDish(authStore) {
-            let validate = false;
             this.checkValidation();
-            if (this.checkValidation()) {
+            if (this.validate) {
                 axios.post(`/api/store`, {
                     user_id: authStore.user.id,
                     name: this.formData.name,
                     description: this.formData.description,
                     price: this.formData.price,
                     category_id: this.formData.category,
-                    photo: this.formData.photo,
                     available: this.formData.available,
                     visible: this.formData.visible,
+                    photo: 'loading'
                 })
                     .then((response) => {
-                        console.log(response);
-                        window.location.href = '/admin/dishes';
+                        this.dishIdCreated = response.data.idCreated[0];
+                        this.uploadFile(this.formData.photo);
                     })
                     .catch(function (error) {
-                        messageErrors = error.response.data.errors;
-                        console.log(messageErrors);
+                        console.log(error);
+                        this.messageErrors = error.response.data.errors;
+                        console.log(this.messageErrors);
                     })
             }
         }
     },
+
 
     setup() {
         const authStore = useAuthStore();
