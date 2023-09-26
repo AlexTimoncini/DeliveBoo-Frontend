@@ -47,13 +47,13 @@
                     </div>
                     <nav class="page" aria-label="Page">
                         <ul class="pagination m-0 justify-content-center ">
-                            <li class="page-item "><button @click="prevPage" class="page-link  text-white">Previous</button>
+                            <li class="page-item "><button @click="prevPage()" class="page-link  text-white">Previous</button>
                             </li>
-                            <li class="page-item text-white" v-for="page, index in order">
+                            <li class="page-item text-white" v-for="page, index in Math.floor(orders.order_length / 8) + 1">
                                 <button @click="singlePage(index + 1)" class="page-link  text-white"
                                     :class="activeIndex === index + 1 ? 'active' : ''">{{ index + 1 }}</button>
                             </li>
-                            <li class="page-item"><button @click="nextPage" class="page-link  text-white">Next</button></li>
+                            <li class="page-item"><button @click="nextPage()" class="page-link  text-white">Next</button></li>
                         </ul>
                     </nav>
 
@@ -83,7 +83,8 @@ import axios from 'axios';
 const authStore = useAuthStore();
 const orders = ref({
     order_list: [],
-    loading: true
+    loading: true,
+    order_length: null
 });
 const nextUrlPage = {
     url: '',
@@ -112,6 +113,7 @@ async function getOrder(url) {
         lastUrlPage.url = response.data.results.last_page_url;
         firstUrlPage.url = response.data.results.first_page_url;
         numberofPage.url = response.data.results.last_page;
+        orders.value.order_length = response.data.array_length;
         orders.value.loading = false;
     })
         .catch(error => console.error(error))
@@ -126,6 +128,8 @@ function nextPage() {
     if (!nextUrlPage.url == '' || !nextUrlPage.url == null) {
         getOrder(nextUrlPage.url);
         activeIndex.index++;
+    } else {
+        console.log('nope')
     }
 };
 
