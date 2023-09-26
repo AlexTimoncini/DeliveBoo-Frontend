@@ -6,7 +6,8 @@
             </div>
             <div class="col-md-9 col-10 p-0">
                 <DashboardNavbar />
-                <div v-if="this.authStore.user" class="dish-edit">
+                <Loader v-if="this.loading" />
+                <div v-else-if="this.authStore.user" class="dish-edit">
                     <h2>{{ store.editingDish ? store.editingDish.name : '' }}</h2>
                     <div class="row align-items-center">
                         <div class="dish-info col-12 col-md-6">
@@ -117,15 +118,16 @@
 <script>
 import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
+import Loader from '../../components/Loader.vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useAuthStore } from '../../stores/auth';
 import { store } from '../../store';
 
 export default {
     name: 'DishEdit',
-    components: { DashboardSidebar, DashboardNavbar },
+    components: { DashboardSidebar, DashboardNavbar, Loader },
 
     data() {
         return {
@@ -150,7 +152,8 @@ export default {
                 visible: false,
                 photo: false,
             },
-            store
+            store,
+            loading: true
         }
     },
 
@@ -294,6 +297,7 @@ export default {
     setup() {
         const authStore = useAuthStore();
         const route = useRoute();
+        const loading = ref(true);
 
         const formData = ({
             id: null,
@@ -321,8 +325,7 @@ export default {
                 formData.user_id = store.editingDish.user_id;
                 formData.available = store.editingDish.available;
                 formData.visible = store.editingDish.visible;
-
-                return formData;
+                loading.value = false;
 
             } catch(error) {
                 console.log(error);
@@ -348,7 +351,8 @@ export default {
 
         return {
             authStore,
-            formData
+            formData,
+            loading
         };
     }
 }
