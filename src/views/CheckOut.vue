@@ -133,66 +133,77 @@ export default {
             surname: '',
             email: '',
             totalPrice: 0,
-            tokenApi: ''
+            tokenApi: '',
+            isFieldInstance: false
         };
     },
 
     mounted() {
         this.setTotalPrice();
+        if (!this.isFieldInstance) {
+            this.initializeBraintree();
+            this.isFieldInstance = true;
+        }
     },
-    created() {
-        console.log('ciao')
-        braintree.client.create({
-            authorization: "sandbox_4xnksjmk_7tdbczf8qx35n699"
-        })
-            .then(clientInstance => {
-                let options = {
-                    client: clientInstance,
-                    styles: {
-                        input: {
-                            'font-size': '14px',
-                            'font-family': 'Open Sans'
-                        }
-                    },
-                    fields: {
-                        number: {
-                            selector: '#creditCardNumber',
-                            placeholder: 'Enter Credit Card'
+    methods: {
+        initializeBraintree() {
+            braintree.client.create({
+                authorization: "sandbox_4xnksjmk_7tdbczf8qx35n699"
+            })
+                .then(clientInstance => {
+                    let options = {
+                        client: clientInstance,
+                        styles: {
+                            input: {
+                                'font-size': '14px',
+                                'font-family': 'Open Sans'
+                            }
                         },
-                        cvv: {
-                            selector: '#cvv',
-                            placeholder: 'Enter CVV'
-                        },
-                        expirationDate: {
-                            selector: '#expireDate',
-                            placeholder: '00 / 0000'
+                        fields: {
+                            number: {
+                                selector: '#creditCardNumber',
+                                placeholder: 'Enter Credit Card'
+                            },
+                            cvv: {
+                                selector: '#cvv',
+                                placeholder: 'Enter CVV'
+                            },
+                            expirationDate: {
+                                selector: '#expireDate',
+                                placeholder: '00 / 00'
+                            }
                         }
                     }
-                }
-                return braintree.hostedFields.create(options)
-            })
-            .then(hostedFieldInstance => {
-                if (!this.hostedFieldInstance)
-                    this.hostedFieldInstance = hostedFieldInstance;
-            })
-            .catch(err => {
-                console.log(err)
-            });
-    },
+                    return braintree.hostedFields.create(options)
+                })
+                .then(hostedFieldInstance => {
+                    if (!this.hostedFieldInstance)
+                        this.hostedFieldInstance = hostedFieldInstance;
+                })
+                .catch(err => {
+                    console.log(err)
+                });
 
+        },
 
-    methods: {
+        resetHostedFields() {
+            if (this.hostedFieldInstance) {
+                this.hostedFieldInstance.teardown(() => {
+                    this.hostedFieldInstance = null;
+                    this.initializeBraintree();
+                });
+            } else {
+                this.initializeBraintree();
+            }
+        },
         payWithCreditCard() {
             if (this.hostedFieldInstance) {
                 this.error = "";
                 this.nonce = "";
                 this.hostedFieldInstance.tokenize().then(payload => {
-                    console.log(payload);
                     this.nonce = payload.nonce
-                    console.log(this.nonce);
                 })
                     .catch(err => {
-                        console.error(err);
                         this.error = err.message;
                     })
                     .then(() => {
@@ -223,13 +234,12 @@ export default {
                         this.store.cart_list = [],
                             localStorage.clear();
                         swal("Pagamento effettuato", "Il tuo ordine arriverà a breve", "success");
-                        this.hostedFieldInstance = false
+                        this.resetHostedFields();
                         this.$router.push({ name: 'Homepage' });
                     }
-                }
-                )
+                })
                 .catch(err => {
-                    swal("Pagamento rifiutato", "Il tuo ordine non è stato effetuato", "error");
+                    swal("Pagamento rifiutato", "Il tuo ordine non è stato effetuato", err);
                 })
         }
     },
