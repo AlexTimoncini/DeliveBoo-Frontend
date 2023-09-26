@@ -420,6 +420,8 @@ export default {
     }
 }
 
+
+
 .top-filters {
     background-color: $priGreen;
 
