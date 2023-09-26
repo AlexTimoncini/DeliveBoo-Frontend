@@ -1,6 +1,6 @@
 <template>
-    <div class="container mt-4">
-        <div class="row  d-flex justify-content-center">
+    <div class="container">
+        <div class="row  d-flex justify-content-center align-items-center">
             <h1 class="text-center mb-0">"Deliveboo is conjuring up your feast... <br><span>Get ready for a ghostly
                     delight!</span>
             </h1>
@@ -24,6 +24,11 @@ export default {
 <style lang="scss" scoped>
 @use '../styles/partials/variables' as *;
 @use '../styles/partials/mixins' as *;
+
+.container {
+    height: calc(100vh - 195px);
+    margin-top: 100px;
+}
 
 h1 {
     color: $priGreen;

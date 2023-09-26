@@ -114,12 +114,13 @@ export default {
                         </div>
                     </li>
                 </ul>
-                <div>
+                <div class="d-flex">
                     <router-link :to="{ name: 'CheckOut' }">
-                        <button class="btn order-btn order mb-4">Order
+                        <button class="btn order-btn order mb-4 me-3">Order
                             Now</button>
-                        <button class="btn btn-danger  ms-sm-3 mb-4" @click="removeAllDishesFromCart()">Empty Cart</button>
                     </router-link>
+                    <button class="btn btn-danger   mb-4" @click="removeAllDishesFromCart()">Empty Cart</button>
+
                 </div>
             </div>
 
