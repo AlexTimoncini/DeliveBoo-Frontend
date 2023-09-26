@@ -6,7 +6,9 @@
             </div>
             <div class="col-md-9 col-10 p-0">
                 <DashboardNavbar />
-                <div class="my-account">
+
+                <Loader v-if="formData.loading" />
+                <div v-else class="my-account">
 
                     <!-- Upper section with restaurant image & buttons -->
                     <div class="row">
@@ -159,6 +161,7 @@
 <script>
 import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
+import Loader from '../../components/Loader.vue';
 export default {
     name: 'MyAccount',
     data() {
@@ -177,7 +180,7 @@ export default {
             console.log(this.isAlertOn)
         },
     },
-    components: { DashboardSidebar, DashboardNavbar }
+    components: { DashboardSidebar, DashboardNavbar, Loader }
 }
 </script>
 
@@ -196,6 +199,7 @@ const formData = ref({
     closer_time: null,
     image: null,
     logo: null,
+    loading: true
 })
 
 function deleteAccount() {
@@ -227,6 +231,7 @@ function changeData() {
     formData.value.open_time = authStore.user.open_time
     formData.value.closer_time = authStore.user.closer_time
     formData.value.description = authStore.user.description
+    formData.value.loading = false;
 }
 
 function updateRestaurant() {
