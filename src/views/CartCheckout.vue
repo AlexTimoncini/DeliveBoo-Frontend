@@ -82,8 +82,9 @@ export default {
                     <li v-for="(dish, index) in store.cart_list"
                         class="cart_item d-flex justify-content-between col-12 mb-3">
                         <div class="d-flex col-8 align-items-center align-items-md-start">
-                            <div class="dish_img"><img class="img-fluid" :src="dish.photo" :alt="dish.name + 'image'"
-                                    draggable="false"></div>
+                            <div class="dish_img">
+                                <img class="img-fluid" :src="dish.photo.startsWith('/dish/') ? (`http://127.0.0.1:8000/storage${dish.photo}`) : dish.photo" :alt="dish.name + ' image'" draggable="false">
+                            </div>
                             <div class="dish_info pe-0">
                                 <div class="dish_name ">
                                     <h6 class="">{{ dish.name }}</h6>
