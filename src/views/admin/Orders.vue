@@ -6,7 +6,8 @@
             </div>
             <div class="col-md-9 col-10 p-0">
                 <DashboardNavbar />
-                <div class="my_app p-4">
+                <Loader v-if="this.loading" />
+                <div v-else class="my_app p-4">
                     <div class="table-container " v-if="authStore.user">
                         <div class="d-block d-md-flex justify-content-between my-table-header">
                             <h2 class="mb-3 mb-md-0 ">Your Orders</h2>
@@ -66,11 +67,12 @@
 <script>
 import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
+import Loader from '../../components/Loader.vue';
 import axios from 'axios';
 
 export default {
     name: 'Orders',
-    components: { DashboardSidebar, DashboardNavbar },
+    components: { DashboardSidebar, DashboardNavbar, Loader },
     data() {
         return {
             apiUrl: 'http://127.0.0.1:8000/api/orders',
@@ -81,6 +83,7 @@ export default {
             firstUrlPage: '',
             numberofPage: '',
             activeIndex: 1,
+            loading: true
         }
     },
     components: { DashboardSidebar, DashboardNavbar },
@@ -94,6 +97,7 @@ export default {
                 this.lastUrlPage = response.data.results.last_page_url;
                 this.firstUrlPage = response.data.results.first_page_url;
                 this.numberofPage = response.data.results.last_page;
+                this.loading = false;
             })
                 .catch(error => console.error(error))
         },
