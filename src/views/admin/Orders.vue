@@ -6,7 +6,7 @@
             </div>
             <div class="col-md-9 col-10 p-0">
                 <DashboardNavbar />
-                <Loader v-if="this.loading" />
+                <Loader v-if="orders.loading" />
                 <div v-else class="my_app p-4">
                     <div class="table-container " v-if="authStore.user">
                         <div class="d-block d-md-flex justify-content-between my-table-header">
@@ -31,7 +31,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="order in order"
+                                <tr v-for="order in orders.order_list"
                                     :class="order.successful == 1 ? 'table-success' : 'table-danger'">
                                     <th scope="row">{{ (order.created_at).slice(0, 10) }}</th>
                                     <td class="d-none d-md-table-cell">{{ order.first_name }} {{ order.last_name }}</td>
@@ -68,70 +68,78 @@
 import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
 import Loader from '../../components/Loader.vue';
-import axios from 'axios';
 
 export default {
     name: 'Orders',
     components: { DashboardSidebar, DashboardNavbar, Loader },
-    data() {
-        return {
-            apiUrl: 'http://127.0.0.1:8000/api/orders',
-            order: {},
-            nextUrlPage: '',
-            prevUrlPage: '',
-            lastUrlPage: '',
-            firstUrlPage: '',
-            numberofPage: '',
-            activeIndex: 1,
-            loading: true
-        }
-    },
-    components: { DashboardSidebar, DashboardNavbar },
-
-    methods: {
-        getOrder(apiUrl = this.apiUrl) {
-            axios.get(apiUrl).then(response => {
-                this.order = response.data.results.data;
-                this.nextUrlPage = response.data.results.next_page_url;
-                this.prevUrlPage = response.data.results.prev_page_url;
-                this.lastUrlPage = response.data.results.last_page_url;
-                this.firstUrlPage = response.data.results.first_page_url;
-                this.numberofPage = response.data.results.last_page;
-                this.loading = false;
-            })
-                .catch(error => console.error(error))
-        },
-
-        singlePage(index) {
-            this.getOrder(`${this.apiUrl}?page=${index}`);
-            this.activeIndex = index;
-        },
-        nextPage() {
-            if (!this.nextUrlPage == '') {
-                this.getOrder(this.nextUrlPage);
-                this.activeIndex++;
-            }
-
-        },
-        prevPage() {
-            if (!this.prevUrlPage == '') {
-                this.getOrder(this.prevUrlPage);
-                this.activeIndex--;
-            }
-        },
-    },
-    mounted() {
-        this.getOrder();
-    }
-} 
+    components: { DashboardSidebar, DashboardNavbar }
+}
 </script >
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useAuthStore } from '../../stores/auth';
+import axios from 'axios';
 const authStore = useAuthStore();
+const orders = ref({
+    order_list: [],
+    loading: true
+});
+const nextUrlPage = {
+    url: '',
+};
+const prevUrlPage = {
+    url: '',
+};
+const lastUrlPage = {
+    url: '',
+};
+const firstUrlPage = {
+    url: '',
+};
+const numberofPage = {
+    url: '',
+};
+const activeIndex = {
+    index: 1
+};
+
+async function getOrder(url) {
+    axios.get(url).then(response => {
+        orders.value.order_list = response.data.results.data;
+        nextUrlPage.url = response.data.results.next_page_url;
+        prevUrlPage.url = response.data.results.prev_page_url;
+        lastUrlPage.url = response.data.results.last_page_url;
+        firstUrlPage.url = response.data.results.first_page_url;
+        numberofPage.url = response.data.results.last_page;
+        orders.value.loading = false;
+    })
+        .catch(error => console.error(error))
+};
+
+function singlePage(index) {
+    getOrder(`api/orders/index/${authStore.user.id}?page=${index}`);
+    activeIndex.index = index;
+};
+
+function nextPage() {
+    if (!nextUrlPage.url == '' || !nextUrlPage.url == null) {
+        getOrder(nextUrlPage.url);
+        activeIndex.index++;
+    }
+};
+
+function prevPage() {
+    if (!prevUrlPage.url == '' || !prevUrlPage.url == null) {
+        getOrder(prevUrlPage.url);
+        activeIndex.index--;
+    }
+};
+
 onMounted(async () => {
     await authStore.getUser();
+    await getOrder('/api/orders/index/' + authStore.user.id);
+    console.log(orders.value);
 })
 </script>
 
