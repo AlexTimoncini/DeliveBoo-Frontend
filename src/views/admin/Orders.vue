@@ -30,8 +30,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="order in authStore.user.orders" :class="order.successful == 1 ? 'table-success' : 'table-danger'">
-                                    <th scope="row">{{ (order.created_at).slice(0,10) }}</th>
+                                <tr v-for="order in order"
+                                    :class="order.successful == 1 ? 'table-success' : 'table-danger'">
+                                    <th scope="row">{{ (order.created_at).slice(0, 10) }}</th>
                                     <td class="d-none d-md-table-cell">{{ order.first_name }} {{ order.last_name }}</td>
                                     <td class="d-none d-md-table-cell">{{ order.customer_address }}</td>
                                     <td><span>€ </span><span>{{ order.total_price }}</span></td>
@@ -43,6 +44,18 @@
                             </tbody>
                         </table>
                     </div>
+                    <nav class="page" aria-label="Page">
+                        <ul class="pagination m-0 justify-content-center ">
+                            <li class="page-item "><button @click="prevPage" class="page-link  text-white">Previous</button>
+                            </li>
+                            <li class="page-item text-white" v-for="page, index in order">
+                                <button @click="singlePage(index + 1)" class="page-link  text-white"
+                                    :class="activeIndex === index + 1 ? 'active' : ''">{{ index + 1 }}</button>
+                            </li>
+                            <li class="page-item"><button @click="nextPage" class="page-link  text-white">Next</button></li>
+                        </ul>
+                    </nav>
+
                 </div>
             </div>
 
@@ -53,11 +66,59 @@
 <script>
 import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
+import axios from 'axios';
+
 export default {
     name: 'Orders',
+    components: { DashboardSidebar, DashboardNavbar },
     data() {
+        return {
+            apiUrl: 'http://127.0.0.1:8000/api/orders',
+            order: {},
+            nextUrlPage: '',
+            prevUrlPage: '',
+            lastUrlPage: '',
+            firstUrlPage: '',
+            numberofPage: '',
+            activeIndex: 1,
+        }
     },
-    components: { DashboardSidebar, DashboardNavbar }
+    components: { DashboardSidebar, DashboardNavbar },
+
+    methods: {
+        getOrder(apiUrl = this.apiUrl) {
+            axios.get(apiUrl).then(response => {
+                this.order = response.data.results.data;
+                this.nextUrlPage = response.data.results.next_page_url;
+                this.prevUrlPage = response.data.results.prev_page_url;
+                this.lastUrlPage = response.data.results.last_page_url;
+                this.firstUrlPage = response.data.results.first_page_url;
+                this.numberofPage = response.data.results.last_page;
+            })
+                .catch(error => console.error(error))
+        },
+
+        singlePage(index) {
+            this.getOrder(`${this.apiUrl}?page=${index}`);
+            this.activeIndex = index;
+        },
+        nextPage() {
+            if (!this.nextUrlPage == '') {
+                this.getOrder(this.nextUrlPage);
+                this.activeIndex++;
+            }
+
+        },
+        prevPage() {
+            if (!this.prevUrlPage == '') {
+                this.getOrder(this.prevUrlPage);
+                this.activeIndex--;
+            }
+        },
+    },
+    mounted() {
+        this.getOrder();
+    }
 } 
 </script >
 
@@ -90,7 +151,7 @@ onMounted(async () => {
         border-radius: 0 0 10px 10px;
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
-        margin: 1rem;
+        margin: .5rem 1rem;
 
         .my-table-header {
             background-color: $priGreen;
@@ -123,6 +184,26 @@ onMounted(async () => {
 
     .my_btn:active {
         background-color: $secYellow;
+    }
+
+    nav.page {
+        ul {
+            li {
+                background-color: none;
+
+                button {
+                    background-color: $priGreen;
+                }
+
+                button:active {
+                    border: 1px solid $secYellow;
+                }
+
+                button:focus {
+                    border: 1px solid $secYellow;
+                }
+            }
+        }
     }
 }
 </style>
