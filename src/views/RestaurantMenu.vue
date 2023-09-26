@@ -21,21 +21,18 @@ export default {
             store,
             totalPrice: 0,
 
-            // alert 
+            // alert
             alert: false,
-            alertId: '',
         }
     },
     methods: {
 
-        alertMessage(dishID) {
+        alertMessage() {
             this.alert = true;
-            this.alertId = dishID;
         },
 
         turnOffAlert() {
             this.alert = false;
-            this.alertId = '';
         },
 
 
@@ -45,8 +42,8 @@ export default {
                 store.cartRestaurantID = dishObj.user_id;
             }
             if (store.cartRestaurantID !== dishObj.user_id) {
-                this.alertMessage(dishObj.id);
-                // alert("You can't add this dish to your cart, you already have others from a different restaurant.");
+                this.alertMessage();
+
             } else {
                 let cart = store.cart_list;
                 if ((cart.find((item) => item.name === dishObj.name)) !== undefined) {
@@ -274,7 +271,7 @@ const authStore = useAuthStore();
                         <Card v-for="    dish     in     bestDishes    " :dish="dish" @add="addDishToCart(dish)" />
                         <div v-for="    dish     in     bestDishes    "
                             class="my_alert alert alert-warning alert-dismissible col-lg-3 col-md-6 col-10 p-4 d-flex flex-column align-items-center"
-                            :class="!alert || alertId === dish.id ? 'd-none' : 'd-block'">
+                            :class="!alert ? 'd-none' : 'd-block'">
                             <img class="" src="../assets/mascotte/angry-boo.png" alt="angry ghost">
                             <h4 class="alert-heading">Boo are you doing?!</h4>
                             <p class="text-center">You can't add this dish to your cart, you already have others from a
