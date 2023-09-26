@@ -181,7 +181,7 @@
                                             for="visible">Visible?</label>
                                         <select name="visible" id="visible"
                                             @change="this.formData.visible = $event.target.value">
-                                            <option value="" selected hidden>{{ this.errorMessages.available.visibility === true
+                                            <option value="" selected hidden>{{ this.errorMessages.visible.visibility === true
                                                 ?
                                                 'Wrong input' : 'Select' }}</option>
                                             <option value="1">Yes</option>
@@ -441,37 +441,30 @@ export default {
 
         errorPopUp() {
             if (!this.formDataValidate.name) {
-                console.log('The name isn\'t in the right format.');
                 this.errorMessages.name.alert = 'The name isn\'t in the right format.';
                 this.errorMessages.name.visibility = true;
             }
             if (!this.formDataValidate.description) {
-                console.log('The description isn\'t in the right format.');
                 this.errorMessages.description.alert = 'The description isn\'t in the right format.';
                 this.errorMessages.description.visibility = true;
             }
             if (!this.formDataValidate.price) {
-                console.log('The price isn\'t in the right format.');
                 this.errorMessages.price.alert = 'The price isn\'t in the right format.';
                 this.errorMessages.price.visibility = true;
             }
             if (!this.formDataValidate.category) {
-                console.log('The category isn\'t in the right format.');
                 this.errorMessages.category.alert = 'The category isn\'t in the right format.';
                 this.errorMessages.category.visibility = true;
             }
             if (!this.formDataValidate.available) {
-                console.log('The available attribute isn\'t in the right format.');
                 this.errorMessages.available.alert = 'The available attribute isn\'t in the right format.';
                 this.errorMessages.available.visibility = true;
             }
             if (!this.formDataValidate.visible) {
-                console.log('The visible attribute isn\'t in the right format.');
                 this.errorMessages.visible.alert = 'The visible attribute isn\'t in the right format.';
                 this.errorMessages.visible.visibility = true;
             }
             if (!this.formDataValidate.photo) {
-                console.log('The photo isn\'t in the right format.');
                 this.errorMessages.photo.alert = 'The photo isn\'t in the right format.';
                 this.errorMessages.photo.visibility = true;
             }
