@@ -237,9 +237,11 @@ export default {
                         this.resetHostedFields();
                         this.$router.push({ name: 'Homepage' });
                     }
+                }).catch((error) => {
+                    console.log(error.response.data.errors)
                 })
-                .catch(err => {
-                    swal("Pagamento rifiutato", "Il tuo ordine non è stato effetuato", err);
+                .catch((err) => {
+                    swal("Pagamento rifiutato", "Il tuo ordine non è stato effetuato");
                 })
         }
     },
