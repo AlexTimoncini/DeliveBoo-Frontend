@@ -51,38 +51,73 @@
                         <div class="alert alert-danger" v-if="error">
                             {{ error }}
                         </div> -->
-                        <form @submit.prevent="payWithCreditCard" class="d-flex flex-column">
-                            <label for="name">Name</label>
-                            <div class="position-relative">
-                                <input type="text" name="name" id="name" v-model="name" />
-                                <div class="info-message" v-if="!errorForm.name">
-                                    <span>Enter your name.</span>
+                        <form @submit.prevent="payWithCreditCard()" class="">
+
+                            <div class="d-flex">
+                                <!-- Name  -->
+                                <div class="form-group pe-1 col-6">
+                                    <label class for="name">Name</label>
+                                    <div class="position-relative">
+                                        <input class="form-control" type="text" name="name" id="name" v-model="name"
+                                            placeholder="Es. Marco" />
+                                        <!-- Error message label  -->
+                                        <div class="info-message">
+                                            <span v-if="!errorForm.name" class="error-message">Enter your name.</span>
+                                            <span v-else>{{ errorForm.name.join() }}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="error-message" v-if="errorForm.name">
-                                    <span>{{ errorForm.name.join() }}</span>
+
+                                <!-- Last name  -->
+                                <div class="form-group col-6 ps-1">
+                                    <label>Last name</label>
+                                    <input type="text" v-model="surname" class="form-control" placeholder="Es. Rossi"
+                                        required>
+                                    <!-- Error message label  -->
+                                    <div class="info-message">
+                                        <span v-if="!errorForm.name" class="error-message">Enter your Last name.</span>
+                                        <span v-else>{{ errorForm.name.join() }}</span>
+                                    </div>
                                 </div>
                             </div>
+
+                            <!-- Delivery Address  -->
                             <div class="form-group my-2">
-                                <label>Cognome</label>
-                                <input type="text" v-model="surname" class="form-control" placeholder="Inserisci Cognome"
-                                    required>
-                            </div>
-                            <div class="form-group my-2">
-                                <label>Indirizzo di consegna</label>
+                                <label>Delivery Address</label>
                                 <input type="text" v-model="address" class="form-control"
-                                    placeholder="Inserisci l'indirizzo di consegna" required>
+                                    placeholder="Es.101 Rue Adolphe Fischer, Luxembourg, Lussemburgo " required>
+                                <!-- Error message label  -->
+                                <div class="info-message">
+                                    <span v-if="!errorForm.name" class="error-message">Enter your Delivery Address.</span>
+                                    <span v-else>{{ errorForm.name.join() }}</span>
+                                </div>
                             </div>
+
+                            <!-- Email  -->
                             <div class="form-group my-2">
                                 <label>email</label>
-                                <input type="email" v-model="email" class="form-control" placeholder="Inserisci email"
-                                    required>
+                                <input type="email" v-model="email" class="form-control"
+                                    placeholder="Es. marco.rossi@gmail.lu" required>
+                                <!-- Error message label  -->
+                                <div class="info-message">
+                                    <span v-if="!errorForm.name" class="error-message">Enter your email.</span>
+                                    <span v-else>{{ errorForm.name.join() }}</span>
+                                </div>
                             </div>
+
+                            <!-- Phone number -->
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-6 my-2">
-                                        <label>Numero di telefono</label>
+                                    <div class="col-6 mt-2">
+                                        <label>Phone number</label>
                                         <input type="text" v-model="phone_number" class="form-control"
-                                            placeholder="Numero di telefono">
+                                            placeholder="Es. 3393847581">
+                                        <!-- Error message label  -->
+                                        <div class="info-message">
+                                            <span v-if="!errorForm.name" class="error-message">Enter your Phone
+                                                number.</span>
+                                            <span v-else>{{ errorForm.name.join() }}</span>
+                                        </div>
                                     </div>
                                     <!-- <div class="col-6 d-flex flex-column justify-content-between d-none">
                                         <label>Totale</label>
@@ -91,27 +126,56 @@
                                     </div> -->
                                 </div>
                             </div>
+
                             <!-- Payment form  -->
-                            <hr />
+                            <hr class="my-1" />
                             <h4 class="titlepayment">Payment Informations</h4>
-                            <hr />
+
+                            <!-- Card Number -->
                             <div class="form-group">
                                 <label>Numero della carta</label>
-                                <div id="creditCardNumber" class="form-control input-pay mb-3"></div>
+                                <div id="creditCardNumber" class="form-control input-pay">
+
+                                </div>
+                                <!-- Error message label  -->
+                                <div class="info-message">
+                                    <span v-if="!errorForm.name" class="error-message">Enter your Card
+                                        number.</span>
+                                    <span v-else>{{ errorForm.name.join() }}</span>
+                                </div>
+
                             </div>
+
+                            <!-- Expiration Date -->
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-6">
                                         <label>Data di scadenza</label>
-                                        <div id="expireDate" class="form-control input-pay mb-3"></div>
+                                        <div id="expireDate" class="form-control input-pay"></div>
+                                        <!-- Error message label  -->
+                                        <div class="info-message">
+                                            <span v-if="!errorForm.name" class="error-message">Enter expiration
+                                                date
+                                                number.</span>
+                                            <span v-else>{{ errorForm.name.join() }}</span>
+                                        </div>
                                     </div>
+
+                                    <!-- Cvv -->
                                     <div class="col-6">
                                         <label>CVV</label>
-                                        <div id="cvv" class="form-control input-pay  mb-3"></div>
+                                        <div id="cvv" class="form-control input-pay"></div>
+                                        <!-- Error message label  -->
+                                        <div class="info-message">
+                                            <span v-if="!errorForm.name" class="error-message">Enter cvv</span>
+                                            <span v-else>{{ errorForm.name.join() }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <button class="border-0 btn-paga btn-block">Pay</button>
+
+                            <!-- Payment button  -->
+                            <button class="border-0 btn-pay btn-block">Pay</button>
                         </form>
                     </div>
                 </div>
@@ -151,6 +215,7 @@ export default {
     },
 
     mounted() {
+
         this.setTotalPrice();
         if (!this.isFieldInstance) {
             this.initializeBraintree();
@@ -160,7 +225,7 @@ export default {
     methods: {
         initializeBraintree() {
             braintree.client.create({
-                authorization: "sandbox_4xnksjmk_7tdbczf8qx35n699"
+                authorization: "sandbox_5rtvtwbt_k35tqnrxdz5sbs89"
             })
                 .then(clientInstance => {
                     let options = {
@@ -208,6 +273,7 @@ export default {
                 this.initializeBraintree();
             }
         },
+
         payWithCreditCard() {
             if (this.hostedFieldInstance) {
                 this.error = "";
@@ -223,6 +289,7 @@ export default {
                     })
             }
         },
+
         setTotalPrice() {
             this.totalPrice = 0;
             store.cart_list.forEach((dish) => {
@@ -256,6 +323,8 @@ export default {
                 .catch((err) => {
                     swal("Pagamento rifiutato", "Il tuo ordine non è stato effetuato");
                 })
+            console.log(error.response.data)
+
         }
     },
 };
@@ -263,6 +332,10 @@ export default {
 
 <style lang="scss" scoped>
 @use '../styles/partials/variables' as *;
+
+.error {
+    background-color: #f86f6f;
+}
 
 .section-payment {
     margin-top: 2rem;
@@ -290,7 +363,7 @@ export default {
     .input-pay {
         border: 1px solid rgb(189, 189, 189);
         box-shadow: none !important;
-        border-radius: 0 10px 10px 10px;
+        border-radius: 0 10px 0 0;
     }
 
     .input-pay {
@@ -300,10 +373,10 @@ export default {
 
 div.info-message {
     background-color: $secYellow;
-}
-
-div.error-message {
-    background-color: #f86f6f;
+    border-radius: 0 0 10px 10px;
+    padding: .1rem .5rem;
+    font-size: .8rem;
+    margin-bottom: .8rem;
 }
 
 .order_review {
@@ -353,20 +426,23 @@ label {
     width: 100%;
 }
 
-.btn-paga {
+
+
+.btn-pay {
     background-color: $priGreen;
     color: White;
     padding: 10px 0;
     transition: all .3s ease;
     border-radius: 10px;
+    width: 80px;
 }
 
-.btn-paga:hover {
+.btn-pay:hover {
     background-color: rgb(67, 156, 111);
     font-weight: bold;
 }
 
-.btn-paga:active {
+.btn-pay:active {
     background-color: $priGreen;
     color: White;
 }
