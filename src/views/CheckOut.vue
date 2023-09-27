@@ -56,10 +56,10 @@
                             <div class="d-flex">
                                 <!-- Name  -->
                                 <div class="form-group pe-1 col-6">
-                                    <label class for="name">Name</label>
+                                    <label>Name</label>
                                     <div class="position-relative">
                                         <input class="form-control" type="text" name="name" id="name" v-model="name"
-                                            placeholder="Es. Marco" />
+                                            placeholder="Ex. John" />
 
                                         <!-- Error message label  -->
                                         <div class="info-message">
@@ -73,7 +73,7 @@
                                 <!-- Last name  -->
                                 <div class="form-group col-6 ps-1">
                                     <label>Last name</label>
-                                    <input type="text" v-model="surname" class="form-control" placeholder="Es. Rossi">
+                                    <input type="text" v-model="surname" class="form-control" placeholder="Ex. Doe">
                                     <!-- Error message label  -->
                                     <div class="info-message">
                                         <span v-if="!errorForm.surname" class="error-message">Enter your Last name.</span>
@@ -86,7 +86,7 @@
                             <div class="form-group my-2">
                                 <label>Delivery Address</label>
                                 <input type="text" v-model="address" class="form-control"
-                                    placeholder="Es.101 Rue Adolphe Fischer, Luxembourg, Lussemburgo ">
+                                    placeholder="Ex. 101 Rue Adolphe Fischer">
                                 <!-- Error message label  -->
                                 <div class="info-message">
                                     <span v-if="!errorForm.address" class="error-message">Enter your Delivery
@@ -99,7 +99,7 @@
                             <div class="form-group my-2">
                                 <label>email</label>
                                 <input type="email" v-model="email" class="form-control"
-                                    placeholder="Es. marco.rossi@gmail.lu">
+                                    placeholder="Ex. john.doe@gmail.lu">
                                 <!-- Error message label  -->
                                 <div class="info-message">
                                     <span v-if="!errorForm.email" class="error-message">Enter your email.</span>
@@ -113,7 +113,7 @@
                                     <div class="col-12 mt-2">
                                         <label>Phone number</label>
                                         <input type="text" v-model="phone_number" class="form-control"
-                                            placeholder="Es. 3393847581">
+                                            placeholder="Ex. 3393847581">
                                         <!-- Error message label  -->
                                         <div class="info-message">
                                             <span v-if="!errorForm.telephone" class="error-message">Enter your Phone
@@ -126,6 +126,35 @@
                                         <input type="text" v-model="store.totalPrice" class="form-control"
                                             placeholder="Totale" readonly>
                                     </div> -->
+                                </div>
+                            </div>
+
+                            <div class="d-flex">
+                                <!-- Interior -->
+                                <div class="form-group pe-1 col-6">
+                                    <label>Interior</label>
+                                    <div class="position-relative">
+                                        <input class="form-control" type="text" name="interior" id="interior" v-model="interior"
+                                            placeholder="Ex. 1" />
+
+                                        <!-- Error message label  -->
+                                        <div class="info-message">
+                                            <span v-if="!errorForm.interior" class="error-message">Interior (optional)</span>
+                                            <span v-if="errorForm.interior" class="error-message">{{ errorForm.interior.join()
+                                            }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Doorbell  -->
+                                <div class="form-group col-6 ps-1">
+                                    <label>Doorbell</label>
+                                    <input type="text" v-model="doorbell" class="form-control" placeholder="Ex. 1">
+                                    <!-- Error message label  -->
+                                    <div class="info-message">
+                                        <span v-if="!errorForm.doorbell" class="error-message">Doorbell (optional)</span>
+                                        <span v-else>{{ errorForm.doorbell.join() }}</span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -193,6 +222,8 @@ export default {
             phone_number: '',
             name: '',
             address: '',
+            interior: '',
+            doorbell: '',
 
             // variabile per errori carta di credito
             error: '',
@@ -216,11 +247,15 @@ export default {
             this.initializeBraintree();
             this.isFieldInstance = true;
         }
+
+        if (store.cart_list.length === 0) {
+            this.$router.push({ name: 'Homepage' });
+        }
     },
     methods: {
         initializeBraintree() {
             braintree.client.create({
-                authorization: "sandbox_5rtvtwbt_k35tqnrxdz5sbs89"
+                authorization: "sandbox_q7k4hs9d_wdn3fmrkkz37q6r9"
             })
                 .then(clientInstance => {
                     let options = {
@@ -302,23 +337,26 @@ export default {
                 email: this.email,
                 telephone: this.phone_number,
                 address: this.address,
+                interior: this.interior,
+                doorbell: this.doorbell
             }
             axios.post('/api/orders/payment', data)
                 .then((response) => {
                     if (response.data.success === true) {
                         this.store.cart_list = [],
                             localStorage.clear();
-                        swal("Pagamento effettuato", "Il tuo ordine arriverà a breve", "success");
+                        swal("Payment made successfully!", "Your order has been placed.", "success");
                         this.resetHostedFields();
-                        this.$router.push({ name: 'Homepage' });
+                        console.log(response.data.order);
+                        store.isOrderConfirmed = true;
+                        store.confirmedOrder = response.data.order;
+                        this.$router.push({ name: 'OrderSuccess' });
                     }
                 }).catch((error) => {
                     this.errorForm = error.response.data.errors;
                     // console.log(error.response.data.errors)
                     console.log(this.errorForm)
-                })
-                .catch((err) => {
-                    swal("Pagamento rifiutato", "Il tuo ordine non è stato effetuato");
+                    swal("Payment refused.", "Your order has not been placed. Please try again.", 'error');
                 })
 
         }
