@@ -9,4 +9,6 @@ export const store = reactive({
     categories: [],
     editingDish: [],
     visibleDishes: [],
+    confirmedOrder: {},
+    isOrderConfirmed: false
 });
