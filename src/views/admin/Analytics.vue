@@ -6,64 +6,65 @@
             </div>
             <div class="col-md-9 col-10 p-0">
                 <DashboardNavbar />
-                <Loader v-if="loader" />
-                <div v-else class="container my_app ">
-                    <!-- Totals-->
-                    <div class="row mb-4">
-                        <!-- Total revenues -->
-                        <div class="col-12 col-sm-4 numbers-box-container mb-3 mb-sm-0 text-center">
-                            <div class="numbers-box">
-                                <h4>Total Revenues</h4>
-                                <h2>€ {{ Math.trunc(restaurantRevenueEver.revenue) }}</h2>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-4 numbers-box-container text-center ">
-                            <!-- Total Monthly -->
-                            <div class="numbers-box">
-                                <h4>This Month Revenues</h4>
-                                <h2>€ {{ Math.trunc(restaurantRevenueThisMonth.revenue) }}</h2>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-4 numbers-box-container text-center">
-                            <!-- Total Orders -->
-                            <div class="numbers-box">
-                                <h4>Total Orders</h4>
-                                <h2>{{ ordersList.length }}</h2>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-8">
-                            <!-- Best selling dishes -->
-                            <div class="col-12numbers-box-container mb-3 text-center">
-                                <div class="numbers-box d-flex align-items-center flex-column">
-                                    <h4 class="mb-0 mt-2">Best Selling Orders:</h4>
-                                    <Bar :data="data" :options="options" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <!-- Best Selling restaurant -->
-                            <div class="col-12 numbers-box-container mb-3 text-center">
-                                <div class="numbers-box d-flex align-items-center flex-column">
-                                    <img class="crown" src="../../assets/icons/crown.png" alt="">
-                                    <h4 class="mb-2">Best Selling Restaurant</h4>
-                                    <img class="container-fluid mb-2 p-0" :src="restaurantWinner.image"
-                                        :alt="restaurantWinner.name">
-                                    <h2 class="mb-0">{{ restaurantWinner.name }}</h2>
+                <div class="container my_app ">
+                    <Loader v-if="loader" />
+                    <div v-else><!-- Totals-->
+                        <div class="row mb-4">
+                            <!-- Total revenues -->
+                            <div class="col-12 col-sm-4 numbers-box-container mb-3 mb-sm-0 text-center">
+                                <div class="numbers-box">
+                                    <h4>Total Revenues</h4>
+                                    <h2>€ {{ Math.trunc(restaurantRevenueEver.revenue) }}</h2>
                                 </div>
                             </div>
 
-                            <!-- Best customer restaurant -->
-                            <div class="col-12numbers-box-container mb-3 text-center">
-                                <div class="numbers-box d-flex align-items-center flex-column">
-                                    <img class="customer" src="../../assets/mascotte/best-customer.png" alt="">
-                                    <h4 class="mb-0 mt-2">Best Customer:</h4>
-                                    <h2 class="mb-0">{{ bestCustomerEver.name }}</h2>
-                                    <h4 class="mb-2">€ {{ bestCustomerEver.total_spent }}</h4>
+                            <div class="col-12 col-sm-4 numbers-box-container text-center ">
+                                <!-- Total Monthly -->
+                                <div class="numbers-box">
+                                    <h4>This Month Revenues</h4>
+                                    <h2>€ {{ Math.trunc(restaurantRevenueThisMonth.revenue) }}</h2>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-4 numbers-box-container text-center">
+                                <!-- Total Orders -->
+                                <div class="numbers-box">
+                                    <h4>Total Orders</h4>
+                                    <h2>{{ ordersList.length }}</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-8">
+                                <!-- Best selling orders -->
+                                <div class="col-12numbers-box-container mb-3 text-center">
+                                    <div class="numbers-box d-flex align-items-center flex-column">
+                                        <h4 class="mb-0 mt-2">Best Selling Orders:</h4>
+                                        <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <!-- Best Selling restaurant -->
+                                <div class="col-12 numbers-box-container mb-3 text-center">
+                                    <div class="numbers-box d-flex align-items-center flex-column">
+                                        <img class="crown" src="../../assets/icons/crown.png" alt="">
+                                        <h4 class="mb-2">Best Selling Restaurant</h4>
+                                        <img class="container-fluid mb-2 p-0" :src="restaurantWinner.image"
+                                            :alt="restaurantWinner.name">
+                                        <h2 class="mb-0">{{ restaurantWinner.name }}</h2>
+                                    </div>
+                                </div>
+
+                                <!-- Best customer restaurant -->
+                                <div class="col-12numbers-box-container mb-3 text-center">
+                                    <div class="numbers-box d-flex align-items-center flex-column">
+                                        <img class="customer" src="../../assets/mascotte/best-customer.png" alt="">
+                                        <h4 class="mb-0 mt-2">Best Customer:</h4>
+                                        <h2 class="mb-0">{{ bestCustomerEver.name }}</h2>
+                                        <h4 class="mb-2">€ {{ bestCustomerEver.total_spent }}</h4>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +97,7 @@ import {
 } from 'chart.js'
 import { Bar } from 'vue-chartjs'
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip)
 
 export default {
     name: 'Analytics',
@@ -114,11 +115,17 @@ export default {
             bestOrders: [],
 
             // Chart
-            data: {
-                labels: ['1', '2', '3', '4', '5'],
-                datasets: [{ data: [40, 20, 12, 1, 12] }]
+            chartData: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Data One',
+                        backgroundColor: '#01975c',
+                        data: []
+                    }
+                ]
             },
-            options: {
+            chartOptions: {
                 responsive: true
             }
         }
@@ -179,8 +186,14 @@ export default {
             // Best Orders
             axios.get(store.ApiUrl + 'restaurants/' + this.restaurant_id + '/bestOrders')
                 .then((response) => {
-                    // this.bestOrders = response.data.data.results.data;
-                    console.log(response.data.results.data)
+                    // console.log(response.data.results.data)
+                    this.bestOrders = response.data.results.data;
+                    console.log(this.bestOrders);
+                    this.bestOrders.forEach(element => {
+                        this.chartData.datasets[0].data.push(element.total_price);
+                        this.chartData.labels.push('€ ' + element.total_price);
+                    });
+
                     this.loader = false;
                 })
                 .catch((error) => {
