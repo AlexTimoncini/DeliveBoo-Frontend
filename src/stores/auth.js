@@ -67,6 +67,11 @@ export const useAuthStore = defineStore('auth', {
             axios.post('/forgot-password', {
                 email: email
             });
+        },
+
+        async resetPassword(resetData) {
+            const response = axios.post('/reset-password', resetData);
+            this.router.push('/login');
         }
     }
 })

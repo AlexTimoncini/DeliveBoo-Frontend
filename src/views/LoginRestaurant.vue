@@ -7,7 +7,6 @@ export default {
 <script setup>
 import { ref } from 'vue';
 import { useAuthStore } from '../stores/auth';
-import ForgotPassword from './ForgotPassword.vue';
 const authStore = useAuthStore();
 const formRegister = ref({
     name: '',

@@ -17,6 +17,7 @@ import NotFound from './views/NotFound.vue';
 import CheckOut from './views/CheckOut.vue';
 import OrderSuccess from './views/OrderSuccess.vue';
 import ForgotPassword from './views/ForgotPassword.vue'
+import ResetPassword from './views/ResetPassword.vue'
 
 
 const router = createRouter({
@@ -67,6 +68,11 @@ const router = createRouter({
             component: ForgotPassword
         },
         {
+            path: '/password-reset/:token',
+            name: 'ResetPassword',
+            component: ResetPassword
+        },
+        {
             path: '/admin/myaccount',
             name: 'MyAccount',
             component: MyAccount,
@@ -85,7 +91,7 @@ const router = createRouter({
             meta: { requiresAuth: true },
         },
         {
-            path: '/admin/analytics',
+            path: '/admin/analytics/:id',
             name: 'Analytics',
             component: Analytics,
             meta: { requiresAuth: true },
