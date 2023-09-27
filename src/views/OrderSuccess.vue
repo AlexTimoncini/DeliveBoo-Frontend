@@ -44,7 +44,7 @@ export default{
             <div class="bottomHalf">
                 <p>Your payment was successful. We’ll do our best to make sure you get your order as soon as possible.</p>
                 <p>We’re glad you chose us and we hope you enjoy it!</p>
-                <p>Your order ID is: <strong>{{ orderId }}</strong>. Here is a summary of your data:</p>
+                <p>Your order ID is: <strong>{{ store.confirmedOrder.id }}</strong>. Here is a summary of your data:</p>
                 <ul>
                     <div class="row mb-5">
                         <div class="col-6">
@@ -246,6 +246,10 @@ div.container-fluid {
                 font-size: 1.05rem;
                 margin-bottom: 20px;
                 text-align: start;
+
+                strong {
+                    font-weight: 600;
+                }
             }
 
             ul {
