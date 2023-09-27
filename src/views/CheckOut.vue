@@ -187,9 +187,9 @@
                             </div>
 
                             <!-- Error message label  -->
-                            <div class="info-message rounded">
-                                <span v-if="!error" class="error-message">Please check your data before
-                                    payment. <strong>Fields marked with * are required.</strong></span>
+                            <div :class="!error ? 'info-message rounded' : 'error-message rounded'">
+                                <span v-if="!error">Please check your data before
+                                    payment. Fields marked with * are required.</span>
                                 <span v-else>{{ error }}</span>
                             </div>
 
