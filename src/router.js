@@ -6,7 +6,6 @@ import AdvanceSearch from './views/AdvanceSearch.vue';
 import RestaurantMenu from './views/RestaurantMenu.vue';
 import LoginRestaurant from './views/LoginRestaurant.vue';
 import CartCheckout from './views/CartCheckout.vue';
-import OrderSuccess from './views/OrderSuccess.vue';
 import MyAccount from './views/admin/MyAccount.vue';
 import Dishes from './views/admin/Dishes.vue';
 import Orders from './views/admin/Orders.vue';
@@ -15,7 +14,8 @@ import DishEdit from './views/admin/DishEdit.vue';
 import DishCreate from './views/admin/DishCreate.vue';
 import OrderShow from './views/admin/OrderShow.vue';
 import NotFound from './views/NotFound.vue';
-import CheckOut from './views/CheckOut.vue'
+import CheckOut from './views/CheckOut.vue';
+import OrderSuccess from './views/OrderSuccess.vue';
 
 
 
@@ -54,11 +54,6 @@ const router = createRouter({
             path: '/cart',
             name: 'CartCheckout',
             component: CartCheckout
-        },
-        {
-            path: '/ordersuccess',
-            name: 'OrderSuccess',
-            component: OrderSuccess
         },
         {
             path: '/404',
@@ -111,6 +106,11 @@ const router = createRouter({
             path: '/payment',
             name: 'CheckOut',
             component: CheckOut,
+        },
+        {
+            path: '/payment/ordersuccess',
+            name: 'OrderSuccess',
+            component: OrderSuccess
         },
     ],
 });
