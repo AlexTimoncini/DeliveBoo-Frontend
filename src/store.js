@@ -10,5 +10,6 @@ export const store = reactive({
     editingDish: [],
     visibleDishes: [],
     confirmedOrder: {},
-    isOrderConfirmed: false
+    isOrderConfirmed: false,
+    user_id: null
 });

@@ -84,7 +84,7 @@ z" />
             </li>
             <!-- Analytics -->
             <li>
-                <router-link to="analytics" href="#"
+                <router-link :to="{ name: 'Analytics' }"
                     class="nav-link my_nav-link d-flex align-items-center justify-content-center justify-content-md-start">
                     <svg class="icon me-md-2" version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 150"

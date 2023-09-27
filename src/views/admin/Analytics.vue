@@ -38,10 +38,17 @@
                         <div class="row">
                             <div class="col-8">
                                 <!-- Best selling orders -->
-                                <div class="col-12numbers-box-container mb-3 text-center">
+                                <div class="col-12 numbers-box-container mb-3 text-center">
                                     <div class="numbers-box d-flex align-items-center flex-column">
                                         <h4 class="mb-0 mt-2">Best Selling Orders:</h4>
                                         <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
+                                    </div>
+                                </div>
+                                <!-- Best selling orders -->
+                                <div class="col-12 numbers-box-container mb-3 text-center">
+                                    <div class="numbers-box d-flex align-items-center flex-column">
+                                        <h4 class="mb-0 mt-2">Orders Timeline:</h4>
+                                        <Line :data="lineData" :options="lineOptions" />
                                     </div>
                                 </div>
                             </div>
@@ -79,11 +86,13 @@
 </template>
 
 <script>
+import { onMounted } from 'vue';
 import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
 import Loader from '../../components/Loader.vue';
 import axios from 'axios';
 import { store } from '../../store';
+import { useAuthStore } from '../../stores/auth';
 
 // Chart JS 
 import {
@@ -93,15 +102,18 @@ import {
     Legend,
     BarElement,
     CategoryScale,
-    LinearScale
+    LinearScale,
+    PointElement,
+    LineElement
 } from 'chart.js'
 import { Bar } from 'vue-chartjs'
+import { Line } from 'vue-chartjs'
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip)
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement)
 
 export default {
     name: 'Analytics',
-    components: { DashboardSidebar, DashboardNavbar, Loader, Bar },
+    components: { DashboardSidebar, DashboardNavbar, Loader, Bar, Line },
     data() {
         return {
             loader: true,
@@ -112,14 +124,13 @@ export default {
             restaurantWinner: [],
             bestCustomerEver: [],
             ordersList: [],
-            bestOrders: [],
 
             // Chart
             chartData: {
                 labels: [],
                 datasets: [
                     {
-                        label: 'Data One',
+                        label: 'Orders',
                         backgroundColor: '#01975c',
                         data: []
                     }
@@ -127,6 +138,19 @@ export default {
             },
             chartOptions: {
                 responsive: true
+            },
+            lineData: {
+                labels: [],
+                datasets: [
+                        {
+                        label: 'Orders',
+                        backgroundColor: '#f4b807',
+                        data: []
+                    }
+                ]
+            },
+            lineOptions: {
+                responsive: true,
             }
         }
     },
@@ -134,7 +158,7 @@ export default {
     methods: {
         analytics() {
             // Total restaurant revenues ever
-            axios.get(store.ApiUrl + 'restaurants/' + this.restaurant_id + '/ranking')
+            axios.get(store.ApiUrl + 'restaurants/' + store.user_id + '/ranking')
                 .then((response) => {
                     this.restaurantRevenueEver.revenue = response.data.data.total_price;
                     this.restaurantRevenueEver.ranking = response.data.data.ranking;
@@ -144,7 +168,7 @@ export default {
                     console.error('Il ristorante non ha ordini di successo con importo maggiore di zero.');
                 });
             // Total restaurant revenues monthly 
-            axios.get(store.ApiUrl + 'restaurants/' + this.restaurant_id + '/ranking')
+            axios.get(store.ApiUrl + 'restaurants/' + store.user_id + '/ranking')
                 .then((response) => {
                     this.restaurantRevenueThisMonth.revenue = response.data.data.total_price;
                     this.restaurantRevenueThisMonth.ranking = response.data.data.ranking;
@@ -164,7 +188,7 @@ export default {
                     console.error('Non ci sono ristoranti con vendite.');
                 });
             // Best customer Ever 
-            axios.get(store.ApiUrl + 'restaurants/' + this.restaurant_id + '/bestcustomer')
+            axios.get(store.ApiUrl + 'restaurants/' + store.user_id + '/bestcustomer')
                 .then((response) => {
                     this.bestCustomerEver.name = response.data.data.customer_name;
                     this.bestCustomerEver.total_spent = response.data.data.total_spent;
@@ -174,7 +198,7 @@ export default {
                 });
 
             // Orders List
-            axios.get(store.ApiUrl + 'orders/index/' + this.restaurant_id)
+            axios.get(store.ApiUrl + 'orders/index/' + store.user_id)
                 .then((response) => {
                     this.ordersList = response.data.results.data;
 
@@ -184,30 +208,50 @@ export default {
                 });
 
             // Best Orders
-            axios.get(store.ApiUrl + 'restaurants/' + this.restaurant_id + '/bestOrders')
+            axios.get(store.ApiUrl + 'restaurants/' + store.user_id + '/bestOrders')
                 .then((response) => {
                     // console.log(response.data.results.data)
-                    this.bestOrders = response.data.results.data;
-                    console.log(this.bestOrders);
-                    this.bestOrders.forEach(element => {
+                    let bestOrders = response.data.results.data;
+                    console.log(bestOrders);
+                    bestOrders.forEach(element => {
+                        this.chartData.labels.push(element.created_at.slice(5, 10));
                         this.chartData.datasets[0].data.push(element.total_price);
-                        this.chartData.labels.push('€ ' + element.total_price);
                     });
-
-                    this.loader = false;
+                    
+                    
                 })
                 .catch((error) => {
                     console.error('Nessuna lista ordini trovata per il ristorante specificato.');
+                });
+
+            // Orders Timeline
+            axios.get('/api/restaurants/' + store.user_id + '/ordersTimeLine')
+                .then((response) => {
+                    let orders = response.data.data;
+                    
+                    orders.forEach(element => {
+                        this.lineData.labels.push(element.created_at.slice(5, 10));
+                        this.lineData.datasets[0].data.push(parseFloat(element.total_price));
+                    });
+                    console.log(orders);
+                    this.loader = false;
+                })
+                .catch((error) => {
+                    console.log(error);
                 });
 
 
         },
     },
     mounted() {
-        this.restaurant_id = this.$route.params.id;
         this.analytics();
+    },
+    setup() {
+        const authStore = useAuthStore();
+        onMounted(() => {
+            store.user_id = authStore.user.id;
+        });
     }
-
 
 }
 </script>

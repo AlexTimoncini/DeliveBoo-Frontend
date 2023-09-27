@@ -91,7 +91,7 @@ const router = createRouter({
             meta: { requiresAuth: true },
         },
         {
-            path: '/admin/analytics/:id',
+            path: '/admin/analytics',
             name: 'Analytics',
             component: Analytics,
             meta: { requiresAuth: true },
