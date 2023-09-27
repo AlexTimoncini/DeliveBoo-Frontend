@@ -10,7 +10,7 @@
                 <div>
                     <ul class="order_review pt-3 pe-4">
                         <li>
-                            <h4 class="title mt-3">Order Rreview</h4>
+                            <h4 class="title mt-3">Order Review</h4>
                         </li>
                         <li v-for="dish in store.cart_list" class="order_item d-flex justify-content-between">
                             <div class="dish_name m-0">
