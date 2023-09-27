@@ -19,6 +19,7 @@
     "swal": "^0.1.0",
     "sweetalert": "^2.1.2",
     "vue": "^3.3.4",
+    "vue-chartjs": "^5.2.0",
     "vue-router": "^4.2.4",
     "vue3-carousel": "^0.3.1"
   },
