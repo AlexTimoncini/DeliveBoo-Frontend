@@ -340,7 +340,7 @@ export default {
                     if (response.data.success === true) {
                         this.store.cart_list = [],
                             localStorage.clear();
-                        swal("Payment made successfully!", "Your order has been placed.", "success");
+                        swal("Order Success!", "Your payment was successful.", "success");
                         this.resetHostedFields();
                         console.log(response.data.order);
                         store.isOrderConfirmed = true;
@@ -351,7 +351,7 @@ export default {
                     this.errorForm = error.response.data.errors;
                     // console.log(error.response.data.errors)
                     console.log(this.errorForm)
-                    swal("Payment refused.", "Your order has not been placed. Please try again.", 'error');
+                    swal("Order Failed.", "The delivery or card informations are invalid. Please try again.", 'error');
                 })
 
         }
