@@ -1,6 +1,19 @@
 <script>
+import { store } from '../store';
 export default{
-    name: 'OrderSuccess'
+    name: 'OrderSuccess',
+
+    data() {
+        return {
+            store
+        }
+    },
+
+    mounted() {
+        if (!store.isOrderConfirmed) {
+            this.$router.push({ name: 'Homepage' });
+        }
+    }
 }
 </script>
 
@@ -31,18 +44,20 @@ export default{
             <div class="bottomHalf">
                 <p>Your payment was successful. We’ll do our best to make sure you get your order as soon as possible.</p>
                 <p>We’re glad you chose us and we hope you enjoy it!</p>
-                <p>Your order ID is: <strong>#1</strong>. Here is a summary of your data:</p>
+                <p>Your order ID is: <strong>{{ orderId }}</strong>. Here is a summary of your data:</p>
                 <ul>
                     <div class="row mb-5">
                         <div class="col-6">
-                            <li>First Name: <strong>Giovanni</strong></li>
-                            <li>Last Name: <strong>Rana</strong></li>
-                            <li>Phone: <strong>0000000000</strong></li>
+                            <li>First Name: <strong>{{ store.confirmedOrder.first_name }}</strong></li>
+                            <li>Last Name: <strong>{{ store.confirmedOrder.last_name }}</strong></li>
+                            <li>Phone: <strong>{{ store.confirmedOrder.phone }}</strong></li>
                         </div>
                         <div class="col-6">
-                            <li>Address: <strong>Via Roma, 12</strong></li>
-                            <li>Interior: <strong>2</strong></li>
-                            <li>Doorbell: <strong>3</strong></li>
+                            <li>Address: <strong>{{ store.confirmedOrder.customer_address }}</strong></li>
+                            <li v-if="store.confirmedOrder.interior">Interior: <strong>{{ store.confirmedOrder.interior }}</strong></li>
+                                <li v-else>Interior: <strong>Not specified</strong></li>
+                            <li v-if="store.confirmedOrder.doorbell">Doorbell: <strong>{{ store.confirmedOrder.doorbell }}</strong></li>
+                                <li v-else>Doorbell: <strong>Not specified</strong></li>
                         </div>
                         <img class="d-none d-sm-block" src="../assets/mascotte/ghost_rider.png" alt="Boo Rider" draggable="false">
                     </div>
