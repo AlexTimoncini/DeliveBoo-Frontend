@@ -7,6 +7,7 @@ export default {
 <script setup>
 import { ref } from 'vue';
 import { useAuthStore } from '../stores/auth';
+import ForgotPassword from './ForgotPassword.vue';
 const authStore = useAuthStore();
 const formRegister = ref({
     name: '',
@@ -243,55 +244,56 @@ function uploadFile(file) {
                         <div class="col-6">
                             <label for="closer-time">Closing Time</label>
                             <div class="position-relative">
-                                <select class="d-block" name="closer-time" id="closer-time" v-model="formRegister.closer_time">
-                                <option value="00:00">00:00</option>
-                                <option value="00:30">00:30</option>
-                                <option value="01:00">01:00</option>
-                                <option value="01:30">01:30</option>
-                                <option value="02:00">02:00</option>
-                                <option value="02:30">02:30</option>
-                                <option value="03:00">03:00</option>
-                                <option value="03:30">03:30</option>
-                                <option value="04:00">04:00</option>
-                                <option value="04:30">04:30</option>
-                                <option value="05:00">05:00</option>
-                                <option value="05:30">05:30</option>
-                                <option value="06:00">06:00</option>
-                                <option value="06:30">06:30</option>
-                                <option value="07:00">07:00</option>
-                                <option value="07:30">07:30</option>
-                                <option value="08:00">08:00</option>
-                                <option value="08:30">08:30</option>
-                                <option value="09:00">09:00</option>
-                                <option value="09:30">09:30</option>
-                                <option value="10:00">10:00</option>
-                                <option value="10:30">10:30</option>
-                                <option value="11:00">11:00</option>
-                                <option value="11:30">11:30</option>
-                                <option value="12:00">12:00</option>
-                                <option value="12:30">12:30</option>
-                                <option value="13:00">13:00</option>
-                                <option value="13:30">13:30</option>
-                                <option value="14:00">14:00</option>
-                                <option value="14:30">14:30</option>
-                                <option value="15:00">15:00</option>
-                                <option value="15:30">15:30</option>
-                                <option value="16:00">16:00</option>
-                                <option value="16:30">16:30</option>
-                                <option value="17:00">17:00</option>
-                                <option value="17:30">17:30</option>
-                                <option value="18:00">18:00</option>
-                                <option value="18:30">18:30</option>
-                                <option value="19:00">19:00</option>
-                                <option value="19:30">19:30</option>
-                                <option value="20:00">20:00</option>
-                                <option value="20:30">20:30</option>
-                                <option value="21:00">21:00</option>
-                                <option value="21:30">21:30</option>
-                                <option value="22:00">22:00</option>
-                                <option value="22:30">22:30</option>
-                                <option value="23:00">23:00</option>
-                                <option value="23:30">23:30</option>
+                                <select class="d-block" name="closer-time" id="closer-time"
+                                    v-model="formRegister.closer_time">
+                                    <option value="00:00">00:00</option>
+                                    <option value="00:30">00:30</option>
+                                    <option value="01:00">01:00</option>
+                                    <option value="01:30">01:30</option>
+                                    <option value="02:00">02:00</option>
+                                    <option value="02:30">02:30</option>
+                                    <option value="03:00">03:00</option>
+                                    <option value="03:30">03:30</option>
+                                    <option value="04:00">04:00</option>
+                                    <option value="04:30">04:30</option>
+                                    <option value="05:00">05:00</option>
+                                    <option value="05:30">05:30</option>
+                                    <option value="06:00">06:00</option>
+                                    <option value="06:30">06:30</option>
+                                    <option value="07:00">07:00</option>
+                                    <option value="07:30">07:30</option>
+                                    <option value="08:00">08:00</option>
+                                    <option value="08:30">08:30</option>
+                                    <option value="09:00">09:00</option>
+                                    <option value="09:30">09:30</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="10:30">10:30</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="11:30">11:30</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="12:30">12:30</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="13:30">13:30</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="14:30">14:30</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="15:30">15:30</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="16:30">16:30</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="17:30">17:30</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="18:30">18:30</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="19:30">19:30</option>
+                                    <option value="20:00">20:00</option>
+                                    <option value="20:30">20:30</option>
+                                    <option value="21:00">21:00</option>
+                                    <option value="21:30">21:30</option>
+                                    <option value="22:00">22:00</option>
+                                    <option value="22:30">22:30</option>
+                                    <option value="23:00">23:00</option>
+                                    <option value="23:30">23:30</option>
                                 </select>
                                 <div class="info-message select" v-if="!authStore.messageErrors.closer_time">
                                     <span>Enter your restaurant's closing time.</span>
@@ -303,26 +305,27 @@ function uploadFile(file) {
                         </div>
                     </div>
                     <div class="row">
-                            <div class="col-12">
-                                <label for="phone-number">Phone Number</label>
-                                <div class="position-relative">
-                                    <input type="text" name="phone-number" id="phone-number" v-model="formRegister.phone" />
-                                    <div class="info-message" v-if="!authStore.messageErrors.phone">
-                                        <span>Enter your restaurant's phone number.</span>
-                                    </div>
-                                    <div class="error-message" v-if="authStore.messageErrors.phone">
-                                        <span>{{ authStore.messageErrors.phone.join() }}</span>
-                                    </div>
+                        <div class="col-12">
+                            <label for="phone-number">Phone Number</label>
+                            <div class="position-relative">
+                                <input type="text" name="phone-number" id="phone-number" v-model="formRegister.phone" />
+                                <div class="info-message" v-if="!authStore.messageErrors.phone">
+                                    <span>Enter your restaurant's phone number.</span>
+                                </div>
+                                <div class="error-message" v-if="authStore.messageErrors.phone">
+                                    <span>{{ authStore.messageErrors.phone.join() }}</span>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <div class="row">
                         <div class="col-12">
                         </div>
                         <div class="col-12">
                             <label for="description">Description</label>
                             <div class="position-relative">
-                                <textarea name="description" id="description" class="w-100" cols="30" rows="2" v-model="formRegister.description"></textarea>
+                                <textarea name="description" id="description" class="w-100" cols="30" rows="2"
+                                    v-model="formRegister.description"></textarea>
                                 <div class="info-message" v-if="!authStore.messageErrors.description">
                                     <span>Enter your restaurant's description.</span>
                                 </div>
@@ -349,7 +352,7 @@ function uploadFile(file) {
                             <label for="password-confirm">Confirm Password</label>
                             <div class="position-relative">
                                 <input type="password" name="password-confirm" id="password-confirm"
-                                v-model="formRegister.password_confirm" />
+                                    v-model="formRegister.password_confirm" />
                                 <div class="info-message">
                                     <span>Confirm your password.</span>
                                 </div>
@@ -445,7 +448,7 @@ function uploadFile(file) {
                         <span>{{ authStore.loginMessageErrors.email.join() }}</span>
                     </div>
                 </div>
-                
+
                 <label for="login-password">Password</label>
                 <div class="position-relative w-100">
                     <input type="password" name="login-password" id="login-password" v-model="formLogin.password" />
@@ -456,7 +459,7 @@ function uploadFile(file) {
                         <span>{{ authStore.loginMessageErrors.password.join() }}</span>
                     </div>
                 </div>
-                <a href="#" style="color: #faf9f5">Forgot your password?</a>
+                <router-link :to="{ name: 'ForgotPassword' }">Forgot Password?</router-link>
                 <button>Sign In</button>
             </form>
         </div>
@@ -560,7 +563,7 @@ function uploadFile(file) {
                     </a>
                 </div>
                 <span class="my-3">or use your account</span>
-                
+
                 <div class="position-relative mb-4">
                     <input type="email" class="mb-4" name="login-email" id="login-email" v-model="formLogin.email" />
                     <div class="info-message login-mobile" v-if="!authStore.loginMessageErrors.email">
@@ -570,7 +573,7 @@ function uploadFile(file) {
                         <span>{{ authStore.loginMessageErrors.email.join() }}</span>
                     </div>
                 </div>
-                
+
                 <div class="position-relative">
                     <input type="password" name="login-password" id="login-password" v-model="formLogin.password" />
                     <div class="info-message login-mobile" v-if="!authStore.loginMessageErrors.password">
@@ -699,7 +702,8 @@ function uploadFile(file) {
                                 <div class="col-12">
                                     <label for=" vat-number">VAT Number</label>
                                     <div class="position-relative">
-                                        <input type="text" name="vat-number" id="vat-number" v-model="formRegister.vat_number" />
+                                        <input type="text" name="vat-number" id="vat-number"
+                                            v-model="formRegister.vat_number" />
                                         <div class="info-message" v-if="!authStore.messageErrors.vat_number">
                                             <span>Enter your VAT number.</span>
                                         </div>
@@ -711,7 +715,8 @@ function uploadFile(file) {
                                 <div class="col-12">
                                     <label for="phone-number">Phone Number</label>
                                     <div class="position-relative">
-                                        <input type="text" name="phone-number" id="phone-number" v-model="formRegister.phone" />
+                                        <input type="text" name="phone-number" id="phone-number"
+                                            v-model="formRegister.phone" />
                                         <div class="info-message" v-if="!authStore.messageErrors.phone">
                                             <span>Enter your restaurant's phone number.</span>
                                         </div>
@@ -737,7 +742,8 @@ function uploadFile(file) {
                                 <div class="col-12">
                                     <label for="open-time">Opening Time</label>
                                     <div class="position-relative">
-                                        <select class="d-block" name="open-time" id="open-time" v-model="formRegister.open_time">
+                                        <select class="d-block" name="open-time" id="open-time"
+                                            v-model="formRegister.open_time">
                                             <option value="00:00">00:00</option>
                                             <option value="00:30">00:30</option>
                                             <option value="01:00">01:00</option>
@@ -798,55 +804,56 @@ function uploadFile(file) {
                                 <div class="col-12">
                                     <label for="closer-time">Closing Time</label>
                                     <div class="position-relative">
-                                        <select class="d-block" name="closer-time" id="closer-time" v-model="formRegister.closer_time">
-                                        <option value="00:00">00:00</option>
-                                        <option value="00:30">00:30</option>
-                                        <option value="01:00">01:00</option>
-                                        <option value="01:30">01:30</option>
-                                        <option value="02:00">02:00</option>
-                                        <option value="02:30">02:30</option>
-                                        <option value="03:00">03:00</option>
-                                        <option value="03:30">03:30</option>
-                                        <option value="04:00">04:00</option>
-                                        <option value="04:30">04:30</option>
-                                        <option value="05:00">05:00</option>
-                                        <option value="05:30">05:30</option>
-                                        <option value="06:00">06:00</option>
-                                        <option value="06:30">06:30</option>
-                                        <option value="07:00">07:00</option>
-                                        <option value="07:30">07:30</option>
-                                        <option value="08:00">08:00</option>
-                                        <option value="08:30">08:30</option>
-                                        <option value="09:00">09:00</option>
-                                        <option value="09:30">09:30</option>
-                                        <option value="10:00">10:00</option>
-                                        <option value="10:30">10:30</option>
-                                        <option value="11:00">11:00</option>
-                                        <option value="11:30">11:30</option>
-                                        <option value="12:00">12:00</option>
-                                        <option value="12:30">12:30</option>
-                                        <option value="13:00">13:00</option>
-                                        <option value="13:30">13:30</option>
-                                        <option value="14:00">14:00</option>
-                                        <option value="14:30">14:30</option>
-                                        <option value="15:00">15:00</option>
-                                        <option value="15:30">15:30</option>
-                                        <option value="16:00">16:00</option>
-                                        <option value="16:30">16:30</option>
-                                        <option value="17:00">17:00</option>
-                                        <option value="17:30">17:30</option>
-                                        <option value="18:00">18:00</option>
-                                        <option value="18:30">18:30</option>
-                                        <option value="19:00">19:00</option>
-                                        <option value="19:30">19:30</option>
-                                        <option value="20:00">20:00</option>
-                                        <option value="20:30">20:30</option>
-                                        <option value="21:00">21:00</option>
-                                        <option value="21:30">21:30</option>
-                                        <option value="22:00">22:00</option>
-                                        <option value="22:30">22:30</option>
-                                        <option value="23:00">23:00</option>
-                                        <option value="23:30">23:30</option>
+                                        <select class="d-block" name="closer-time" id="closer-time"
+                                            v-model="formRegister.closer_time">
+                                            <option value="00:00">00:00</option>
+                                            <option value="00:30">00:30</option>
+                                            <option value="01:00">01:00</option>
+                                            <option value="01:30">01:30</option>
+                                            <option value="02:00">02:00</option>
+                                            <option value="02:30">02:30</option>
+                                            <option value="03:00">03:00</option>
+                                            <option value="03:30">03:30</option>
+                                            <option value="04:00">04:00</option>
+                                            <option value="04:30">04:30</option>
+                                            <option value="05:00">05:00</option>
+                                            <option value="05:30">05:30</option>
+                                            <option value="06:00">06:00</option>
+                                            <option value="06:30">06:30</option>
+                                            <option value="07:00">07:00</option>
+                                            <option value="07:30">07:30</option>
+                                            <option value="08:00">08:00</option>
+                                            <option value="08:30">08:30</option>
+                                            <option value="09:00">09:00</option>
+                                            <option value="09:30">09:30</option>
+                                            <option value="10:00">10:00</option>
+                                            <option value="10:30">10:30</option>
+                                            <option value="11:00">11:00</option>
+                                            <option value="11:30">11:30</option>
+                                            <option value="12:00">12:00</option>
+                                            <option value="12:30">12:30</option>
+                                            <option value="13:00">13:00</option>
+                                            <option value="13:30">13:30</option>
+                                            <option value="14:00">14:00</option>
+                                            <option value="14:30">14:30</option>
+                                            <option value="15:00">15:00</option>
+                                            <option value="15:30">15:30</option>
+                                            <option value="16:00">16:00</option>
+                                            <option value="16:30">16:30</option>
+                                            <option value="17:00">17:00</option>
+                                            <option value="17:30">17:30</option>
+                                            <option value="18:00">18:00</option>
+                                            <option value="18:30">18:30</option>
+                                            <option value="19:00">19:00</option>
+                                            <option value="19:30">19:30</option>
+                                            <option value="20:00">20:00</option>
+                                            <option value="20:30">20:30</option>
+                                            <option value="21:00">21:00</option>
+                                            <option value="21:30">21:30</option>
+                                            <option value="22:00">22:00</option>
+                                            <option value="22:30">22:30</option>
+                                            <option value="23:00">23:00</option>
+                                            <option value="23:30">23:30</option>
                                         </select>
                                         <div class="info-message select" v-if="!authStore.messageErrors.closer_time">
                                             <span>Enter your restaurant's closing time.</span>
@@ -863,7 +870,8 @@ function uploadFile(file) {
                                 <div class="col-12">
                                     <label for="description">Description</label>
                                     <div class="position-relative">
-                                        <textarea name="description" id="description" class="w-100" cols="30" rows="2" v-model="formRegister.description"></textarea>
+                                        <textarea name="description" id="description" class="w-100" cols="30" rows="2"
+                                            v-model="formRegister.description"></textarea>
                                         <div class="info-message" v-if="!authStore.messageErrors.description">
                                             <span>Enter your restaurant's description.</span>
                                         </div>
@@ -877,7 +885,8 @@ function uploadFile(file) {
                                 <div class="col-12">
                                     <label for="password">Password</label>
                                     <div class="position-relative">
-                                        <input type="password" name="password" id="password" v-model="formRegister.password" />
+                                        <input type="password" name="password" id="password"
+                                            v-model="formRegister.password" />
                                         <div class="info-message" v-if="!authStore.messageErrors.password">
                                             <span>Enter your password.</span>
                                         </div>
@@ -890,7 +899,7 @@ function uploadFile(file) {
                                     <label for="password-confirm">Confirm Password</label>
                                     <div class="position-relative">
                                         <input type="password" name="password-confirm" id="password-confirm"
-                                        v-model="formRegister.password_confirm" />
+                                            v-model="formRegister.password_confirm" />
                                         <div class="info-message">
                                             <span>Confirm your password.</span>
                                         </div>

@@ -61,6 +61,12 @@ export const useAuthStore = defineStore('auth', {
             axios.post('/logout');
             this.authUser = null;
             this.router.push('/');
+        },
+
+        async forgotPassword(email) {
+            axios.post('/forgot-password', {
+                email: email
+            });
         }
     }
 })
