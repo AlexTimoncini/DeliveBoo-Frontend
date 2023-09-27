@@ -47,13 +47,15 @@
                     </div>
                     <nav class="page" aria-label="Page">
                         <ul class="pagination m-0 justify-content-center ">
-                            <li class="page-item "><button @click="prevPage()" class="page-link  text-white">Previous</button>
+                            <li class="page-item "><button @click="prevPage()"
+                                    class="page-link  text-white">Previous</button>
                             </li>
                             <li class="page-item text-white" v-for="page, index in Math.floor(orders.order_length / 8) + 1">
                                 <button @click="singlePage(index + 1)" class="page-link  text-white"
                                     :class="activeIndex === index + 1 ? 'active' : ''">{{ index + 1 }}</button>
                             </li>
-                            <li class="page-item"><button @click="nextPage()" class="page-link  text-white">Next</button></li>
+                            <li class="page-item"><button @click="nextPage()" class="page-link  text-white">Next</button>
+                            </li>
                         </ul>
                     </nav>
 
@@ -74,7 +76,7 @@ export default {
     components: { DashboardSidebar, DashboardNavbar, Loader },
     components: { DashboardSidebar, DashboardNavbar }
 }
-</script >
+</script>
 
 <script setup>
 import { onMounted, ref } from 'vue';

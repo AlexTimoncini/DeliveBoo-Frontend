@@ -16,7 +16,7 @@ import OrderShow from './views/admin/OrderShow.vue';
 import NotFound from './views/NotFound.vue';
 import CheckOut from './views/CheckOut.vue';
 import OrderSuccess from './views/OrderSuccess.vue';
-
+import ForgotPassword from './views/ForgotPassword.vue'
 
 
 const router = createRouter({
@@ -59,6 +59,12 @@ const router = createRouter({
             path: '/404',
             name: 'NotFound',
             component: NotFound
+        },
+
+        {
+            path: '/forgot-password',
+            name: 'ForgotPassword',
+            component: ForgotPassword
         },
         {
             path: '/admin/myaccount',
