@@ -3,7 +3,7 @@ import { useAuthStore } from '../../stores/auth';
 const authStore = useAuthStore();
 
 </script>
-<template>
+<template >
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 col-2 p-0">
@@ -11,7 +11,8 @@ const authStore = useAuthStore();
             </div>
             <div class="col-md-9 col-10 p-0">
                 <DashboardNavbar />
-                <div class="my_app px-5">
+                <Loader v-if="loading" />
+                <div v-else class="my_app px-5">
 
                     <div class="mt-4">
                         <div class="d-flex justify-content-end">
@@ -135,15 +136,17 @@ const authStore = useAuthStore();
 import axios from 'axios';
 import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
+import Loader from '../../components/Loader.vue';
 export default {
     name: 'Dishes',
 
-    components: { DashboardSidebar, DashboardNavbar },
+    components: { DashboardSidebar, DashboardNavbar, Loader},
     data() {
         return {
             isAlertOn: false,
             AlertID: 0,
             confirmDelete: false,
+            loading: true
         }
     },
     methods: {
@@ -156,15 +159,19 @@ export default {
             axios.delete(`/api/delete/${dishID}`)
                 .then((response) => {
                     console.log(response);
-                    window.location.href = '/admin/dishes';
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
             this.isAlertOn = false;
             this.confirmDelete = false;
-
+        },
+        loaded(){
+            this.loading = false;
         }
+    },
+    mounted(){
+        setTimeout(this.loaded, 1500);
     }
 }
 </script>

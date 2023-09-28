@@ -507,7 +507,7 @@ export default {
                 })
                     .then((response) => {
                         console.log(response);
-                        window.location.href = '/admin/dishes';
+                        this.$router.push({name:'Dishes'});
                     })
                     .catch((error) => {
                         this.messageErrors = error.response.data.errors;

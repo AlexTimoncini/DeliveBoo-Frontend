@@ -476,7 +476,7 @@ export default {
             const config = { headers: { 'Content-Type': 'multipart/form-data' } };
             axios.post(`api/upload/File/${this.dishIdCreated}`, file, config).then(function (response) {
                 console.log(response.data);
-                window.location.href = '/admin/dishes';
+                this.$router.push({name:'Dishes'});            
             });
         },
         storeDish(authStore) {

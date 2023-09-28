@@ -264,7 +264,7 @@ export default {
     methods: {
         initializeBraintree() {
             braintree.client.create({
-                authorization: "sandbox_q7k4hs9d_wdn3fmrkkz37q6r9"
+                authorization: "sandbox_4xnksjmk_7tdbczf8qx35n699"
             })
                 .then(clientInstance => {
                     let options = {
