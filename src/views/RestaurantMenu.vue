@@ -218,7 +218,7 @@ const authStore = useAuthStore();
 
                 <!-- Restaurant Photo & Logo -->
                 <div class="image-container col-12">
-                    <img class="image img-fluid" v-if="restaurant.image" :src="restaurant.image"
+                    <img class="image img-fluid" v-if="restaurant.image" :src="restaurant.image.startsWith('/restaurants/') ? (`http://127.0.0.1:8000/storage${restaurant.image}`) : restaurant.image"
                         :alt="restaurant.name + ' image'" draggable="false">
                     <img class="image img-fluid" v-else src="../assets/mascotte/pattern.jpg"
                         :alt="restaurant.name + ' image'" draggable="false">

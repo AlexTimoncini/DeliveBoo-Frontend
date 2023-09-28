@@ -343,9 +343,9 @@ export default {
                                             v-for="restaurant in filteredRestaurants"
                                             @click="this.$router.push({ name: 'RestaurantMenu', params: { id: restaurant.id } })">
                                             <div class=" my_card d-flex justify-content-center align-items-center">
-                                                <img v-if="restaurant.image" class="img-fluid" :src="restaurant.image"
+                                                <img v-if="restaurant.image" class="img-fluid" :src="restaurant.image.startsWith('/restaurants/') ? (`http://127.0.0.1:8000/storage${restaurant.image}`) : restaurant.image"
                                                     alt="">
-                                                <img v-else="restaurant.image" class="img-fluid"
+                                                <img v-else class="img-fluid"
                                                     src="../assets/mascotte/pattern.jpg" alt="">
                                                 <h3>{{ restaurant.name }}</h3>
                                             </div>

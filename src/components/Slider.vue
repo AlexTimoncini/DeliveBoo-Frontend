@@ -49,7 +49,8 @@ export default {
                         {{ slide.name }}
                     </h3>
                     <div class="slide-img">
-                        <img :src="slide.image" alt="">
+                        <img v-if="slide.image" :src="slide.image.startsWith('/restaurants/') ? (`http://127.0.0.1:8000/storage${slide.image}`) : slide.image" alt="">
+                        <img v-else src="../assets/mascotte/pattern.jpg" alt="">
                     </div>
                 </router-link>
 
