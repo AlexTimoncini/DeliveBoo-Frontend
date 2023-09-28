@@ -291,7 +291,7 @@ export default {
         h2 {
             color: $priGreen;
             font-weight: 700;
-            font-size: 2.5rem;
+            font-size: 2rem;
         }
 
         img {
