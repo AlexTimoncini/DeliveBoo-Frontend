@@ -458,7 +458,7 @@ function uploadFile(file) {
                         <span>{{ authStore.loginMessageErrors.password.join() }}</span>
                     </div>
                 </div>
-                <router-link :to="{ name: 'ForgotPassword' }">Forgot Password?</router-link>
+                <router-link :to="{ name: 'ForgotPassword' }"><span class="forgot-password">Forgot Password?</span></router-link>
                 <button>Sign In</button>
             </form>
         </div>
@@ -930,6 +930,20 @@ p {
 
 span {
     font-size: 1rem;
+
+    &.forgot-password {
+        color: $priGreen;
+        background-color: white;
+        padding: .5rem 1rem;
+        border-radius: 20px;
+        font-size: .8rem;
+        font-weight: 600;
+        transition: all .3s ease;
+
+        &:hover {
+            background-color: #cefcea;
+        }
+    }
 }
 
 a {
