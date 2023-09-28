@@ -54,8 +54,8 @@ onMounted(async () => {
             <div class="navbar d-none d-lg-flex flex-lg-nowrap" :class="triggerMenu ? 'active' : ''">
                 <ul class="nav-links d-flex flex-column flex-lg-row">
                     <li @click="triggerMenu = false"><router-link :to="{ name: 'Homepage' }">Home</router-link></li>
-                    <li @click="triggerMenu = false"><router-link :to="{ name: 'WorkInProgress' }">About</router-link></li>
-                    <li @click="triggerMenu = false"><router-link :to="{ name: 'WorkInProgress' }">Contact</router-link>
+                    <li @click="triggerMenu = false"><router-link :to="{ name: 'AboutUs' }">About Us</router-link></li>
+                    <li @click="triggerMenu = false"><router-link :to="{ name: 'ContactUs' }">Contact Us</router-link>
                     </li>
                 </ul>
                 <div class="are-you-a-restaurant-btn" v-if="!authStore.user">
