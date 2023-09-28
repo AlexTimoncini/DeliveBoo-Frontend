@@ -1,23 +1,19 @@
 <template>
     <div class="container">
-        <div class="row">
-            <div class="col-6">
-                <form @submit.prevent="authStore.forgotPassword(email)">
-                    <div class="bg-success send-email" :class="authStore.authStatus === true ? 'd-block' : 'd-none'">
+        <div class="row d-flex justify-content-center">
+            <div class="col-4">
+                <form @submit.prevent="authStore.forgotPassword(email)" class="card">
+
+                    <h2>Forgot Password?</h2>
+                    <p>You can reset your Password here</p>
+                    <input type="email" class="passInput" placeholder="Email address" name="email" v-model="email">
+                    <div class="success send-email mt-3" :class="authStore.authStatus === true ? 'd-block' : 'd-none'">
                         {{ authStore.authSuccess }}
                     </div>
-                    <div class="bg-danger send-email" :class="authStore.authStatus === false ? 'd-block' : 'd-none'">
+                    <div class="error send-email mt-3" :class="authStore.authStatus === false ? 'd-block' : 'd-none'">
                         {{ authStore.forgotError }}
                     </div>
-                    <label for=" login-email">Email</label>
-                    <div class="position-relative w-100 mb-3">
-                        <input type="email" class="mb-4" name="login-email" id="login-email" v-model="email" />
-                        <div class="info-message" v-if="!authStore.loginMessageErrors.email">
-                            <span>Enter your email.</span>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Invia</button>
+                    <button type="submit">Send Your Email</button>
                 </form>
 
             </div>
@@ -30,22 +26,63 @@ import { useAuthStore } from '../stores/auth';
 const authStore = useAuthStore();
 const email = ref('');
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @use '../styles/partials/variables' as *;
 
-div.info-message {
-    background-color: $secYellow;
+.card {
+    margin: 10rem 0;
+    background-color: $priGreen;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 40px;
+}
 
-    &.login-mobile {
-        background-color: $priGreen;
-    }
+h2 {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+p {
+    font-size: 12px;
+}
+
+.passInput {
+    margin-top: 15px;
+    width: 80%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid $secYellow;
+    font-size: 15px;
+    color: white;
+    outline: none;
+}
+
+button {
+    margin-top: 15px;
+    width: 80%;
+    background-color: $secYellow;
+    color: white;
+    padding: 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    border: none;
 }
 
 .send-email {
-    padding: 1rem;
+    padding: .44rem;
+    border-radius: 10px;
 }
 
-div.error-message {
-    background-color: #f86f6f;
+.error {
+    color: rgb(255, 0, 0);
+    background-color: $secYellow;
+}
+
+.success {
+    background-color: rgb(22, 224, 22);
+    color: rgb(57, 173, 57);
 }
 </style>
