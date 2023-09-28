@@ -9,34 +9,34 @@
                 <div class="container my_app ">
                     <Loader v-if="loader" />
                     <div v-else><!-- Totals-->
-                        <div class="row mb-4">
+                        <div class="row ">
                             <!-- Total revenues -->
-                            <div class="col-12 col-sm-4 numbers-box-container mb-3 mb-sm-0 text-center">
-                                <div class="numbers-box">
+                            <div class="col-12 col-sm-12 col-md-4 numbers-box-container mb-4 text-center">
+                                <div class="numbers-box square">
                                     <h4>Total Revenues</h4>
                                     <h2>€ {{ Math.trunc(restaurantRevenueEver.revenue) }}</h2>
                                 </div>
                             </div>
 
-                            <div class="col-12 col-sm-4 numbers-box-container text-center ">
+                            <div class="col-12 col-sm-6 col-md-4 mb-4  numbers-box-container text-center ">
                                 <!-- Total Monthly -->
-                                <div class="numbers-box">
+                                <div class="numbers-box square">
                                     <h4>This Month Revenues</h4>
                                     <h2>€ {{ Math.trunc(restaurantRevenueThisMonth.revenue) }}</h2>
                                 </div>
                             </div>
 
-                            <div class="col-12 col-sm-4 numbers-box-container text-center">
+                            <div class="col-12 col-sm-6 col-md-4 mb-4  numbers-box-container text-center">
                                 <!-- Total Orders -->
-                                <div class="numbers-box">
+                                <div class="numbers-box square">
                                     <h4>Total Orders</h4>
                                     <h2>{{ ordersList.length }}</h2>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-8">
+                        <div class="row flex-grow-0">
+                            <div class="col-12 col-lg-8">
                                 <!-- Best selling orders -->
                                 <div class="col-12 numbers-box-container mb-3 text-center">
                                     <div class="numbers-box d-flex align-items-center flex-column">
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-12 col-lg-4">
                                 <!-- Best Selling restaurant -->
                                 <div class="col-12 numbers-box-container mb-3 text-center">
                                     <div class="numbers-box d-flex align-items-center flex-column">
@@ -142,7 +142,7 @@ export default {
             lineData: {
                 labels: [],
                 datasets: [
-                        {
+                    {
                         label: 'Orders',
                         backgroundColor: '#f4b807',
                         data: []
@@ -217,8 +217,8 @@ export default {
                         this.chartData.labels.push(element.created_at.slice(5, 10));
                         this.chartData.datasets[0].data.push(element.total_price);
                     });
-                    
-                    
+
+
                 })
                 .catch((error) => {
                     console.error('Nessuna lista ordini trovata per il ristorante specificato.');
@@ -228,7 +228,7 @@ export default {
             axios.get('/api/restaurants/' + store.user_id + '/ordersTimeLine')
                 .then((response) => {
                     let orders = response.data.data;
-                    
+
                     orders.forEach(element => {
                         this.lineData.labels.push(element.created_at.slice(5, 10));
                         this.lineData.datasets[0].data.push(parseFloat(element.total_price));
@@ -306,6 +306,14 @@ export default {
         img.customer {
             width: 70%;
         }
+    }
+
+    .square {
+        height: 150px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 }
 </style>
