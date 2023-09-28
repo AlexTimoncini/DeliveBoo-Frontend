@@ -74,7 +74,7 @@ div.container {
         text-align: center;
         
         img {
-            width: 100%;
+            width: 80%;
         }
 
         div.title-section {
@@ -113,7 +113,6 @@ div.container {
                     background-color: $secYellow;
                     padding: .5rem 2rem;
                     font-weight: 700;
-                    font-size: 1.2rem;
                     border-radius: 20px 20px 0 0;
                 }
                 
@@ -135,7 +134,7 @@ div.container {
                     background-color: $secYellow;
                     padding: .5rem 2rem;
                     border-radius: 0 0 20px 20px;
-                    font-size: 1.2rem;
+                    font-size: 1.1rem;
                     text-transform: uppercase;
                     border: none;
                     font-weight: 700;
