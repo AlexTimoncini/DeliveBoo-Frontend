@@ -4,10 +4,13 @@ export const useAuthStore = defineStore('auth', {
     state: () => ({
         authUser: null,
         messageErrors: '',
-        loginMessageErrors: ''
+        loginMessageErrors: '',
+        forgotError: null,
+        authSuccess: null,
+        authStatus: null
     }),
     getters: {
-        user: (state) => state.authUser
+        user: (state) => state.authUser,
     },
     actions: {
         async getToken() {
@@ -64,9 +67,21 @@ export const useAuthStore = defineStore('auth', {
         },
 
         async forgotPassword(email) {
-            axios.post('/forgot-password', {
-                email: email
-            });
+            try {
+                const response = await axios.post('/forgot-password', {
+                    email: email
+                })
+                this.authSuccess = response.data.status
+                if (this.authSuccess) {
+                    this.authStatus = true
+                }
+            } catch (error) {
+                console.log(error.response.data)
+                this.forgotError = error.response.data.message
+                if (this.forgotError) {
+                    this.authStatus = false
+                }
+            }
         },
 
         async resetPassword(resetData) {
