@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import axios from "axios";
 import Homepage from './views/HomePage.vue';
+import AboutUs from './views/AboutUs.vue';
+import ContactUs from './views/ContactUs.vue';
 import WorkInProgress from './views/WorkInProgress.vue';
 import AdvanceSearch from './views/AdvanceSearch.vue';
 import RestaurantMenu from './views/RestaurantMenu.vue';
@@ -30,6 +32,16 @@ const router = createRouter({
             path: '/',
             name: 'Homepage',
             component: Homepage
+        },
+        {
+            path: '/about-us',
+            name: 'AboutUs',
+            component: AboutUs
+        },
+        {
+            path: '/contact-us',
+            name: 'ContactUs',
+            component: ContactUs
         },
         {
             path: '/workinprogress',
