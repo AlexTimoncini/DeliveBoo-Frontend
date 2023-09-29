@@ -1,3 +1,30 @@
+<script>
+import { useRoute } from 'vue-router';
+import { useAuthStore } from '../stores/auth';
+import { ref } from 'vue';
+
+export default {
+    name: 'ResetPassword',
+
+    setup() {
+        const route = useRoute();
+        const authStore = useAuthStore();
+
+        const formData = ref({
+            password: '',
+            password_confirmation: '',
+            email: route.query.email,
+            token: route.params.token
+        });
+
+        return {
+            formData,
+            authStore
+        };
+    }
+}
+</script>
+
 <template>
     <div class="container">
         <div class="password-reset">
@@ -11,43 +38,28 @@
                         <p>Ghoulfriend, it's time to conjure up a new 'Boo'-tiful password!</p>
                     </div>
                     <div class="form-section">
-                        <form @submit.prevent="authStore.resetPassword(formData)">
+                        <form @submit.prevent="authStore.resetPassword(this.formData)">
                             <div class="row">
                                 <div class="col-12">
                                     <label for="password">Enter your new password:</label>
-                                    <input type="password" name="password" v-model="formData.password">
+                                    <input type="password" name="password" v-model="this.formData.password">
                                 </div>
                                 <div class="col-12">
                                     <label for="password">Confirm your new password:</label>
-                                    <input type="password" name="password" v-model="formData.password_confirmation">
+                                    <input type="password" name="password" v-model="this.formData.password_confirmation">
                                 </div>
                             </div>
                             <button type="submit">Send</button>
                         </form>
-                        <!-- <div class="error-message" v-if="authStore.loginMessageErrors.password">
-                            <span>authStore.loginMessageErrors.password</span>
-                        </div> -->
+                        <div class="error-message" v-if="authStore.authStatus === false">
+                            <span v-if="authStore.authStatus === false">{{ authStore.resetError }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
-<script setup>
-import { ref } from 'vue';
-import { useAuthStore } from '../stores/auth';
-import { useRoute } from 'vue-router';
-const route = useRoute();
-const authStore = useAuthStore();
-
-const formData = ref({
-    password: '',
-    password_confirmation: '',
-    email: route.query.email,
-    token: route.params.token,
-})
-</script>
 
 <style lang="scss" scoped>
 @use '../styles/partials/variables' as *;
