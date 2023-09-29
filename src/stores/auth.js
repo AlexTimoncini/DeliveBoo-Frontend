@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import swal from 'sweetalert';
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         authUser: null,
@@ -56,6 +57,7 @@ export const useAuthStore = defineStore('auth', {
                 password_confirmation: dataRegister.password_confirm
             }).then((response) => {
                 this.router.push('/admin/myaccount');
+                swal("Registration completed successfully!", "Thank you for joining the large DeliveBoo family!", 'success');
             }).catch((error) => {
                 this.messageErrors = error.response.data.errors
                 console.log(this.messageErrors);
@@ -70,6 +72,7 @@ export const useAuthStore = defineStore('auth', {
         },
 
         async forgotPassword(email) {
+            this.forgotLoader = true;
             try {
                 const response = await axios.post('/forgot-password', {
                     email: email
@@ -90,6 +93,8 @@ export const useAuthStore = defineStore('auth', {
         },
 
         async resetPassword(resetData) {
+            this.resetError = '';
+            this.authStatus = '';
             this.getToken();
             try {
                 const response = await axios.post('/reset-password', resetData);
@@ -98,6 +103,7 @@ export const useAuthStore = defineStore('auth', {
                     console.log(this.authResetSuccess)
                     this.authStatus = true
                     this.router.push('/login');
+                    swal("Password reset completed!", "Your new password has been successfully saved.", 'success');
                 }
 
             } catch (error) {
