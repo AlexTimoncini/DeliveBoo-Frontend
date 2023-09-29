@@ -4,15 +4,10 @@ import { ref } from 'vue';
 export default {
     name: 'ForgotPassword',
 
-    methods: {
-        startLoader() {
-            this.authStore.forgotLoader = true;
-        }
-    },
-
     setup() {
         const authStore = useAuthStore();
         const email = ref('');
+        authStore.authStatus = '';
 
         return {
             authStore,
@@ -38,7 +33,7 @@ export default {
                         <form @submit.prevent="this.authStore.forgotPassword(email)">
                             <label for="email">Enter your email address:</label>
                             <input type="email" name="email" v-model="email">
-                            <button type="submit" @click="startLoader()">Send Request</button>
+                            <button type="submit">Send Request</button>
                         </form>
                         <div class="success send-email mt-3" :class="this.authStore.authStatus === true ? 'd-block' : 'd-none'">
                             {{ this.authStore.authSuccess }}
