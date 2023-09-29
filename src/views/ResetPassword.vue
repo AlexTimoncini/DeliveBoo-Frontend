@@ -49,7 +49,7 @@ const formData = ref({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @use '../styles/partials/variables' as *;
 
 div.container {
