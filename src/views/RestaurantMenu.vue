@@ -1,12 +1,13 @@
 <script>
 import Card from '../components/Card.vue';
+import Loader from '../components/Loader.vue';
 import { store } from '../store';
 import axios from 'axios';
 export default {
     name: 'RestaurantMenu',
 
     components: {
-        Card
+        Card, Loader
     },
 
     data() {
@@ -16,6 +17,7 @@ export default {
             bestDishes: [],
             restaurant_id: null,
             restaurant_logo: '',
+            loading: true,
 
             // cart sidebar 
             store,
@@ -75,6 +77,7 @@ export default {
                     const logoUrl = `/storage/${logoFileName}`;
                     this.restaurant_logo = logoUrl;
                     console.log(logoUrl);
+                    this.loading = false;
                 })
                 .catch((error) => {
                     console.error('Errore durante il recupero dell\'immagine:', error);
@@ -141,7 +144,7 @@ const authStore = useAuthStore();
 </script>
 
 <template>
-    <div class="d-flex container-fluid flex-column flex-md-row p-0 position-relative">
+    <div class="d-flex container-fluid flex-column flex-md-row p-0 position-relative" v-if="!loading">
         <div class="cart-container  d-none d-md-block col-md-3">
             <div class="cart-sidebar px-3 py-4">
                 <h2 class="mb-4 px-3">Shopping Cart</h2>
@@ -294,6 +297,7 @@ const authStore = useAuthStore();
             </div>
         </div>
     </div>
+    <Loader v-if="loading" />
 </template>
 
 <style lang="scss" scoped>
