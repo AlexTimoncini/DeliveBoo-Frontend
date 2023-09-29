@@ -42,7 +42,7 @@
                     </div>
                     <h3 class="mb-0">Vito Pizzulli</h3>
                     <h5>IT Illusionist</h5>
-                    <p><em>"Ciao a tutti dico cose qui"</em></p>
+                    <p><em>"In the land of shadows, every Boo finds its echo"</em></p>
 
                 </div>
 
