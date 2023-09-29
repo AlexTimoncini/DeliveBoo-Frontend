@@ -94,9 +94,6 @@
                                 <label for="address">Address</label>
                                 <input class="w-100" type="text" id="address" name="address" v-model="formData.address"
                                     v-bind:disabled="isDisabled">
-                                <label for="free-delivery-from">Free Delivery From</label>
-                                <input class="w-100" type="text" id="free-delivery-from" name="free-delivery-from"
-                                    :value="authStore.user ? '' : ''" v-bind:disabled="isDisabled">
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="opening-time">Opening Time</label>
@@ -125,12 +122,12 @@
                                     </div>
                                 </div>
                                 <label for="description">Description</label>
-                                <textarea class="w-100" name="description" id="description" cols="30" rows="6"
+                                <textarea class="w-100" name="description" id="description" cols="30" rows="4"
                                     v-bind:disabled="isDisabled" v-model="formData.description"></textarea>
                             </div>
                         </div>
                         <div class="buttons">
-                            <button v-bind:class="{ disabled: isDisabled }" type="submit">
+                            <button v-bind:class="{ disabled: isDisabled }" type="submit" class="button-save">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" id="save">
                                     <switch>
                                         <g>
@@ -351,8 +348,12 @@ div.my-account {
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
             transition: all .3s ease;
 
+            &.button-save {
+                background-color: lightgreen;
+            }
+
             &:hover {
-                background-color: #ffd966;
+                filter: brightness(1.1);
             }
 
             &:hover svg {
@@ -441,7 +442,7 @@ div.my-account {
 
     div.my-restaurant,
     div.my-media {
-        height: 440px;
+        height: 370px;
     }
 }
 </style>
