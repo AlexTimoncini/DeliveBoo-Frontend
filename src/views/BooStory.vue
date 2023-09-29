@@ -10,7 +10,7 @@
                     <h1>This is where it all began</h1>
                     <h5 class="mb-3"><em>September 2023</em></h5>
                     <p>The beginning of a legend. The worst photo ever taken. We are proud of our journey. And our terrible
-                        photography skills. 😂</p>
+                        photography skills.</p>
                 </div>
             </div>
             <div class="slide second">
@@ -80,15 +80,11 @@
                 </div>
             </div>
             <div class="slide seventh">
-                <div class="photo">
-                    <img class="" src="../assets/mascotte/ghost-jumbo-hd.png" alt="">
-                </div>
-
-                <div class="second_photo">
-                    <img class="" src="../assets/mascotte/boo-detective-wink.png" alt="">
-                </div>
-
                 <img class="my_gif" src="../assets/mascotte/boo-love.gif" alt="">
+                <div class="info d-flex justify-content-center align-items-center flex-column">
+                    <h1>It's me , Hi. I'm not the problem I'm Boo</h1>
+                    <h5 class="ending">(Taylor Swift Voice OFC)</h5>
+                </div>
             </div>
         </div>
         <div class="timeline">
@@ -280,6 +276,25 @@ export default {
 }
 
 .slide.seventh {
+
+    .info {
+        position: absolute;
+        right: 15%;
+        // transform: translate(-50%);
+        top: 15%;
+        text-align: center;
+
+        h1 {
+            color: $priGreen;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        h5 {
+            color: grey;
+        }
+    }
+
     img.my_gif {
         width: 450px;
         height: 450px;
@@ -287,37 +302,6 @@ export default {
         top: 300px;
         right: 500px;
 
-    }
-
-    .second_photo {
-        width: 200px;
-        height: 200px;
-        top: 100;
-        right: 500px;
-        position: absolute;
-
-        img {
-            object-fit: cover;
-            width: 200px;
-            height: 200px;
-        }
-    }
-
-    .photo {
-        width: 300px;
-        height: 300px;
-        right: 200px;
-        top: 100px;
-        transform: rotate(5deg);
-        border: none;
-        background-color: transparent;
-        box-shadow: none;
-        // background-color: white;
-
-        img {
-            object-fit: contain;
-
-        }
     }
 }
 
@@ -360,8 +344,8 @@ ul.bg-bubbles {
         display: block;
         width: 100%;
         height: 100%;
-        // top: 160px;
-        bottom: -160px;
+        top: 0px;
+        // bottom: -160px;
         background-size: cover;
         background-repeat: no-repeat;
 
@@ -429,8 +413,8 @@ ul.bg-bubbles {
 
         &:nth-child(8) {
             left: 55%;
-            width: 20px;
-            height: 20px;
+            width: 60px;
+            height: 60px;
             animation-delay: 15s;
             animation-duration: 40s;
             background-image: url(../assets/logos/yellow_ghost.svg);
@@ -438,8 +422,8 @@ ul.bg-bubbles {
 
         &:nth-child(9) {
             left: 25%;
-            width: 10px;
-            height: 10px;
+            width: 40px;
+            height: 40px;
             animation-delay: 2s;
             animation-duration: 40s;
             background-image: url(../assets/logos/white_ghost.svg);
@@ -461,7 +445,7 @@ ul.bg-bubbles {
     }
 
     100% {
-        transform: translateY(-6100px) rotate(900deg);
+        transform: translateY(6100px) rotate(1400deg);
     }
 }
 
@@ -471,7 +455,7 @@ ul.bg-bubbles {
     }
 
     100% {
-        transform: translateY(-6100px) rotate(900deg);
+        transform: translateY(6100px) rotate(1400deg);
     }
 }
 
