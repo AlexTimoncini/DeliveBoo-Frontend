@@ -61,7 +61,7 @@
                     </div>
                     <h3 class="mb-0">Mario Santoro</h3>
                     <h5>Ghost Debugger</h5>
-                    <p><em>"Ciao a tutti dico cose qui"</em></p>
+                    <p><em>"In the depths of the assembler, the Ghost Debugger whispers a haunting "Boo"!"</em></p>
                 </div>
 
 
