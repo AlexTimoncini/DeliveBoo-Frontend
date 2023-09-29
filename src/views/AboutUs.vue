@@ -32,7 +32,7 @@
                     </div>
                     <h3 class="mb-0">Alex Timoncini</h3>
                     <h5>Code Conjurer</h5>
-                    <p><em>"Ciao a tutti dico cose qui"</em></p>
+                    <p><em>"BOO! Wait... Stop- Don't you dare say I'm scawwwwry, I'm a grown ghost-"</em></p>
 
                 </div>
 
