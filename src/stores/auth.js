@@ -7,8 +7,10 @@ export const useAuthStore = defineStore('auth', {
         loginMessageErrors: '',
         forgotError: null,
         authSuccess: null,
+        authResetSuccess: null,
         forgotLoader: false,
-        authStatus: null
+        authStatus: null,
+        resetPassword: null
     }),
     getters: {
         user: (state) => state.authUser,
@@ -88,8 +90,23 @@ export const useAuthStore = defineStore('auth', {
         },
 
         async resetPassword(resetData) {
-            const response = axios.post('/reset-password', resetData);
-            this.router.push('/login');
+            this.getToken();
+            try {
+                const response = await axios.post('/reset-password', resetData);
+                this.authResetSuccess = response.data.status
+                if (this.authResetSuccess) {
+                    console.log(this.authResetSuccess)
+                    this.authStatus = true
+                    this.router.push('/login');
+                }
+
+            } catch (error) {
+                console.log(error.response.data.message)
+                this.resetError = error.response.data.message
+                if (this.resetError) {
+                    this.authStatus = false
+                }
+            }
         }
     }
 })
