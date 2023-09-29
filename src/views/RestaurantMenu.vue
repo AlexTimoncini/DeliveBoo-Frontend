@@ -222,8 +222,8 @@ const authStore = useAuthStore();
                         :alt="restaurant.name + ' image'" draggable="false">
                     <img class="image img-fluid" v-else src="../assets/mascotte/pattern.jpg"
                         :alt="restaurant.name + ' image'" draggable="false">
-                    <div v-if="authStore.user">
-                        <img class="logo img-fluid" v-if="authStore.user.logo"
+                    <div>
+                        <img class="logo img-fluid" v-if="restaurant_logo"
                             :src="`http://127.0.0.1:8000${this.restaurant_logo}`" :alt="restaurant.name + ' image'"
                             draggable="false">
                         <img class="logo img-fluid" v-else src="../assets/logos/green_ghost.png"
