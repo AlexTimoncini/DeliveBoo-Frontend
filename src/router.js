@@ -18,9 +18,9 @@ import OrderShow from './views/admin/OrderShow.vue';
 import NotFound from './views/NotFound.vue';
 import CheckOut from './views/CheckOut.vue';
 import OrderSuccess from './views/OrderSuccess.vue';
-import ForgotPassword from './views/ForgotPassword.vue'
-import ResetPassword from './views/ResetPassword.vue'
-
+import ForgotPassword from './views/ForgotPassword.vue';
+import ResetPassword from './views/ResetPassword.vue';
+import BooStory from './views/BooStory.vue';
 
 const router = createRouter({
     scrollBehavior() {
@@ -42,6 +42,11 @@ const router = createRouter({
             path: '/contact-us',
             name: 'ContactUs',
             component: ContactUs
+        },
+        {
+            path: '/boo',
+            name: 'BooStory',
+            component: BooStory
         },
         {
             path: '/workinprogress',
