@@ -3,7 +3,7 @@
         <div class="password-reset">
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="d-none d-md-block col-5">
-                    <img src="../assets/mascotte/boo-forgot-password.png" alt="Afraid Boo Image">
+                    <img src="../assets/mascotte/password-resetted.png" alt="Investigator Boo Image" draggable="false">
                 </div>
                 <div class="col-12 col-md-7">
                     <div class="title-section">
@@ -22,7 +22,7 @@
                                     <input type="password" name="password" v-model="formData.password_confirmation">
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Send</button>
+                            <button type="submit">Send</button>
                         </form>
                         <!-- <div class="error-message" v-if="authStore.loginMessageErrors.password">
                             <span>authStore.loginMessageErrors.password</span>
