@@ -27,7 +27,7 @@ export default {
         <div class="password-forgotten">
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="d-none d-md-block col-6">
-                    <img src="../assets/mascotte/boo-forgot-password.png" alt="Afraid Boo Image">
+                    <img src="../assets/mascotte/boo-forgot-password.png" alt="Afraid Boo Image" draggable="false">
                 </div>
                 <div class="col-12 col-md-6">
                     <div class="title-section">
@@ -55,7 +55,7 @@ export default {
     <div class="loader" v-if="authStore.forgotLoader">
         <div class="row">
             <div class="col-12">
-                <img src="../assets/mascotte/Loader-boo-thinking.gif" alt="">
+                <img src="../assets/mascotte/Loader-boo-thinking.gif" alt="Boo Thinking Loader" draggable="false">
             </div>
         </div>
     </div>
