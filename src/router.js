@@ -21,6 +21,7 @@ import OrderSuccess from './views/OrderSuccess.vue';
 import ForgotPassword from './views/ForgotPassword.vue';
 import ResetPassword from './views/ResetPassword.vue';
 import BooStory from './views/BooStory.vue';
+import Riders from './views/Riders.vue';
 
 const router = createRouter({
     scrollBehavior() {
@@ -140,6 +141,11 @@ const router = createRouter({
             path: '/payment/ordersuccess',
             name: 'OrderSuccess',
             component: OrderSuccess
+        },
+        {
+            path: '/riders',
+            name: 'Riders',
+            component: Riders
         },
     ],
 });

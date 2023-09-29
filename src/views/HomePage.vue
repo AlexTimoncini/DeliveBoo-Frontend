@@ -145,8 +145,8 @@ onMounted(async () => {
                                             tap into the dark arts of our platform, marketing sorcery, and enhanced
                                             visibility.</p>
                                         <div class="d-flex">
-                                            <router-link :to="{ name: 'WorkInProgress' }" class="card_btn">
-                                                Discover More
+                                            <router-link :to="{ name: 'LoginRestaurant' }" class="card_btn">
+                                                Registern Now
                                             </router-link>
                                         </div>
                                     </div>
@@ -164,8 +164,8 @@ onMounted(async () => {
                                             us. From dark tech mysteries to ghostly customer support, help us conjure the
                                             future of food delivery.</p>
                                         <div class="d-flex">
-                                            <router-link :to="{ name: 'WorkInProgress' }" class="card_btn mt-auto">
-                                                Discover More
+                                            <router-link :to="{ name: 'AboutUs' }" class="card_btn mt-auto">
+                                                Meet our team
                                             </router-link>
                                         </div>
                                     </div>
