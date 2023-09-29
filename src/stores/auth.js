@@ -7,6 +7,7 @@ export const useAuthStore = defineStore('auth', {
         loginMessageErrors: '',
         forgotError: null,
         authSuccess: null,
+        forgotLoader: false,
         authStatus: null
     }),
     getters: {
@@ -74,12 +75,14 @@ export const useAuthStore = defineStore('auth', {
                 this.authSuccess = response.data.status
                 if (this.authSuccess) {
                     this.authStatus = true
+                    this.forgotLoader = false
                 }
             } catch (error) {
                 console.log(error.response.data)
                 this.forgotError = error.response.data.message
                 if (this.forgotError) {
                     this.authStatus = false
+                    this.forgotLoader = false
                 }
             }
         },
