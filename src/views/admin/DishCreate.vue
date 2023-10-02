@@ -32,8 +32,8 @@
 
                                     <label :class="this.errorMessages.name.visibility ? ' border-error' : 'border-none'"
                                         for="name">Name</label>
-                                    <input placeholder="Insert the dish name" class="w-100" type="text" id="name" name="name"
-                                        v-model="this.formData.name">
+                                    <input placeholder="Insert the dish name" class="w-100" type="text" id="name"
+                                        name="name" v-model="this.formData.name">
 
                                 </div>
 
@@ -55,7 +55,8 @@
                                         </div>
                                     </div>
 
-                                    <label :class="this.errorMessages.description.visibility ? ' border-error' : 'border-none'"
+                                    <label
+                                        :class="this.errorMessages.description.visibility ? ' border-error' : 'border-none'"
                                         for="description">Description</label>
                                     <textarea placeholder="Insert the dish description" class="w-100" name="description"
                                         id="description" cols="30" rows="3" v-model="this.formData.description"></textarea>
@@ -63,11 +64,13 @@
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-12 col-md-6 form-section">
-                                        <label :class="this.errorMessages.category.visibility ? ' border-error' : 'border-none'"
+                                        <label
+                                            :class="this.errorMessages.category.visibility ? ' border-error' : 'border-none'"
                                             for="ingredients">Categories</label>
                                         <select name="category" id="category"
                                             @change="this.formData.category = $event.target.value">
-                                            <option value="" selected hidden>{{ this.errorMessages.available.visibility === true
+                                            <option value="" selected hidden>{{ this.errorMessages.available.visibility ===
+                                                true
                                                 ?
                                                 'Wrong input' : 'Select a category...' }}</option>
                                             <option v-for="category in store.categories" :value="category.id">{{
@@ -102,10 +105,11 @@
 
                                 <div class="row">
                                     <div class="col-12 col-md-6  form-section">
-                                        <label :class="this.errorMessages.price.visibility ? ' border-error' : 'border-none'"
+                                        <label
+                                            :class="this.errorMessages.price.visibility ? ' border-error' : 'border-none'"
                                             for="price">Price</label>
-                                        <input placeholder="Example: 13.00" class="w-100" type="text" id="price" name="price"
-                                            v-model="this.formData.price">
+                                        <input placeholder="Example: 13.00" class="w-100" type="text" id="price"
+                                            name="price" v-model="this.formData.price">
 
                                         <!-- Price Error message -->
                                         <div v-if="this.errorMessages.price.alert" class="talkbubble-container ">
@@ -124,10 +128,12 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6  form-section">
-                                        <label :class="this.errorMessages.photo.visibility ? ' border-error' : 'border-none'"
+                                        <label
+                                            :class="this.errorMessages.photo.visibility ? ' border-error' : 'border-none'"
                                             for="photo">Photo</label>
                                         <input placeholder="Insert your dish photo URL" class="w-100" type="file" id="photo"
-                                            name="photo" @change="formData.photo = $event.target.files; console.log(formData.photo)">
+                                            name="photo"
+                                            @change="formData.photo = $event.target.files; console.log(formData.photo)">
 
                                         <!-- Photo Error message -->
                                         <div v-if="this.errorMessages.photo.alert" class="talkbubble-container ">
@@ -148,11 +154,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 col-md-6  form-section">
-                                        <label :class="this.errorMessages.available.visibility ? ' border-error' : 'border-none'"
+                                        <label
+                                            :class="this.errorMessages.available.visibility ? ' border-error' : 'border-none'"
                                             for="available">Available?</label>
                                         <select name="available" id="available"
                                             @change="this.formData.available = $event.target.value">
-                                            <option value="" selected hidden>{{ this.errorMessages.available.visibility === true
+                                            <option value="" selected hidden>{{ this.errorMessages.available.visibility ===
+                                                true
                                                 ?
                                                 'Wrong input' : 'Select' }}</option>
                                             <option value="1">Yes</option>
@@ -177,11 +185,13 @@
                                     </div>
 
                                     <div class="col-12 col-md-6 form-section">
-                                        <label :class="this.errorMessages.visible.visibility ? ' border-error' : 'border-none'"
+                                        <label
+                                            :class="this.errorMessages.visible.visibility ? ' border-error' : 'border-none'"
                                             for="visible">Visible?</label>
                                         <select name="visible" id="visible"
                                             @change="this.formData.visible = $event.target.value">
-                                            <option value="" selected hidden>{{ this.errorMessages.visible.visibility === true
+                                            <option value="" selected hidden>{{ this.errorMessages.visible.visibility ===
+                                                true
                                                 ?
                                                 'Wrong input' : 'Select' }}</option>
                                             <option value="1">Yes</option>
@@ -265,7 +275,6 @@
 <script>
 import DashboardSidebar from '../../components/admin/DashboardSidebar.vue';
 import DashboardNavbar from '../../components/admin/DashboardNavbar.vue';
-import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { onMounted } from 'vue';
 import { useAuthStore } from '../../stores/auth';
@@ -350,7 +359,7 @@ export default {
             if (
                 typeof (this.formData.description) === 'string' && this.formData.description.length >= 3 && this.formData.description.length <= 65535) {
                 this.formDataValidate.description = true;
-                
+
             } else {
                 this.formDataValidate.description = false;
             }
@@ -476,7 +485,6 @@ export default {
             const config = { headers: { 'Content-Type': 'multipart/form-data' } };
             axios.post(`api/upload/File/${this.dishIdCreated}`, file, config).then(function (response) {
                 console.log(response.data);
-                this.$router.push({name:'Dishes'});            
             });
         },
         storeDish(authStore) {
@@ -495,6 +503,7 @@ export default {
                     .then((response) => {
                         this.dishIdCreated = response.data.idCreated[0];
                         this.uploadFile(this.formData.photo);
+                        this.$router.push({ name: 'Dishes' });
                     })
                     .catch(function (error) {
                         console.log(error);
