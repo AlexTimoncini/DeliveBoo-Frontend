@@ -11,14 +11,14 @@
                     <div class="table-container " v-if="authStore.user">
                         <div class="d-block d-md-flex justify-content-between my-table-header">
                             <h2 class="mb-3 mb-md-0 ">Your Orders</h2>
-                            <form action="">
+                            <!-- <form action="">
                                 <select class="form-select" aria-label="Default select example">
                                     <option value="0">This Week</option>
                                     <option value="1">This Month</option>
                                     <option value="2">This Year</option>
                                     <option value="3" selected>Ever</option>
                                 </select>
-                            </form>
+                            </form> -->
                         </div>
                         <table class="table table-striped table-hover text-center">
                             <thead>
