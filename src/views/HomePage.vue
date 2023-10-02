@@ -42,6 +42,7 @@ export default {
     created() {
         this.getTypes();
         this.getBestRestaurants();
+
     }
 }
 </script>
@@ -126,7 +127,7 @@ onMounted(async () => {
                                             for bewitching hours and ghostly rewards as you deliver spine-tingling meals to
                                             the hungriest souls in town.</p>
                                         <div class="d-flex">
-                                            <router-link :to="{ name: 'WorkInProgress' }" class="card_btn">
+                                            <router-link :to="{ name: 'Riders' }" class="card_btn">
                                                 Discover More
                                             </router-link>
                                         </div>
@@ -146,7 +147,7 @@ onMounted(async () => {
                                             visibility.</p>
                                         <div class="d-flex">
                                             <router-link :to="{ name: 'LoginRestaurant' }" class="card_btn">
-                                                Registern Now
+                                                Register Now
                                             </router-link>
                                         </div>
                                     </div>

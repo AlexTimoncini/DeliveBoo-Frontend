@@ -20,8 +20,8 @@ export default {
                             path: 'WorkInProgress'
                         },
                         {
-                            name: 'design blog',
-                            path: 'WorkInProgress'
+                            name: 'rider kit',
+                            path: 'Riders'
                         },
                         {
                             name: 'careeers',
