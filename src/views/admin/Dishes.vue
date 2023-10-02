@@ -159,6 +159,7 @@ export default {
             axios.delete(`/api/delete/${dishID}`)
                 .then((response) => {
                     console.log(response);
+                    location.reload();
                 })
                 .catch(function (error) {
                     console.log(error);
