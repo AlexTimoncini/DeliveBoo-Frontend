@@ -315,6 +315,7 @@ export default {
 
     svg {
         fill: $priGreen;
+        object-fit: cover;
     }
 }
 
@@ -329,7 +330,7 @@ export default {
 
 ul.bg-bubbles {
     position: absolute;
-    top: 0;
+    top: -150px;
     left: 0;
     width: 100%;
     height: calc((100vh - 95px) * 7);
